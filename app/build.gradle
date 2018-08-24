@@ -20,6 +20,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    // ソースディレクトリを指定
+    sourceSets {
+        // 共通ソース(Javaディレクトリが自動生成されないようにKotlinディレクトリを先に配置)
+        main {
+            java.srcDirs = ['src/main/kotlin', 'src/main/java']
+        }
+        // テスト環境ソース
+        test {
+            java.srcDirs += 'src/test/kotlin'
+        }
+        // テスト(Android)環境ソース
+        androidTest {
+            java.srcDirs += 'src/androidTest/kotlin'
+        }
+    }
 }
 
 dependencies {
