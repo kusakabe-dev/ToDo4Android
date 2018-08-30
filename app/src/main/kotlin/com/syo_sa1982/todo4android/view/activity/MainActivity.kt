@@ -1,7 +1,8 @@
-package com.syo_sa1982.todo4android
+package com.syo_sa1982.todo4android.view.activity
 
 import android.app.Activity
 import android.os.Bundle
+import com.syo_sa1982.todo4android.R
 
 class MainActivity : Activity() {
 
