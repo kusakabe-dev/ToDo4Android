@@ -5,11 +5,36 @@ import android.app.Application
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.ProcessLifecycleOwner
 import android.os.Bundle
+import android.util.Log
+import com.syo_sa1982.todo4android.extension.className
+import com.syo_sa1982.todo4android.helper.NetworkHelper
+import com.syo_sa1982.todo4android.helper.NetworkState
+import com.syo_sa1982.todo4android.helper.OnNetworkListener
+import com.syo_sa1982.todo4android.manager.IRepositoryManager
+import com.syo_sa1982.todo4android.manager.RepositoryManager
+import com.syo_sa1982.todo4android.view.activity.BaseActivity
+import java.lang.ref.WeakReference
 
 /**
  * アプリケーションクラス
  */
-class TodoApplication : Application(), LifecycleObserver, Application.ActivityLifecycleCallbacks {
+class TodoApplication : Application(), LifecycleObserver, Application.ActivityLifecycleCallbacks, OnNetworkListener {
+
+
+    /**
+     * リポジトリ管理クラス
+     */
+    val repository: IRepositoryManager = RepositoryManager(this)
+
+    /**
+     * ネットワーク検知クラス
+     */
+    private val networkReceiver = NetworkHelper.NetworkReceiver()
+
+    /**
+     * 現在のActivity
+     */
+    private var currentActivity: WeakReference<BaseActivity?>? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -22,36 +47,50 @@ class TodoApplication : Application(), LifecycleObserver, Application.ActivityLi
     }
 
 
-
     // region Activity Lifecycle
 
     override fun onActivityCreated(activity: Activity?, savedInstanceState: Bundle?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d(className(), "onActivityCreated : ${className(activity)}")
     }
 
     override fun onActivityStarted(activity: Activity?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d(className(), "onActivityStarted : ${className(activity)}")
+        currentActivity = WeakReference(activity as? BaseActivity)
     }
 
     override fun onActivityResumed(activity: Activity?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d(className(), "onActivityResumed : ${className(activity)}")
     }
 
     override fun onActivityPaused(activity: Activity?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d(className(), "onActivityPaused : ${className(activity)}")
     }
 
     override fun onActivitySaveInstanceState(activity: Activity?, outState: Bundle?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d(className(), "onActivitySaveInstanceState : ${className(activity)}")
     }
 
     override fun onActivityStopped(activity: Activity?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d(className(), "onActivityStopped : ${className(activity)}")
     }
 
     override fun onActivityDestroyed(activity: Activity?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Log.d(className(), "onActivityDestroyed : ${className(activity)}")
     }
 
+    // endregion
+
+    override fun onChangedNetworkState(state: NetworkState) {
+        // ネットワーク状態を検知して、Activityに通知する
+        try {
+            val activity = currentActivity?.get() ?: return
+            when (state) {
+                NetworkState.CONNECT -> activity.onNetworkConnected()
+                NetworkState.DISCONNECT -> activity.onNetworkDisconnected()
+            }
+        } catch (e: Exception) {
+            Log.e(className(), "onChangedNetworkState : $e")
+        }
+    }
     // endregion
 }
