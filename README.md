@@ -23,7 +23,7 @@
 ### ディレクトリ構成
 
 ```
-   + com.syo_sa1982.todo4android
+   + com.syousa1982.todo4android
    ++ manager
    ++ model
    +++ api
