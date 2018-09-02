@@ -61,6 +61,10 @@ android {
         develop {
             java.srcDirs +='src/develop/kotlin/'
         }
+        // モック環境ソース
+        mock {
+            java.srcDirs +='src/mock/kotlin/'
+        }
         // テスト環境ソース
         test {
             java.srcDirs += 'src/test/kotlin'
