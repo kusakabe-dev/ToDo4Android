@@ -22,7 +22,7 @@ abstract class BaseActivity : AppCompatActivity(), FragmentController.RootFragme
     /**
      * Fragment管理クラス
      */
-    val fragmentController = FragmentController()
+    private val fragmentController = FragmentController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

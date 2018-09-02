@@ -1,8 +1,16 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto">
+
+<data>
+
+</data>
+
+<LinearLayout
+    style="@style/FragmentTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.syousa1982.todo4android.view.fragment.TaskFragment">
+    android:orientation="vertical">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -10,4 +18,6 @@
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+</LinearLayout>
+
+</layout>

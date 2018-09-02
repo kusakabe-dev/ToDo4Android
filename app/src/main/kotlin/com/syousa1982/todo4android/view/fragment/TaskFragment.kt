@@ -7,23 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.syousa1982.todo4android.R
+import com.syousa1982.todo4android.databinding.FragmentTaskBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 /**
  * タスク一覧 [Fragment] subclass.
  *
  */
-class TaskFragment : Fragment() {
+class TaskFragment : BaseFragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task, container, false)
+    private lateinit var binding: FragmentTaskBinding
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentTaskBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-
+    companion object {
+        fun newInstance() : TaskFragment = TaskFragment()
+    }
 }
