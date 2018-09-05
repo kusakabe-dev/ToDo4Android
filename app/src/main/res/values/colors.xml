@@ -2,7 +2,7 @@
 <resources>
     <color name="color_primary">#FFFFFF</color>
     <color name="color_primary_dark">#303F9F</color>
-    <color name="color_accent">#FF4081</color>
+    <color name="color_accent">#0080FF</color>
     <!--背景色-->
     <color name="background">#F2F2F2</color>
     <!--共通ボタン-->
