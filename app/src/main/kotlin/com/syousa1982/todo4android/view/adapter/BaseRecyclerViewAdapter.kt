@@ -16,7 +16,7 @@ abstract class BaseRecyclerViewAdapter<T : BaseListViewModel> : RecyclerView.Ada
     /**
      * アイテムリスト
      */
-    private val items: MutableList<T> = mutableListOf()
+    val items: MutableList<T> = mutableListOf()
 
     /**
      * アイテム変更 Observable
