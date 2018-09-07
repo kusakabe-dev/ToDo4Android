@@ -2,6 +2,7 @@ package com.syousa1982.todo4android.viewmodel.fragment
 
 import android.databinding.Bindable
 import com.syousa1982.todo4android.BR
+import com.syousa1982.todo4android.model.constant.ViewType
 import com.syousa1982.todo4android.model.entity.Task
 import com.syousa1982.todo4android.viewmodel.BaseListViewModel
 import com.syousa1982.todo4android.viewmodel.BaseViewModel
@@ -15,6 +16,8 @@ class TaskViewModel : BaseViewModel()
  * タスク一覧画面 リストアイテム ViewModel
  */
 class TaskListViewModel : BaseListViewModel(){
+
+    override val viewType: ViewType = ViewType.VIEW_TYPE_1
 
     override fun getItemId(): String? {
         return task?.id

@@ -1,6 +1,7 @@
 package com.syousa1982.todo4android.viewmodel
 
 import android.databinding.BaseObservable
+import com.syousa1982.todo4android.model.constant.ViewType
 
 /**
  * 抽象 リストアイテム ViewModel
@@ -10,6 +11,10 @@ import android.databinding.BaseObservable
  */
 abstract class BaseListViewModel : BaseObservable() {
 
+    /**
+     * ViewType
+     */
+    abstract val viewType: ViewType
 
     /**
      * リストの更新時に判別するためのID
