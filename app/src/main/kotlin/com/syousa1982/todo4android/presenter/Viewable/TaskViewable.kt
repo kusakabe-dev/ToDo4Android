@@ -10,4 +10,9 @@ interface TaskViewable {
      * @param viewModels ドクターリスト
      */
     fun onBindTasks(viewModels: List<TaskListViewModel>)
+
+    /**
+     * タスク更新失敗時の処理
+     */
+    fun onFailureUpdateTask()
 }
