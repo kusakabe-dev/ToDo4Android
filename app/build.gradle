@@ -43,7 +43,7 @@ android {
         develop {
             applicationIdSuffix '.develop'
             // APIのエンドポイント
-            buildConfigField "String", "API_ENDPOINT", '"https://sample.com/"'
+            buildConfigField "String", "API_ENDPOINT", '"https://6653m7jnhc.execute-api.ap-northeast-1.amazonaws.com/dev/v1/"'
             // OkHttp（通信ログ）ライブラリの有効判定
             buildConfigField "Boolean", "OK_HTTP_LOG_ENABLED", 'true'
         }
