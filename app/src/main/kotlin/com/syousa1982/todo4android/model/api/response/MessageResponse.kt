@@ -1,4 +1,4 @@
-package com.syousa1982.todo4android.model.api
+package com.syousa1982.todo4android.model.api.response
 
 import com.squareup.moshi.Json
 import se.ansman.kotshi.JsonSerializable
