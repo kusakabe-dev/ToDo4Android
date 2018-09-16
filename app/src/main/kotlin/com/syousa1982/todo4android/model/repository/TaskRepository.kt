@@ -28,7 +28,7 @@ interface ITaskRepository {
      *
      * @param task タスク
      */
-    fun updateTasks(id: String, task: Task): Single<MessageResponse>
+    fun updateTasks(task: Task): Single<MessageResponse>
 
 }
 
@@ -55,8 +55,7 @@ class TaskRepository(private val api: TaskApi) : ITaskRepository {
         return api.addTasks(task)
     }
 
-    override fun updateTasks(id: String, task: Task): Single<MessageResponse> {
-        val request = Request(task)
-        return api.updateTasks(id, request)
+    override fun updateTasks(task: Task): Single<MessageResponse> {
+        return api.updateTasks(task.id, Request(task))
     }
 }
