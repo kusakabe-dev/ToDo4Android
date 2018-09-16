@@ -1,5 +1,8 @@
 package com.syousa1982.todo4android.model.api
 
+import com.syousa1982.todo4android.BuildConfig
+import com.syousa1982.todo4android.model.api.response.ItemsResponse
+import com.syousa1982.todo4android.model.api.response.MessageResponse
 import com.syousa1982.todo4android.model.entity.Task
 import io.reactivex.Single
 import retrofit2.http.*
@@ -14,8 +17,9 @@ interface TaskApi {
      *
      * @return
      */
+    @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @GET("tasks")
-    fun fetchTasks(): Single<List<Task>>
+    fun fetchTasks(): Single<ItemsResponse<List<Task>>>
 
     /**
      * タスクを登録

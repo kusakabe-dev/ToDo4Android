@@ -1,6 +1,6 @@
 package com.syousa1982.todo4android.model.repository
 
-import com.syousa1982.todo4android.model.api.MessageResponse
+import com.syousa1982.todo4android.model.api.response.MessageResponse
 import com.syousa1982.todo4android.model.api.TaskApi
 import com.syousa1982.todo4android.model.entity.Task
 import io.reactivex.Single
@@ -37,7 +37,17 @@ interface ITaskRepository {
 class TaskRepository(private val api: TaskApi) : ITaskRepository {
 
     override fun fetchTasks(): Single<List<Task>> {
-        return api.fetchTasks()
+        return Single.create { subscriber ->
+            api.fetchTasks()
+                    .map {
+                        it.items
+                    }
+                    .subscribe({
+                        subscriber.onSuccess(it)
+                    }, {
+                        subscriber.onError(it)
+                    })
+        }
     }
 
     override fun addTasks(task: Task): Single<MessageResponse> {
