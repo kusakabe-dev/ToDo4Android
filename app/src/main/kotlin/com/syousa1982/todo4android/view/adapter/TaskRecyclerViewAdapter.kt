@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
+import com.syousa1982.todo4android.extension.pauseClickTimer
 import com.syousa1982.todo4android.model.constant.ViewType
 import com.syousa1982.todo4android.viewmodel.fragment.TaskListViewModel
 
@@ -13,6 +14,11 @@ import com.syousa1982.todo4android.viewmodel.fragment.TaskListViewModel
  * タスクリスト Adapter
  */
 class TaskRecyclerViewAdapter : BaseRecyclerViewAdapter<TaskListViewModel>() {
+
+    /**
+     * アイテムリスナー
+     */
+    var onItemListener: OnItemListener? = null
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
@@ -47,6 +53,24 @@ class TaskRecyclerViewAdapter : BaseRecyclerViewAdapter<TaskListViewModel>() {
 
         fun bind(item: TaskListViewModel) {
             binding.viewModel = item
+            binding.taskCheck.setOnClickListener {
+                it.pauseClickTimer()
+                val check = binding.taskCheck.isChecked()
+                onItemListener?.onClickTaskCheck(binding, check)
+            }
         }
+    }
+
+    /**
+     * アイテムリスナー
+     */
+    interface OnItemListener {
+
+        /**
+         * チェックボックスをチェック
+         *
+         * @param binding FragmentTaskListBinding
+         */
+        fun onClickTaskCheck(binding: FragmentTaskListBinding, checked:Boolean)
     }
 }
