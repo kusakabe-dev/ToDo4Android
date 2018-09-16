@@ -1,6 +1,7 @@
 package com.syousa1982.todo4android.model.api
 
 import com.syousa1982.todo4android.BuildConfig
+import com.syousa1982.todo4android.model.api.request.Request
 import com.syousa1982.todo4android.model.api.response.ItemsResponse
 import com.syousa1982.todo4android.model.api.response.MessageResponse
 import com.syousa1982.todo4android.model.entity.Task
@@ -30,6 +31,7 @@ interface TaskApi {
     /**
      * タスクを更新
      */
-    @PUT("tasks")
-    fun updateTasks(@Body task: Task):Single<MessageResponse>
+    @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
+    @PATCH("tasks/{id}")
+    fun updateTasks(@Path("id") id:String, @Body taskRequest: Request<Task>):Single<MessageResponse>
 }
