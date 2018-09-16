@@ -17,6 +17,9 @@ import io.reactivex.schedulers.Schedulers
 class TaskPresenter(private val viewable: TaskViewable,
                     private val taskRepository: ITaskRepository) : BasePresenter() {
 
+    /**
+     * タスク一覧を取得
+     */
     fun fetchTasks(){
         repositoryStreamTasks.add(taskRepository.fetchTasks()
                 .toObservable()
