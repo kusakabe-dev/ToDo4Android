@@ -33,6 +33,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'OPEN_TASK_API_KEY', TaskApiToken
+    }
     // ビルド環境を設定
     flavorDimensions "default"
     productFlavors {
