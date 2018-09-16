@@ -9,9 +9,12 @@ import se.ansman.kotshi.JsonSerializable
  * APIの簡易的な応答に使用するためのクラス
  * </p>
  *
- * @param status ステータス
+ * @param success
+ * @param message
+ *
  */
 @JsonSerializable
 data class MessageResponse(
-    @Json(name = "status") val status: Int
+    @Json(name = "success") val success: Boolean,
+    @Json(name = "message") val message: String
 )
