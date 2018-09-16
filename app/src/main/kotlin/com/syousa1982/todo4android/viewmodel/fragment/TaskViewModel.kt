@@ -32,4 +32,21 @@ class TaskListViewModel : BaseListViewModel(){
         field = value
         notifyPropertyChanged(BR._all)
     }
+
+    /**
+     * タスクモデルを再生成
+     * 引数の項目だけ更新して再生成する
+     *
+     * @param isDone 完了フラグ
+     */
+    fun recreateByParam(isDone: Boolean): Task? {
+        task?.let {
+            return Task(
+                    it.id,
+                    it.name,
+                    isDone
+            )
+        }
+        return null
+    }
 }
