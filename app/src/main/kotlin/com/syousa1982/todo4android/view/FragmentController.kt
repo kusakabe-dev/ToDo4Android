@@ -107,7 +107,7 @@ class FragmentController : FragNavController.TransactionListener, FragNavControl
      * @param popCount Popする数
      * @return Boolean 遷移したかどうか
      */
-    fun pop(popCount: Int = 1):Boolean{
+    fun pop(popCount: Int = 1): Boolean {
         if (fragmentNavController.isRootFragment) {
             return false
         }
@@ -115,7 +115,7 @@ class FragmentController : FragNavController.TransactionListener, FragNavControl
         return try {
             fragmentNavController.popFragments(popCount, fragmentNavOptions.build())
             true
-        } catch (e: Exception){
+        } catch (e: Exception) {
             Log.e(className(), "Fragment遷移エラー : $e")
             false
         }
