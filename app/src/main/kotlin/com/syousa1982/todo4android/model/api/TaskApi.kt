@@ -25,13 +25,14 @@ interface TaskApi {
     /**
      * タスクを登録
      */
+    @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @POST("tasks")
-    fun addTasks(@Body task: Task): Single<MessageResponse>
+    fun addTasks(@Body taskRequest: Request<Task>): Single<MessageResponse>
 
     /**
      * タスクを更新
      */
     @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @PATCH("tasks/{id}")
-    fun updateTasks(@Path("id") id:String, @Body taskRequest: Request<Task>):Single<MessageResponse>
+    fun updateTasks(@Path("id") id: String, @Body taskRequest: Request<Task>): Single<MessageResponse>
 }
