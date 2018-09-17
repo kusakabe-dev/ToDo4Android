@@ -66,11 +66,11 @@ android {
         }
         // 開発環境ソース
         develop {
-            java.srcDirs +='src/develop/kotlin/'
+            java.srcDirs += 'src/develop/kotlin/'
         }
         // モック環境ソース
         mock {
-            java.srcDirs +='src/mock/kotlin/'
+            java.srcDirs += 'src/mock/kotlin/'
         }
         // テスト環境ソース
         test {
@@ -86,6 +86,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"
+    implementation 'com.android.support:support-v4:27.1.1'
     kapt "com.android.databinding:compiler:3.1.4"
 
     // AndroidSupport
