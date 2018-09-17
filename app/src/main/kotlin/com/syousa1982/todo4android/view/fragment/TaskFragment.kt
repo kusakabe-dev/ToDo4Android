@@ -1,9 +1,11 @@
 package com.syousa1982.todo4android.view.fragment
 
 
+import android.app.Activity.RESULT_OK
 import android.app.Fragment
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
@@ -15,6 +17,7 @@ import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import com.syousa1982.todo4android.extension.application
 import com.syousa1982.todo4android.extension.pauseClickTimer
 import com.syousa1982.todo4android.extension.push
+import com.syousa1982.todo4android.model.constant.RequestCode
 import com.syousa1982.todo4android.presenter.TaskPresenter
 import com.syousa1982.todo4android.presenter.Viewable.TaskViewable
 import com.syousa1982.todo4android.view.adapter.TaskRecyclerViewAdapter
@@ -69,6 +72,21 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
         }
     }
 
+    override fun onFragmentResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onFragmentResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            when (RequestCode.values()[requestCode]) {
+                RequestCode.TASK_ADDED -> {
+                    presenter.fetchTasks()
+                }
+                else -> {
+                    // ignore
+                }
+            }
+        }
+
+    }
+
     override fun onDestroyView() {
         presenter.onDestroy()
         super.onDestroyView()
@@ -94,7 +112,7 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
     override fun onClick(v: View?) {
         v?.pauseClickTimer()
         when (v?.id) {
-            R.id.add_button -> push(AddTaskFragment.newInstance())
+            R.id.add_button -> push(AddTaskFragment.newInstance(), RequestCode.TASK_ADDED)
         }
     }
 
