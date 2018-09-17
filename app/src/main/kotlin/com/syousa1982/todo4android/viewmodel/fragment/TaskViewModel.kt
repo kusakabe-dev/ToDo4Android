@@ -15,7 +15,7 @@ class TaskViewModel : BaseViewModel()
 /**
  * タスク一覧画面 リストアイテム ViewModel
  */
-class TaskListViewModel : BaseListViewModel(){
+class TaskListViewModel : BaseListViewModel() {
 
     override val viewType: ViewType = ViewType.VIEW_TYPE_1
 
@@ -28,10 +28,10 @@ class TaskListViewModel : BaseListViewModel(){
      */
     @Bindable
     var task: Task? = null
-    set(value) {
-        field = value
-        notifyPropertyChanged(BR._all)
-    }
+        set(value) {
+            field = value
+            notifyPropertyChanged(BR._all)
+        }
 
     /**
      * タスクモデルを再生成
@@ -41,11 +41,13 @@ class TaskListViewModel : BaseListViewModel(){
      */
     fun recreateByParam(isDone: Boolean): Task? {
         task?.let {
-            return Task(
+            val newTask = Task(
                     it.id,
                     it.name,
                     isDone
             )
+            task = newTask
+            return newTask
         }
         return null
     }
