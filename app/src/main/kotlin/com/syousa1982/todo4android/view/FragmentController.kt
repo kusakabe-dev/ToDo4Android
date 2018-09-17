@@ -1,5 +1,6 @@
 package com.syousa1982.todo4android.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
@@ -8,6 +9,7 @@ import com.ncapdevi.fragnav.FragNavController
 import com.ncapdevi.fragnav.FragNavTransactionOptions
 import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.extension.className
+import com.syousa1982.todo4android.model.constant.RequestCode
 import com.syousa1982.todo4android.view.fragment.BaseFragment
 
 class FragmentController : FragNavController.TransactionListener, FragNavController.RootFragmentListener {
@@ -102,6 +104,20 @@ class FragmentController : FragNavController.TransactionListener, FragNavControl
     }
 
     /**
+     * FragmentのPush遷移（前の画面にデータを結果を通知）
+     * <p>
+     * BaseFragmentのonFragmentResultで結果を受け取ります
+     * </p>
+     *
+     * @param fragment BaseFragment
+     * @param requestCode リクエストコード
+     */
+    fun push(fragment: BaseFragment, requestCode: RequestCode) {
+        fragment.setTargetFragment(current(), requestCode.ordinal)
+        push(fragment)
+    }
+
+    /**
      * FragmentのPop遷移
      *
      * @param popCount Popする数
@@ -119,6 +135,25 @@ class FragmentController : FragNavController.TransactionListener, FragNavControl
             Log.e(className(), "Fragment遷移エラー : $e")
             false
         }
+    }
+
+    /**
+     * FragmentのPop遷移（前の画面にデータを結果を通知）
+     * <p>
+     * BaseFragmentのonFragmentResultで結果を受け取ります
+     * </p>
+     *
+     * @param resultCode 結果コード
+     * @param data 結果データ
+     * @return Boolean 遷移したかどうか
+     */
+    fun pop(resultCode: Int, data: Intent? = null): Boolean {
+        val currentFragment = current()
+        val targetFragment = currentFragment?.targetFragment as? BaseFragment
+        if (currentFragment != null && targetFragment != null) {
+            targetFragment.onFragmentResult(currentFragment.targetRequestCode, resultCode, data)
+        }
+        return pop(1)
     }
 
     /**

@@ -7,10 +7,15 @@ package com.syousa1982.todo4android.model.constant
  * 重複すると思わぬ誤作動を起こしかけないので、enumでユニークにしておく
  * </p>
  */
-enum class RequestCode{
+enum class RequestCode {
 
     /**
      * ネットワークエラー
      */
     NETWORK_ERROR,
+
+    /**
+     * タスク追加
+     */
+    TASK_ADDED
 }
