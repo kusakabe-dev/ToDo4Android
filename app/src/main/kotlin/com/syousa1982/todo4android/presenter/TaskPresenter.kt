@@ -24,7 +24,7 @@ class TaskPresenter(private val viewable: TaskViewable,
     fun fetchTasks() {
         repositoryStreamTasks.add(taskRepository.fetchTasks()
                 .toObservable()
-                .map { it.map { TaskListViewModel().apply { task = it } } }
+                .map { it.sortedBy { it.id }.map { TaskListViewModel().apply { task = it } } }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
