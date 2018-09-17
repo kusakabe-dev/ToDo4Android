@@ -29,7 +29,7 @@ class TaskPresenter(private val viewable: TaskViewable,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     viewable.onBindTasks(it)
-                },{
+                }, {
                     Log.e(className(), "Taskを取得できません : $it")
                 })
         )
