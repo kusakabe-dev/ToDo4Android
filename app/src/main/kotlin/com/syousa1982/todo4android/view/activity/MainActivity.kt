@@ -7,6 +7,8 @@ import android.os.Bundle
 import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.ActivityMainBinding
 import com.syousa1982.todo4android.extension.clear
+import com.syousa1982.todo4android.extension.pop
+import com.syousa1982.todo4android.view.fragment.AddTaskFragment
 import com.syousa1982.todo4android.view.fragment.BaseFragment
 import com.syousa1982.todo4android.view.fragment.TaskFragment
 
@@ -46,7 +48,12 @@ class MainActivity : BaseActivity() {
         binding.toolbar.clear()
         when (fragment) {
             is TaskFragment -> {
-                binding.toolbar.title = "Todo list"
+                binding.toolbar.title = "タスク一覧"
+            }
+            is AddTaskFragment -> {
+                binding.toolbar.title = "タスク追加"
+                binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+                binding.toolbar.setNavigationOnClickListener { pop() }
             }
         }
     }

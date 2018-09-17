@@ -9,9 +9,12 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTaskBinding
 import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import com.syousa1982.todo4android.extension.application
+import com.syousa1982.todo4android.extension.pauseClickTimer
+import com.syousa1982.todo4android.extension.push
 import com.syousa1982.todo4android.presenter.TaskPresenter
 import com.syousa1982.todo4android.presenter.Viewable.TaskViewable
 import com.syousa1982.todo4android.view.adapter.TaskRecyclerViewAdapter
@@ -23,7 +26,7 @@ import com.syousa1982.todo4android.viewmodel.fragment.TaskViewModel
  * タスク一覧 [Fragment] subclass.
  *
  */
-class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnItemListener {
+class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnItemListener, View.OnClickListener {
 
     /**
      * バインディングインスタンス
@@ -53,6 +56,7 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.taskList.adapter = adapter
+        binding.addButton.setOnClickListener(this)
         return binding.root
     }
 
@@ -60,7 +64,9 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(TaskViewModel::class.java)
         binding.viewModel = viewModel
-        presenter.fetchTasks()
+        if (!isExistData()) {
+            presenter.fetchTasks()
+        }
     }
 
     override fun onDestroyView() {
@@ -85,13 +91,29 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
                 .show()
     }
 
+    override fun onClick(v: View?) {
+        v?.pauseClickTimer()
+        when (v?.id) {
+            R.id.add_button -> push(AddTaskFragment.newInstance())
+        }
+    }
+
     override fun onClickTaskCheck(binding: FragmentTaskListBinding, checked: Boolean) {
         binding.viewModel?.recreateByParam(checked)?.let {
             presenter.updateTask(it)
         }
     }
 
+    /**
+     * 必要なデータがあるか判断
+     *
+     * @return Boolean
+     */
+    private fun isExistData(): Boolean {
+        return adapter.items.isNotEmpty()
+    }
+
     companion object {
-        fun newInstance() : TaskFragment = TaskFragment()
+        fun newInstance(): TaskFragment = TaskFragment()
     }
 }

@@ -21,5 +21,8 @@ class AddTaskFragment : BaseFragment() {
         return binding.root
     }
 
+    companion object {
+        fun newInstance(): AddTaskFragment = AddTaskFragment()
+    }
 
 }
