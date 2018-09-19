@@ -2,7 +2,7 @@ package com.syousa1982.todo4android.presenter.Viewable
 
 import com.syousa1982.todo4android.viewmodel.fragment.TaskListViewModel
 
-interface TaskViewable {
+interface TaskViewable : ProgressViewable {
 
     /**
      * タスクリストをViewにバインド

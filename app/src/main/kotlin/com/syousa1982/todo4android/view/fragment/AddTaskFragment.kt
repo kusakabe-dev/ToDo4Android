@@ -58,6 +58,14 @@ class AddTaskFragment : BaseFragment(), AddTaskViewable, View.OnClickListener {
         binding.viewModel = viewModel
     }
 
+    override fun showProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun dismissProgress() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun onSuccessAddTask() {
         // Todo: リソース管理
         AlertDialog.Builder(requireContext())

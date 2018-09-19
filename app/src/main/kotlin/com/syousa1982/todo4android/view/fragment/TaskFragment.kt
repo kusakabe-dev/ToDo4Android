@@ -14,9 +14,7 @@ import android.view.ViewGroup
 import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTaskBinding
 import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
-import com.syousa1982.todo4android.extension.application
-import com.syousa1982.todo4android.extension.pauseClickTimer
-import com.syousa1982.todo4android.extension.push
+import com.syousa1982.todo4android.extension.*
 import com.syousa1982.todo4android.model.constant.RequestCode
 import com.syousa1982.todo4android.presenter.TaskPresenter
 import com.syousa1982.todo4android.presenter.Viewable.TaskViewable
@@ -90,6 +88,14 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
     override fun onDestroyView() {
         presenter.onDestroy()
         super.onDestroyView()
+    }
+
+    override fun showProgress() {
+        showScreenProgress()
+    }
+
+    override fun dismissProgress() {
+        dismissScreenProgress()
     }
 
     override fun onBindTasks(viewModels: List<TaskListViewModel>) {
