@@ -77,3 +77,13 @@ fun Fragment.finishActivity(resultCode: Int = Activity.RESULT_OK, data: Intent? 
     activity.setResult(resultCode, data)
     activity.finish()
 }
+
+/**
+ * 画面全体のProgressBarを表示
+ */
+fun Fragment.showScreenProgress() = baseActivity()?.showScreenProgress()
+
+/**
+ * 画面全体のProgressBarを非表示
+ */
+fun Fragment.dismissScreenProgress() = baseActivity()?.dismissScreenProgress()
