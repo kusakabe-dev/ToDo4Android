@@ -34,6 +34,16 @@ class MainActivity : BaseActivity() {
         setToolbarFromFragment(fragment)
     }
 
+    override fun showScreenProgress() {
+        super.showScreenProgress()
+        binding.loading = true
+    }
+
+    override fun dismissScreenProgress() {
+        super.dismissScreenProgress()
+        binding.loading = false
+    }
+
     /**
      * FragmentからToolbarを設定
      *
