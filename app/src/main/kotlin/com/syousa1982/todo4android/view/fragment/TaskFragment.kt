@@ -76,11 +76,11 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
         super.onFragmentResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             when (RequestCode.values()[requestCode]) {
-                RequestCode.TASK_ADDED -> {
-                    presenter.fetchTasks()
-                }
-                else -> {
-                    // ignore
+                RequestCode.TASK_ADDED -> presenter.fetchTasks()
+                RequestCode.NETWORK_ERROR -> {
+                    if (!isExistData()) {
+                        presenter.fetchTasks()
+                    }
                 }
             }
         }
