@@ -85,8 +85,14 @@ abstract class BaseActivity : AppCompatActivity(), FragmentController.RootFragme
      */
     open fun onNetworkDisconnected() {
         Log.d(className(), "ネットワークが切断されました")
+        if (this is NetworkErrorActivity) {
+            Log.e(className(), "すでにネットワークエラー画面が開いています")
+            return
+        }
         // Fragmentに通知
         fragmentController.current()?.onNetworkDisconnected()
+        // ネットワークエラー画面を開く
+        startActivityForResult(NetworkErrorActivity.newIntent(this), RequestCode.NETWORK_ERROR.ordinal)
     }
 
     /**
