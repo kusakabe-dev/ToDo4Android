@@ -1,5 +1,6 @@
 package com.syousa1982.todo4android.extension
 
+import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
 import com.syousa1982.todo4android.TodoApplication
@@ -64,3 +65,15 @@ fun Fragment.pop(popCount: Int = 1): Boolean? = baseActivity()?.pop(popCount)
  * @return Boolean 遷移したかどうか
  */
 fun Fragment.pop(resultCode: Int, data: Intent? = null): Boolean? = baseActivity()?.pop(resultCode, data)
+
+/**
+ * FragmentからActivityを閉じる
+ *
+ * @param resultCode 結果値
+ * @param data onActivityResultで受け取る、遷移元へ通知するデータ
+ */
+fun Fragment.finishActivity(resultCode: Int = Activity.RESULT_OK, data: Intent? = null) {
+    val activity = activity ?: return
+    activity.setResult(resultCode, data)
+    activity.finish()
+}
