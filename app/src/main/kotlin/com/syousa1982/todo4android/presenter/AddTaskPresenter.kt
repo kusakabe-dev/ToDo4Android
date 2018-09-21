@@ -23,6 +23,8 @@ class AddTaskPresenter(private val viewable: AddTaskViewable,
         repositoryStreamTasks.add(taskRepository.addTasks(task)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewable.showProgress() }
+                .doFinally { viewable.dismissProgress() }
                 .subscribe({
                     viewable.onSuccessAddTask()
                     Log.d(className(), "追加成功 : $it")

@@ -6,6 +6,9 @@
 
     <data>
 
+        <variable
+                name="loading"
+                type="Boolean"/>
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -37,6 +40,10 @@
                         android:id="@+id/container"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"/>
+
+                <include
+                        layout="@layout/view_progress"
+                        app:loading="@{safeUnbox(loading)}"/>
 
             </FrameLayout>
 

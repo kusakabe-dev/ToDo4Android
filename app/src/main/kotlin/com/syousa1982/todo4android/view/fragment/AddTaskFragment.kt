@@ -12,9 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentAddTaskBinding
-import com.syousa1982.todo4android.extension.application
-import com.syousa1982.todo4android.extension.pauseClickTimer
-import com.syousa1982.todo4android.extension.pop
+import com.syousa1982.todo4android.extension.*
 import com.syousa1982.todo4android.presenter.AddTaskPresenter
 import com.syousa1982.todo4android.presenter.Viewable.AddTaskViewable
 import com.syousa1982.todo4android.viewmodel.fragment.AddTaskViewModel
@@ -56,6 +54,16 @@ class AddTaskFragment : BaseFragment(), AddTaskViewable, View.OnClickListener {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity()).get(AddTaskViewModel::class.java)
         binding.viewModel = viewModel
+    }
+
+    override fun showProgress() {
+        binding.progressBar.toVisible()
+        viewModel.observer.inProgress = true
+    }
+
+    override fun dismissProgress() {
+        binding.progressBar.toGone()
+        viewModel.observer.inProgress = false
     }
 
     override fun onSuccessAddTask() {

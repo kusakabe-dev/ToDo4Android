@@ -107,4 +107,24 @@ abstract class BaseActivity : AppCompatActivity(), FragmentController.RootFragme
         fragmentController.current()?.onNetworkReconnected()
     }
 
+    /**
+     * 画面全体のProgressBarを表示
+     * <p>
+     * オーバーライドして使用する
+     * </p>
+     */
+    open fun showScreenProgress() {
+        Log.d(className(), "showScreenProgress")
+    }
+
+    /**
+     * 画面全体のProgressBarを非表示
+     * <p>
+     * オーバーライドして使用する
+     * </p>
+     */
+    open fun dismissScreenProgress() {
+        Log.d(className(), "dismissScreenProgress")
+    }
+
 }

@@ -27,6 +27,8 @@ class TaskPresenter(private val viewable: TaskViewable,
                 .map { it.sortedBy { it.id }.map { TaskListViewModel().apply { task = it } } }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewable.showProgress() }
+                .doFinally { viewable.dismissProgress() }
                 .subscribe({
                     viewable.onBindTasks(it)
                 }, {

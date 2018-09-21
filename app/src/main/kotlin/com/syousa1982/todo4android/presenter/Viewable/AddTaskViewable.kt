@@ -1,6 +1,6 @@
 package com.syousa1982.todo4android.presenter.Viewable
 
-interface AddTaskViewable {
+interface AddTaskViewable : ProgressViewable {
 
     /**
      * タスク追加成功時の処理
