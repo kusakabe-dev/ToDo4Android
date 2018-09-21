@@ -76,9 +76,7 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
             when (RequestCode.values()[requestCode]) {
                 RequestCode.TASK_ADDED -> presenter.fetchTasks()
                 RequestCode.NETWORK_ERROR -> {
-                    if (!isExistData()) {
-                        presenter.fetchTasks()
-                    }
+                    if (!isExistData()) presenter.fetchTasks()
                 }
             }
         }
@@ -126,6 +124,10 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
         binding.viewModel?.recreateByParam(checked)?.let {
             presenter.updateTask(it)
         }
+    }
+
+    override fun onClickTaskName(binding: FragmentTaskListBinding) {
+        push(EditTaskFragment.newInstance(), RequestCode.TASK_EDIT)
     }
 
     /**
