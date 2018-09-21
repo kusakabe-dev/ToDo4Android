@@ -47,6 +47,17 @@ class AddTaskViewModel : BaseViewModel() {
             }
 
         /**
+         * 通信中
+         */
+        @Bindable
+        var inProgress: Boolean = false
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.inProgress)
+                notifyPropertyChanged(BR.enableAddButton)
+            }
+
+        /**
          * 追加ボタンの活性状態
          */
         @Bindable
@@ -56,7 +67,7 @@ class AddTaskViewModel : BaseViewModel() {
                 notifyPropertyChanged(BR.enableAddButton)
             }
             get() {
-                return name.isNotEmpty()
+                return name.isNotEmpty() && !inProgress
             }
     }
 }
