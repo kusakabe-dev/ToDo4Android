@@ -32,3 +32,18 @@ fun View.pauseClickTimer(delayMillis: Long = 500) {
     isClickable = false
     Handler().postDelayed({ isClickable = true }, delayMillis)
 }
+
+
+/**
+ * VISIBLE処理
+ */
+fun View.toVisible() {
+    visibility = View.VISIBLE
+}
+
+/**
+ * GONE処理
+ */
+fun View.toGone() {
+    visibility = View.GONE
+}
