@@ -6,12 +6,17 @@ package com.syousa1982.todo4android.presenter.Viewable
 interface EditTaskViewable : ProgressViewable {
 
     /**
+     * タスク取得時の処理
+     */
+    fun onBindTask()
+
+    /**
      * タスク編集成功時の処理
      */
-    fun onSuccessEditTask()
+    fun onSuccessUpdateTask()
 
     /**
      * タスク編集失敗時の処理
      */
-    fun onFailureEditTask()
+    fun onFailureUpdateTask()
 }
