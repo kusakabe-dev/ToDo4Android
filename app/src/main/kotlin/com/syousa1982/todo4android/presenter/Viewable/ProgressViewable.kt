@@ -1,5 +1,8 @@
 package com.syousa1982.todo4android.presenter.Viewable
 
+/**
+ * プログレス表示 Viewインタフェース
+ */
 interface ProgressViewable {
 
     /**
