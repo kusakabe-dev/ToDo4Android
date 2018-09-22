@@ -75,6 +75,7 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
         if (resultCode == RESULT_OK) {
             when (RequestCode.values()[requestCode]) {
                 RequestCode.TASK_ADDED -> presenter.fetchTasks()
+                RequestCode.TASK_EDIT -> presenter.fetchTasks()
                 RequestCode.NETWORK_ERROR -> {
                     if (!isExistData()) presenter.fetchTasks()
                 }
@@ -127,7 +128,9 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
     }
 
     override fun onClickTaskName(binding: FragmentTaskListBinding) {
-        push(EditTaskFragment.newInstance(), RequestCode.TASK_EDIT)
+        binding.viewModel?.task?.let {
+            push(EditTaskFragment.newInstance(it.id), RequestCode.TASK_EDIT)
+        }
     }
 
     /**
