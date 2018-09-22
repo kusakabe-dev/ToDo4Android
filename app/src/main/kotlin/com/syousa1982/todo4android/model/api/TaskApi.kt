@@ -17,7 +17,7 @@ interface TaskApi {
     /**
      * タスク一覧を取得
      *
-     * @return
+     * @return タスク一覧レスポンス
      */
     @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @GET("tasks")
@@ -26,7 +26,8 @@ interface TaskApi {
     /**
      * タスクを取得
      *
-     * @return
+     * @param id タスクID
+     * @return タスクレスポンス
      */
     @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @GET("tasks/{id}")
@@ -34,6 +35,9 @@ interface TaskApi {
 
     /**
      * タスクを登録
+     *
+     * @param taskRequest タスクリクエスト
+     * @return 結果メッセージ
      */
     @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @POST("tasks")
@@ -41,6 +45,9 @@ interface TaskApi {
 
     /**
      * タスクを更新
+     *
+     * @param id タスクID
+     * @return 結果メッセージ
      */
     @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @PATCH("tasks/{id}")
