@@ -12,9 +12,16 @@ import io.reactivex.Single
 interface ITaskRepository {
 
     /**
-     * タスクを取得
+     * タスク一覧を取得
      */
     fun fetchTasks(): Single<List<Task>>
+
+    /**
+     * タスクを取得
+     *
+     * @param id タスクID
+     */
+    fun fetchTask(id: String): Single<Task>
 
     /**
      * タスクを登録
@@ -42,6 +49,20 @@ class TaskRepository(private val api: TaskApi) : ITaskRepository {
             api.fetchTasks()
                     .map {
                         it.items
+                    }
+                    .subscribe({
+                        subscriber.onSuccess(it)
+                    }, {
+                        subscriber.onError(it)
+                    })
+        }
+    }
+
+    override fun fetchTask(id: String): Single<Task> {
+        return Single.create { subscriber ->
+            api.fetchTask(id)
+                    .map {
+                        it.item
                     }
                     .subscribe({
                         subscriber.onSuccess(it)
