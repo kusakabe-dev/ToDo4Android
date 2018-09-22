@@ -1,5 +1,7 @@
 package com.syousa1982.todo4android.presenter.Viewable
 
+import com.syousa1982.todo4android.model.entity.Task
+
 /**
  * タスク編集Viewインタフェース
  */
@@ -8,7 +10,7 @@ interface EditTaskViewable : ProgressViewable {
     /**
      * タスク取得時の処理
      */
-    fun onBindTask()
+    fun onBindTask(task: Task)
 
     /**
      * タスク編集成功時の処理
