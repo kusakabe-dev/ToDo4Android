@@ -6,6 +6,9 @@ import com.syousa1982.todo4android.BR
 import com.syousa1982.todo4android.model.entity.Task
 import com.syousa1982.todo4android.viewmodel.BaseViewModel
 
+/**
+ * タスク追加ViewModel
+ */
 class AddTaskViewModel : BaseViewModel() {
 
     val observer = Observer()
