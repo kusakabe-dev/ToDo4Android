@@ -2,6 +2,9 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
+        <variable name="viewModel"
+                  type="com.syousa1982.todo4android.viewmodel.fragment.EditTaskViewModel"/>
     </data>
 
     <LinearLayout
@@ -32,7 +35,7 @@
                     android:imeOptions="actionNext"
                     android:inputType="text"
                     android:maxLines="1"
-                    android:text=""/>
+                    android:text="@={viewModel.observer.name}"/>
 
         </android.support.design.widget.TextInputLayout>
 
@@ -44,7 +47,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:enabled="true"
+                android:enabled="@{viewModel.observer.enableEditButton}"
                 android:text="タスク編集"/>
 
     </LinearLayout>
