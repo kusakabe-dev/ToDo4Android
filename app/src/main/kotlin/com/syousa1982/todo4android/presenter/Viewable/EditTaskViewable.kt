@@ -5,7 +5,7 @@ import com.syousa1982.todo4android.model.entity.Task
 /**
  * タスク編集Viewインタフェース
  */
-interface EditTaskViewable : ProgressViewable {
+interface EditTaskViewable : ProgressViewable, SendProgressViewable {
 
     /**
      * タスク取得時の処理
