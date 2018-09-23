@@ -62,9 +62,13 @@ class EditTaskFragment : BaseFragment(), EditTaskViewable, View.OnClickListener 
         }
     }
 
+    override fun onStop() {
+        hideKeyboard()
+        super.onStop()
+    }
+
     override fun onDestroyView() {
         presenter.onDestroy()
-        hideKeyboard()
         super.onDestroyView()
     }
 

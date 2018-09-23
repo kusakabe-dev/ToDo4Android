@@ -57,9 +57,14 @@ class AddTaskFragment : BaseFragment(), AddTaskViewable, View.OnClickListener {
         binding.viewModel = viewModel
     }
 
+    override fun onStop() {
+        hideKeyboard()
+        super.onStop()
+    }
+
     override fun onDestroy() {
         presenter.onDestroy()
-        hideKeyboard()
+        viewModel.clear()
         super.onDestroy()
     }
 
