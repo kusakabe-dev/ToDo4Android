@@ -37,6 +37,12 @@ interface ITaskRepository {
      */
     fun updateTasks(task: Task): Single<MessageResponse>
 
+    /**
+     * タスクを削除
+     *
+     * @param id タスクID
+     */
+    fun removeTasks(id: String): Single<MessageResponse>
 }
 
 /**
@@ -78,5 +84,9 @@ class TaskRepository(private val api: TaskApi) : ITaskRepository {
 
     override fun updateTasks(task: Task): Single<MessageResponse> {
         return api.updateTasks(task.id, Request(task))
+    }
+
+    override fun removeTasks(id: String): Single<MessageResponse> {
+        return api.removeTasks(id)
     }
 }

@@ -18,4 +18,9 @@ interface TaskViewable : ProgressViewable {
      * タスク更新失敗時の処理
      */
     fun onFailureUpdateTask()
+
+    /**
+     * タスク削除成功時の処理
+     */
+    fun onSuccessRemoveTask(position: Int)
 }

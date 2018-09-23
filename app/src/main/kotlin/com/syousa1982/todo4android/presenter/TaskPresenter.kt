@@ -55,6 +55,26 @@ class TaskPresenter(private val viewable: TaskViewable,
         )
     }
 
+    /**
+     * タスクを削除
+     */
+    fun removeTask(viewModel: TaskListViewModel, position: Int) {
+        viewModel.task?.let {
+            repositoryStreamTasks.add(taskRepository.removeTasks(it.id)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        Log.d(className(), "削除成功 : $it")
+                        viewable.onSuccessRemoveTask(position)
+                    }, {
+                        Log.e(className(), "削除失敗 : $it")
+                        viewable.onFailureUpdateTask()
+                    })
+            )
+        }
+
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         repositoryStreamTasks.clear()

@@ -52,4 +52,14 @@ interface TaskApi {
     @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
     @PATCH("tasks/{id}")
     fun updateTasks(@Path("id") id: String, @Body taskRequest: Request<Task>): Single<MessageResponse>
+
+    /**
+     * タスクを削除
+     *
+     * @param id タスクID
+     * @return 結果メッセージ
+     */
+    @Headers("x-api-key: ${BuildConfig.OPEN_TASK_API_KEY}")
+    @DELETE("tasks/{id}")
+    fun removeTasks(@Path("id") id: String): Single<MessageResponse>
 }
