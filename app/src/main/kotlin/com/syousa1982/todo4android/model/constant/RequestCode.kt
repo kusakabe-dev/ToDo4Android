@@ -17,5 +17,10 @@ enum class RequestCode {
     /**
      * タスク追加
      */
-    TASK_ADDED
+    TASK_ADDED,
+
+    /**
+     * タスク編集
+     */
+    TASK_EDIT
 }

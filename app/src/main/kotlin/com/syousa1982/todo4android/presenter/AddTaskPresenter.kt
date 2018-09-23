@@ -10,6 +10,7 @@ import io.reactivex.schedulers.Schedulers
 
 /**
  * タスク追加Presenter
+ *
  * @param viewable AddTaskViewable
  * @param taskRepository ITaskRepository
  */

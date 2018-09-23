@@ -1,17 +1,18 @@
 package com.syousa1982.todo4android.presenter.Viewable
 
+
 /**
- * プログレス表示 Viewインタフェース
+ * 追加または更新時のプログレス表示
  */
-interface ProgressViewable {
+interface SendProgressViewable {
 
     /**
      * プログレス表示
      */
-    fun showProgress()
+    fun showSendProgress()
 
     /**
      * プログレス非表示
      */
-    fun dismissProgress()
+    fun dismissSendProgress()
 }

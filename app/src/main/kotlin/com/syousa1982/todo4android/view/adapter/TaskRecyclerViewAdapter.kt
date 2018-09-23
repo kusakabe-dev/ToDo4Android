@@ -55,8 +55,12 @@ class TaskRecyclerViewAdapter : BaseRecyclerViewAdapter<TaskListViewModel>() {
             binding.viewModel = item
             binding.taskCheck.setOnClickListener {
                 it.pauseClickTimer()
-                val check = binding.taskCheck.isChecked()
+                val check = binding.taskCheck.isChecked
                 onItemListener?.onClickTaskCheck(binding, check)
+            }
+            binding.taskName.setOnClickListener {
+                it.pauseClickTimer()
+                onItemListener?.onClickTaskName(binding)
             }
         }
     }
@@ -72,5 +76,10 @@ class TaskRecyclerViewAdapter : BaseRecyclerViewAdapter<TaskListViewModel>() {
          * @param binding FragmentTaskListBinding
          */
         fun onClickTaskCheck(binding: FragmentTaskListBinding, checked:Boolean)
+
+        /**
+         * タスク名をクリック
+         */
+        fun onClickTaskName(binding: FragmentTaskListBinding)
     }
 }
