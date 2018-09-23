@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentEditTaskBinding
 import com.syousa1982.todo4android.extension.*
@@ -63,6 +64,7 @@ class EditTaskFragment : BaseFragment(), EditTaskViewable, View.OnClickListener 
 
     override fun onDestroyView() {
         presenter.onDestroy()
+        hideKeyboard()
         super.onDestroyView()
     }
 
@@ -118,6 +120,16 @@ class EditTaskFragment : BaseFragment(), EditTaskViewable, View.OnClickListener 
                     presenter.updateTask(it)
                 }
             }
+        }
+    }
+
+    /**
+     * 画面遷移時にソフトキーボードを非表示
+     */
+    private fun hideKeyboard() {
+        activity?.currentFocus?.let {
+            val manager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 
