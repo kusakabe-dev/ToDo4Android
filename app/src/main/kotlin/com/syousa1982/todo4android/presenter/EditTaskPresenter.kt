@@ -45,7 +45,10 @@ class EditTaskPresenter(private val viewable: EditTaskViewable,
         repositoryStreamTasks.add(taskRepository.updateTasks(task)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe { viewable.showSendProgress() }
+                .doFinally { viewable.dismissSendProgress() }
                 .subscribe({
+                    viewable.onSuccessUpdateTask()
                     Log.d(className(), "更新成功 : $it")
                 }, {
                     viewable.onFailureUpdateTask()
