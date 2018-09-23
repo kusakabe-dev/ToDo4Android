@@ -6,6 +6,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +18,7 @@ import com.syousa1982.todo4android.extension.*
 import com.syousa1982.todo4android.presenter.TaskPresenter
 import com.syousa1982.todo4android.presenter.Viewable.TaskViewable
 import com.syousa1982.todo4android.view.adapter.TaskRecyclerViewAdapter
+import com.syousa1982.todo4android.view.custom.SwipeToDeleteCallback
 import com.syousa1982.todo4android.viewmodel.fragment.TaskListViewModel
 import com.syousa1982.todo4android.viewmodel.fragment.TaskViewModel
 
@@ -54,6 +57,20 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.taskList.adapter = adapter
+
+        val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
+                val adapter = binding.taskList.adapter as TaskRecyclerViewAdapter
+                viewHolder?.let {
+                    val item = adapter.items[it.adapterPosition]
+                    presenter.removeTask(item, it.adapterPosition)
+                }
+            }
+        }
+
+        val itemTouchHelper = ItemTouchHelper(swipeHandler)
+        itemTouchHelper.attachToRecyclerView(binding.taskList)
+
         binding.addButton.setOnClickListener(this)
         return binding.root
     }
@@ -95,6 +112,12 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
                 }
                 .show()
     }
+
+    override fun onSuccessRemoveTask(position: Int) {
+        val adapter = binding.taskList.adapter as TaskRecyclerViewAdapter
+        adapter.removeItem(position)
+    }
+
 
     override fun onClick(v: View?) {
         v?.pauseClickTimer()

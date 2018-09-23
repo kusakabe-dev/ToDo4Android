@@ -26,6 +26,15 @@ abstract class BaseRecyclerViewAdapter<T : BaseListViewModel> : RecyclerView.Ada
         notifyDataSetChanged()
     }
 
+    /**
+     * 指定ポジションのアイテムを削除
+     *
+     * @param position Int
+     */
+    open fun removeItem(position: Int) {
+        this.items.removeAt(position)
+        notifyDataSetChanged()
+    }
 
     /**
      * 共通 RecyclerView ViewHolder
