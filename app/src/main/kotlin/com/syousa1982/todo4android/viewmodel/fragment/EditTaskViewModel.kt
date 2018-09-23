@@ -18,25 +18,45 @@ class EditTaskViewModel : BaseViewModel() {
      *
      * @return Task
      */
-    fun create(): Task {
-        return Task(
-                "",
-                observer.name,
-                false
-        )
+    fun recreate(): Task? {
+        observer.task?.let {
+            return Task(
+                    it.id,
+                    observer.name,
+                    it.isDone
+            )
+        }
+        return null
     }
 
     /**
      * ViewModelの中身をクリア
      */
     fun clear() {
+        observer.task = null
         observer.name = ""
+    }
+
+    /**
+     * タスクデータを各プロパティに代入
+     */
+    fun setTask(task: Task) {
+        observer.task = task
+        observer.name = task.name
     }
 
     /**
      * オブザーバー
      */
     inner class Observer : BaseObservable() {
+
+        @Bindable
+        var task: Task? = null
+            set(value) {
+                field = value
+                notifyPropertyChanged(BR.name)
+                notifyPropertyChanged(BR.enableEditButton)
+            }
 
         /**
          * タスク名
