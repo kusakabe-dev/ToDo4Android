@@ -143,6 +143,12 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
     }
 
     companion object {
+
+        /**
+         * インスタンス生成
+         *
+         * @return EditTaskFragment
+         */
         fun newInstance(): TaskFragment = TaskFragment()
     }
 }

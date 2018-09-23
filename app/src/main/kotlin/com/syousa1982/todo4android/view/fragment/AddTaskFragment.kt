@@ -99,6 +99,12 @@ class AddTaskFragment : BaseFragment(), AddTaskViewable, View.OnClickListener {
     }
 
     companion object {
+
+        /**
+         * インスタンス生成
+         *
+         * @return EditTaskFragment
+         */
         fun newInstance(): AddTaskFragment = AddTaskFragment()
     }
 
