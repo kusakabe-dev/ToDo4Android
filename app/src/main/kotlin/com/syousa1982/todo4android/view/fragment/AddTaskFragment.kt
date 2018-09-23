@@ -56,12 +56,12 @@ class AddTaskFragment : BaseFragment(), AddTaskViewable, View.OnClickListener {
         binding.viewModel = viewModel
     }
 
-    override fun showProgress() {
+    override fun showSendProgress() {
         binding.progressBar.toVisible()
         viewModel.observer.inProgress = true
     }
 
-    override fun dismissProgress() {
+    override fun dismissSendProgress() {
         binding.progressBar.toGone()
         viewModel.observer.inProgress = false
     }
