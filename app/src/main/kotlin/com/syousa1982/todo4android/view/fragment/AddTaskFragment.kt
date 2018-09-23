@@ -56,6 +56,11 @@ class AddTaskFragment : BaseFragment(), AddTaskViewable, View.OnClickListener {
         binding.viewModel = viewModel
     }
 
+    override fun onDestroy() {
+        presenter.onDestroy()
+        super.onDestroy()
+    }
+
     override fun showSendProgress() {
         binding.progressBar.toVisible()
         viewModel.observer.inProgress = true
