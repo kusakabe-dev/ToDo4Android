@@ -12,15 +12,5 @@ enum class RequestCode {
     /**
      * ネットワークエラー
      */
-    NETWORK_ERROR,
-
-    /**
-     * タスク追加
-     */
-    TASK_ADDED,
-
-    /**
-     * タスク編集
-     */
-    TASK_EDIT
+    NETWORK_ERROR
 }

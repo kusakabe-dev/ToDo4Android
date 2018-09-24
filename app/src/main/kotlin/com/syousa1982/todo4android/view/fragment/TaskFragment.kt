@@ -58,6 +58,7 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.taskList.adapter = adapter
 
+        // スワイプ処理
         val swipeHandler = object : SwipeToDeleteCallback(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder?, direction: Int) {
                 val adapter = binding.taskList.adapter as TaskRecyclerViewAdapter
@@ -136,15 +137,6 @@ class TaskFragment : BaseFragment(), TaskViewable, TaskRecyclerViewAdapter.OnIte
         binding.viewModel?.task?.let {
             push(EditTaskFragment.newInstance(it.id))
         }
-    }
-
-    /**
-     * 必要なデータがあるか判断
-     *
-     * @return Boolean
-     */
-    private fun isExistData(): Boolean {
-        return adapter.items.isNotEmpty()
     }
 
     companion object {

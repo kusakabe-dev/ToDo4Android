@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.support.v4.app.Fragment
 import com.syousa1982.todo4android.TodoApplication
-import com.syousa1982.todo4android.model.constant.RequestCode
 import com.syousa1982.todo4android.view.activity.BaseActivity
 import com.syousa1982.todo4android.view.fragment.BaseFragment
 
@@ -34,25 +33,6 @@ fun Fragment.baseActivity(): BaseActivity? = (activity as? BaseActivity)
  */
 fun Fragment.push(fragment: BaseFragment) = baseActivity()?.push(fragment)
 
-
-/**
- * FragmentのPush遷移（前の画面にデータを結果を通知）
- * <p>
- * BaseFragmentのonFragmentResultで結果を受け取ります
- * </p>
- *
- * @param fragment BaseFragment
- * @param requestCode リクエストコード
- */
-fun Fragment.push(fragment: BaseFragment, requestCode: RequestCode) = baseActivity()?.push(fragment, requestCode)
-
-/**
- * FragmentのPop遷移
- *
- * @param popCount Popする数
- * @return Boolean 遷移したかどうか
- */
-fun Fragment.pop(popCount: Int = 1): Boolean? = baseActivity()?.pop(popCount)
 
 /**
  * FragmentのPop遷移（前の画面にデータを結果を通知）
