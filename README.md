@@ -24,9 +24,14 @@
 
 ```
    + com.syousa1982.todo4android
+   ++ extension
+   ++ helper
    ++ manager
    ++ model
-   +++ api
+   +++ api WebApi 定義インタフェース
+   ++++ request リクエストパラメータ定義クラス
+   ++++ response レスポンス定義クラス
+   +++ constant プロジェクト内共通で使う定数
    +++ entity
    +++ repository API・Modelを統括（アプリケーションクラスで保持する管理クラス）
    ++ presenter
