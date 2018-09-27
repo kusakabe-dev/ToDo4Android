@@ -13,36 +13,6 @@
 
 ## 設計指針
 
-### 概要
-
-* MVP+DataBinding設計で行う。
-* Rxの使用はPresenterより下層に制限する。
-
-![mvp_databinding](https://user-images.githubusercontent.com/1960883/44800976-c2985a80-abf2-11e8-9562-e6176bcaca66.png)
-
-### ディレクトリ構成
-
-```
-   + com.syousa1982.todo4android
-   ++ extension
-   ++ helper
-   ++ manager
-   ++ model
-   +++ api WebApi 定義インタフェース
-   ++++ request リクエストパラメータ定義クラス
-   ++++ response レスポンス定義クラス
-   +++ constant プロジェクト内共通で使う定数
-   +++ entity
-   +++ repository API・Modelを統括（アプリケーションクラスで保持する管理クラス）
-   ++ presenter
-   +++ viewable (プレゼンターからViewへイベントを通知するインタフェース)
-   ++ view
-   +++ activity (画面)
-   +++ fragment (画面)
-   +++ adapter (RecyclerViewのAdapter)
-   ++ viewmodel
-   ++ TodoApplication (アプリケーションクラス)
-```
 
 ## サードパーティ
 
