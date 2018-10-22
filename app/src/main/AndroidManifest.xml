@@ -22,7 +22,7 @@
 
         <!-- メイン画面 -->
         <activity
-                android:name=".view.ui.MainActivity"
+                android:name=".presentation.MainActivity"
                 android:launchMode="singleTop"
                 android:screenOrientation="portrait"
                 android:theme="@style/AppTheme.NoActionBar">
