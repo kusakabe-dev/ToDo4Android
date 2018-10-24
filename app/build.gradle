@@ -11,8 +11,8 @@ android {
         applicationId "com.syousa1982.todo4android"
         minSdkVersion 21
         targetSdkVersion 27
-        versionCode 3
-        versionName "1.1"
+        versionCode 1
+        versionName "1.1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         def properties = new Properties()
@@ -77,50 +77,79 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"
-    implementation 'com.android.support:support-v4:27.1.1'
-    annotationProcessor "com.android.databinding:compiler:3.1.4"
-
+    // Language
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // AndroidSupport
-    final ANDROID_SUPPORT_VERSION = "27.1.1"
     implementation "com.android.support.constraint:constraint-layout:1.1.3"
-    implementation "com.android.support:support-v4:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:appcompat-v7:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_VERSION}"
-    implementation "com.android.support:design:${ANDROID_SUPPORT_VERSION}"
-
-    // Android Architecture Components
-    final ANDROID_ARCHITECTURE_COMPONENTS_VERSION = "1.1.1"
-    implementation "android.arch.lifecycle:extensions:${ANDROID_ARCHITECTURE_COMPONENTS_VERSION}"
-
+    implementation "com.android.support:appcompat-v7:$android_support_version"
+    implementation "com.android.support:recyclerview-v7:$android_support_version"
+    implementation "com.android.support:cardview-v7:$android_support_version"
+    implementation "com.android.support:design:$android_support_version"
+    implementation "com.android.support:customtabs:$android_support_version"
+    implementation "com.android.support:support-annotations:$android_support_version"
+    // Architecture
+    kapt "android.arch.lifecycle:compiler:$aac_lifecycle_version"
+    implementation "android.arch.lifecycle:extensions:$aac_lifecycle_version"
+    implementation "android.arch.lifecycle:reactivestreams:$aac_lifecycle_version"
+    kapt "android.arch.persistence.room:compiler:$aac_room_version"
+    implementation "android.arch.persistence.room:runtime:$aac_room_version"
+    implementation "android.arch.persistence.room:rxjava2:$aac_room_version"
+    // SDK
+//    implementation "com.google.firebase:firebase-core:16.0.4"
+//    implementation "com.google.firebase:firebase-messaging:17.3.3"
+//    implementation "com.google.firebase:firebase-auth:16.0.4"
+//    implementation "com.google.firebase:firebase-invites:16.0.4"
+//    implementation "com.google.firebase:firebase-firestore:17.1.1"
+//    implementation "com.google.android.gms:play-services-auth:16.0.1"
+    implementation "com.facebook.android:facebook-login:4.34.0"
+    implementation "com.stripe:stripe-android:8.0.0"
     // NetWork
-    final RETROFIT_VERSION = "2.4.0"
-    final OK_HTTP_VERSION = "3.10.0"
-    implementation "com.squareup.okhttp3:okhttp:${OK_HTTP_VERSION}"
-    implementation "com.squareup.okhttp3:logging-interceptor:${OK_HTTP_VERSION}"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:${RETROFIT_VERSION}"
-    implementation "com.squareup.retrofit2:converter-moshi:${RETROFIT_VERSION}"
-    implementation "com.squareup.retrofit2:retrofit-mock:${RETROFIT_VERSION}"
-    implementation("com.squareup.retrofit2:retrofit:${RETROFIT_VERSION}") {
-        exclude module: 'okhttp'
+    implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
+    implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
+    implementation("com.squareup.retrofit2:retrofit:$retrofit_version") {
+        exclude module: "okhttp"
     }
-
-    // Json Converter
-    final KOTSHI_VERSION = "1.0.4"
-    final MOSHI_VERSION = "1.5.0"
-    kapt "se.ansman.kotshi:compiler:${KOTSHI_VERSION}"
-    implementation "se.ansman.kotshi:api:${KOTSHI_VERSION}"
-    implementation "com.squareup.moshi:moshi:${MOSHI_VERSION}"
-    implementation "com.squareup.moshi:moshi-adapters:${MOSHI_VERSION}"
-
+    // Converter
+    kapt "se.ansman.kotshi:compiler:$kotshi_version"
+    implementation "se.ansman.kotshi:api:$kotshi_version"
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
+    // DI
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-scope:$koin_version"
+    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    // UI
+    kapt "com.github.bumptech.glide:compiler:$glide_version"
+    implementation "com.github.bumptech.glide:glide:$glide_version"
+    implementation "com.xwray:groupie:$groupie_version"
+    implementation "com.xwray:groupie-databinding:$groupie_version"
+    implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
+    implementation "co.lujun:androidtagview:1.1.4"
+    implementation "com.firebaseui:firebase-ui-firestore:4.1.0"
+    implementation "com.ncapdevi:frag-nav:2.4.0"
     // Reactive
     implementation "io.reactivex.rxjava2:rxjava:2.1.13"
     implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
     implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
-
+    // Util
+    kapt "com.github.hotchemi:permissionsdispatcher-processor:$permissions_dispatcher_version"
+    implementation("com.github.hotchemi:permissionsdispatcher:$permissions_dispatcher_version") {
+        exclude module: "support-v13"
+    }
+    // Debug & Log
+    implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
+    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
     // Test
     testImplementation "junit:junit:4.12"
-    testImplementation "com.squareup.okhttp3:mockwebserver:${OK_HTTP_VERSION}"
+    testImplementation "com.squareup.okhttp3:mockwebserver:$ok_http_version"
+    testImplementation "org.robolectric:robolectric:3.8"
     androidTestImplementation "com.android.support.test:runner:1.0.2"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:3.0.2"
 }
+// GoogleServicesプラグインを適用(dependenciesよりも下に設定する)
+//apply plugin: "com.google.gms.google-services"

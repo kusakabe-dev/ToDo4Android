@@ -1,8 +1,31 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    // Kotlinのバージョン(使ってるプラグインのバージョンと合わせること)
+    // Language
     ext.kotlin_version = '1.2.71'
+    // AndroidSupport
+    ext.android_support_version = "27.1.1"
+    // Architecture
+    ext.aac_lifecycle_version = "1.1.1"
+    ext.aac_room_version = "1.1.1"
+    ext.aac_nav_version = "1.0.0-alpha06"
+    // NetWork
+    ext.retrofit_version = "2.4.0"
+    ext.ok_http_version = "3.11.0"
+    // Converter
+    ext.kotshi_version = "1.0.5"
+    ext.moshi_version = "1.7.0"
+    // DI
+    ext.dagger_version = "2.17"
+    ext.koin_version = "1.0.1"
+    // UI
+    ext.glide_version = "4.8.0"
+    ext.groupie_version = "2.1.0"
+    // Util
+    ext.permissions_dispatcher_version = "3.3.1"
+    // Debug & Log
+    ext.leak_canary_version = "1.5.4"
+
     repositories {
         google()
         jcenter()
@@ -16,8 +39,8 @@ buildscript {
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.15"
         // ライブラリのライセンス出力プラグイン
         classpath "com.cookpad.android.licensetools:license-tools-plugin:1.3.0"
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        // GoogleServicesプラグイン
+//        classpath "com.google.gms:google-services:4.0.0"
     }
 }
 
@@ -25,6 +48,10 @@ allprojects {
     repositories {
         google()
         jcenter()
+        // Permission Dispatcher
+        maven {
+            url "http://oss.jfrog.org/artifactory/oss-snapshot-local/"
+        }
     }
 }
 
