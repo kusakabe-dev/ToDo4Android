@@ -1,7 +1,7 @@
 package com.syousa1982.todo4android.presentation
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.syousa1982.todo4android.R
 
 class MainActivity : AppCompatActivity() {
