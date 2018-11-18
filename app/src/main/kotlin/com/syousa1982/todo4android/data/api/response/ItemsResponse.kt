@@ -5,5 +5,5 @@ import se.ansman.kotshi.JsonSerializable
 
 @JsonSerializable
 data class ItemsResponse<T>(
-        @Json(name = "Items") val items: T
+        @Json(name = "Items") val items: List<T>
 )
