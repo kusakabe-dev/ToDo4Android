@@ -20,7 +20,7 @@ buildscript {
     ext.koin_version = "1.0.1"
     // UI
     ext.glide_version = "4.8.0"
-    ext.groupie_version = "2.1.0"
+    ext.groupie_version = "2.2.0"
     // Util
     ext.permissions_dispatcher_version = "3.3.1"
     // Debug & Log
