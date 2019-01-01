@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val frammentTransaction = fragmentManager.beginTransaction()
         frammentTransaction.replace(binding.container.id, TopFragment.newInstance())
+        frammentTransaction.addToBackStack(null)
         frammentTransaction.commit()
     }
 }

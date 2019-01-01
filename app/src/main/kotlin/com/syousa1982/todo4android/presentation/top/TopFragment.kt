@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.syousa1982.todo4android.R
+import com.syousa1982.todo4android.databinding.FragmentTopBinding
+import com.syousa1982.todo4android.util.extention.setOnClickPauseListener
 
 /**
  * A simple [Fragment] subclass.
@@ -15,10 +17,22 @@ import com.syousa1982.todo4android.R
 class TopFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_top, container, false)
+        val binding = FragmentTopBinding.inflate(inflater, container, false)
+        bindInput(binding)
+        return binding.root
     }
 
+    private fun bindInput(binding: FragmentTopBinding) {
+        binding.toSubButton.setOnClickPauseListener {
+            fragmentManager?.let {
+                val fragmentTransaction = it.beginTransaction()
+                // BackStackを設定
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.replace(R.id.container, SubFragment.newInstance())
+                fragmentTransaction.commit()
+            }
+        }
+    }
 
     companion object {
 
