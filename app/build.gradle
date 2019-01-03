@@ -73,6 +73,23 @@ android {
             java.srcDirs += 'src/androidTest/kotlin'
         }
     }
+    // Lintオプションを設定
+    // "./gradlew lint"で実行
+    lintOptions {
+        // Lint設定ファイル
+        lintConfig file("lint-config.xml")
+        // Lint結果出力
+        htmlReport true
+        htmlOutput file("$buildDir/reports/lint-results.html")
+        abortOnError false
+    }
+    // Lintオプションを設定
+    // "./gradlew test"で実行
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
