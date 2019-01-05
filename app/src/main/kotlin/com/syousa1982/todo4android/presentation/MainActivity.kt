@@ -17,10 +17,10 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val fragmentManager = supportFragmentManager
-        val frammentTransaction = fragmentManager.beginTransaction()
-        frammentTransaction.replace(binding.container.id, TopFragment.newInstance())
-        frammentTransaction.addToBackStack(null)
-        frammentTransaction.commit()
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(binding.container.id, TopFragment.newInstance())
+        fragmentTransaction.addToBackStack(null)
+        fragmentTransaction.commit()
     }
 
     override fun onCreateToolbar(fragment: BaseFragment) {
