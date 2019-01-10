@@ -7,6 +7,8 @@ import com.syousa1982.todo4android.databinding.ActivityMainBinding
 import com.syousa1982.todo4android.presentation.top.SubFragment
 import com.syousa1982.todo4android.presentation.top.TopFragment
 import com.syousa1982.todo4android.util.extention.clear
+import com.syousa1982.todo4android.util.extention.pop
+import com.syousa1982.todo4android.util.extention.push
 
 class MainActivity : BaseActivity() {
 
@@ -16,11 +18,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(binding.container.id, TopFragment.newInstance())
-        fragmentTransaction.addToBackStack(null)
-        fragmentTransaction.commit()
+        push(TopFragment.newInstance(), binding.container.id)
     }
 
     override fun onCreateToolbar(fragment: BaseFragment) {
@@ -34,7 +32,7 @@ class MainActivity : BaseActivity() {
                 binding.toolbar.title = "Sub"
                 binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
                 binding.toolbar.setNavigationOnClickListener {
-                    fragment.fragmentManager?.popBackStack()
+                    pop()
                 }
             }
         }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.syousa1982.todo4android.databinding.FragmentSubBinding
 import com.syousa1982.todo4android.presentation.BaseFragment
+import com.syousa1982.todo4android.util.extention.pop
 
 /**
  * A simple [Fragment] subclass.
@@ -32,7 +33,7 @@ class SubFragment : BaseFragment() {
 
     private fun bindInput(binding: FragmentSubBinding) {
         binding.toBackButton.setOnClickListener {
-            fragmentManager?.popBackStack()
+            pop()
         }
     }
 

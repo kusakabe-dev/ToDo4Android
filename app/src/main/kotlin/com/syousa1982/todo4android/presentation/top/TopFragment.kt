@@ -7,9 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTopBinding
 import com.syousa1982.todo4android.presentation.BaseFragment
+import com.syousa1982.todo4android.util.extention.push
 import com.syousa1982.todo4android.util.extention.setOnClickPauseListener
 
 /**
@@ -35,13 +35,7 @@ class TopFragment : BaseFragment() {
 
     private fun bindInput(binding: FragmentTopBinding) {
         binding.toSubButton.setOnClickPauseListener {
-            fragmentManager?.let {
-                val fragmentTransaction = it.beginTransaction()
-                // BackStackを設定
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.replace(R.id.container, SubFragment.newInstance())
-                fragmentTransaction.commit()
-            }
+            push(SubFragment.newInstance())
         }
     }
 
