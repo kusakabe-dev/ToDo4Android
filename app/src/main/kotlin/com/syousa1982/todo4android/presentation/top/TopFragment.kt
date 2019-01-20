@@ -7,9 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTopBinding
 import com.syousa1982.todo4android.presentation.BaseFragment
-import com.syousa1982.todo4android.util.extention.push
 import com.syousa1982.todo4android.util.extention.setOnClickPauseListener
 
 /**
@@ -35,7 +36,7 @@ class TopFragment : BaseFragment() {
 
     private fun bindInput(binding: FragmentTopBinding) {
         binding.toSubButton.setOnClickPauseListener {
-            push(SubFragment.newInstance())
+            Navigation.findNavController(it).navigate(R.id.action_top_to_sub)
         }
     }
 
