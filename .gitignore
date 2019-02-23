@@ -52,6 +52,7 @@ captures/
 .idea/misc.xml
 .idea/codeStyles/codeStyleConfig.xml
 /.idea/modules.xml
+.idea/navEditor.xml
 
 
 # Google Services (e.g. APIs or Firebase)
