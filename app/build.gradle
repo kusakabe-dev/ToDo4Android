@@ -102,7 +102,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'com.google.android.material:material:1.1.0-alpha03'
     implementation 'androidx.browser:browser:1.0.0'
     implementation 'androidx.annotation:annotation:1.0.1'
     // Architecture
@@ -110,9 +110,9 @@ dependencies {
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
-    kapt 'androidx.room:room-compiler:2.1.0-alpha03'
-    implementation 'androidx.room:room-runtime:2.1.0-alpha03'
-    implementation 'androidx.room:room-rxjava2:2.1.0-alpha03'
+    kapt 'androidx.room:room-compiler:2.1.0-alpha04'
+    implementation 'androidx.room:room-runtime:2.1.0-alpha04'
+    implementation 'androidx.room:room-rxjava2:2.1.0-alpha04'
     implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
     implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
     // NetWork
@@ -138,7 +138,6 @@ dependencies {
     implementation "com.xwray:groupie:$groupie_version"
     implementation "com.xwray:groupie-databinding:$groupie_version"
     implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
-    implementation "co.lujun:androidtagview:1.1.4"
     implementation "com.firebaseui:firebase-ui-firestore:4.1.0"
     implementation "com.ncapdevi:frag-nav:2.4.0"
     // Reactive
