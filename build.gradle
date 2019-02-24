@@ -26,7 +26,7 @@ buildscript {
     // Debug & Log
     ext.leak_canary_version = "1.6.3"
 
-    ext.nav_version = "1.0.0-alpha09"
+    ext.nav_version = "1.0.0-beta02"
 
     repositories {
         google()
@@ -42,7 +42,7 @@ buildscript {
         // ライブラリのライセンス出力プラグイン
         classpath "com.cookpad.android.licensetools:license-tools-plugin:1.3.0"
         // GoogleServicesプラグイン
-//        classpath "com.google.gms:google-services:4.0.0"
+        classpath "com.google.gms:google-services:4.2.0"
     }
 }
 
