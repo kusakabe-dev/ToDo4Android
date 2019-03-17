@@ -7,8 +7,8 @@
 
     <fragment
         android:id="@+id/tasksFragment"
-        android:name="com.syousa1982.todo4android.presentation.tasks.TasksFragment"
+        android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListFragment"
         android:label="fragment_tasks"
-        tools:layout="@layout/fragment_tasks" />
+        tools:layout="@layout/fragment_task_list" />
 
 </navigation>

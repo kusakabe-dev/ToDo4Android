@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.syousa1982.todo4android.databinding.FragmentTasklistBinding
+import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import org.koin.android.viewmodel.ext.android.sharedViewModel
 
 /**
@@ -18,7 +18,7 @@ class TaskListFragment : Fragment() {
     private val viewModel: TaskListViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentTasklistBinding.inflate(inflater, container, false)
+        val binding = FragmentTaskListBinding.inflate(inflater, container, false)
         lifecycle.addObserver(viewModel)
         return binding.root
     }
