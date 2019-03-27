@@ -12,11 +12,11 @@ import com.syousa1982.todo4android.presentation.BaseViewModel
  */
 class TaskListViewModel : BaseViewModel() {
 
-    val taskList = MutableLiveData<Result<List<TaskList>>>()
+    val taskLists = MutableLiveData<Result<List<TaskList>>>()
 
     override fun onResume() {
         super.onResume()
-        taskList.value = Result.success(
+        taskLists.value = Result.success(
                 listOf(
                         TaskList(1, "ToDo", listOf(
                                 Task(1, "ほげ", Task.Status.DONE),
