@@ -98,23 +98,22 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // AndroidSupport
+    implementation "com.google.android.material:material:1.1.0-alpha02"
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha3"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha02'
-    implementation 'androidx.browser:browser:1.0.0'
-    implementation 'androidx.annotation:annotation:1.0.1'
-    // Architecture
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
-    kapt 'androidx.room:room-compiler:2.1.0-alpha04'
-    implementation 'androidx.room:room-runtime:2.1.0-alpha04'
-    implementation 'androidx.room:room-rxjava2:2.1.0-alpha04'
-    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
-    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
+    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.browser:browser:1.0.0"
+    implementation "androidx.annotation:annotation:1.0.2"
+    implementation "androidx.exifinterface:exifinterface:1.0.0"
+    kapt "androidx.lifecycle:lifecycle-compiler:$aac_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$aac_lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$aac_lifecycle_version"
+    kapt "androidx.room:room-compiler:$aac_room_version"
+    implementation "androidx.room:room-runtime:$aac_room_version"
+    implementation "androidx.room:room-rxjava2:$aac_room_version"
+    implementation "android.arch.navigation:navigation-fragment:$aac_nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$aac_nav_version" // use -ktx for Kotlin
     // NetWork
     implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"

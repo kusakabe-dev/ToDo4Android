@@ -3,22 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/topFragment">
+    app:startDestination="@id/tasksFragment">
 
     <fragment
-        android:id="@+id/topFragment"
-        android:name="com.syousa1982.todo4android.presentation.top.TopFragment"
-        android:label="fragment_top">
-
-        <action
-            android:id="@+id/action_top_to_sub"
-            app:destination="@id/subFragment"
-            app:popUpTo="@+id/subFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/subFragment"
-        android:name="com.syousa1982.todo4android.presentation.top.SubFragment"
-        android:label="fragment_sub"
-        tools:layout="@layout/fragment_sub" />
+        android:id="@+id/tasksFragment"
+        android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListFragment"
+        android:label="fragment_tasks"
+        tools:layout="@layout/fragment_task_list" />
 
 </navigation>
