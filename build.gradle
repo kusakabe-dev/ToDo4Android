@@ -7,7 +7,7 @@ buildscript {
     ext.android_support_version = "27.1.1"
     // Architecture
     ext.aac_lifecycle_version = "2.0.0"
-    ext.aac_room_version = "2.1.0-alpha05"
+    ext.aac_room_version = "2.1.0-alpha06"
     ext.aac_nav_version = "1.0.0"
     // NetWork
     ext.retrofit_version = "2.4.0"
