@@ -2,6 +2,7 @@ package com.syousa1982.todo4android.data.db.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
 /**
  * Task Entity
@@ -15,6 +16,7 @@ import androidx.room.ForeignKey
         ))
 )
 data class Task(
+        @PrimaryKey(autoGenerate = true)
         val id: Int,
         val taskListId: Int,
         val name: String,
