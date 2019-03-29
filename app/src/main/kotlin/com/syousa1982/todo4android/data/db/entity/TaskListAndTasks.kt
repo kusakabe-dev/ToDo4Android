@@ -8,7 +8,7 @@ import androidx.room.Relation
  */
 class TaskListAndTasks {
     @Embedded
-    lateinit var task: Task
+    lateinit var taskList: TaskList
 
     @Relation(parentColumn = "id", entityColumn = "taskListId")
     lateinit var tasks: List<Task>
