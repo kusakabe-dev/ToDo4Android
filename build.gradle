@@ -26,6 +26,8 @@ buildscript {
     ext.leak_canary_version = "1.6.3"
     // Spek
     ext.spek_version = "2.0.1"
+    // MockK
+    ext.mockk_version = "1.9.3.kotlin12"
 
     repositories {
         google()

@@ -179,6 +179,8 @@ dependencies {
 
     // spek requires kotlin-reflect, omit when already in classpath
     testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    // MockK
+    testImplementation("io.mockk:mockk:$mockk_version")
 }
 // GoogleServicesプラグインを適用(dependenciesよりも下に設定する)
 //apply plugin: "com.google.gms.google-services"
