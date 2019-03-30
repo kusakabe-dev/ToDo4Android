@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'com.cookpad.android.licensetools'
+apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     compileSdkVersion 28
@@ -86,8 +87,15 @@ android {
     // Lintオプションを設定
     // "./gradlew test"で実行
     testOptions {
-        unitTests {
-            includeAndroidResources = true
+//        unitTests {
+//            includeAndroidResources = true
+//        }
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek2'
+                }
+            }
         }
     }
 }
@@ -107,7 +115,7 @@ configurations {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Language
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // AndroidX
     implementation "com.google.android.material:material:1.1.0-alpha04"
@@ -164,6 +172,13 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.0"
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+
+    // spek
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+
+    // spek requires kotlin-reflect, omit when already in classpath
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 }
 // GoogleServicesプラグインを適用(dependenciesよりも下に設定する)
 //apply plugin: "com.google.gms.google-services"
