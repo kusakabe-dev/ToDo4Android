@@ -4,6 +4,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'com.cookpad.android.licensetools'
+apply plugin: "de.mannodermaus.android-junit5"
 
 android {
     compileSdkVersion 28
@@ -86,19 +87,38 @@ android {
     // Lintオプションを設定
     // "./gradlew test"で実行
     testOptions {
-        unitTests {
-            includeAndroidResources = true
+//        unitTests {
+//            includeAndroidResources = true
+//        }
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek2'
+                }
+            }
         }
     }
 }
 
+kapt {
+    generateStubs = true
+    javacOptions {
+        option("-Xmaxerrs", 5000)
+    }
+}
+
+configurations {
+    all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+}
+
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // Language
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    // AndroidSupport
-    implementation "com.google.android.material:material:1.1.0-alpha02"
+    // AndroidX
+    implementation "com.google.android.material:material:1.1.0-alpha04"
     implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha3"
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.recyclerview:recyclerview:1.0.0"
@@ -106,31 +126,28 @@ dependencies {
     implementation "androidx.browser:browser:1.0.0"
     implementation "androidx.annotation:annotation:1.0.2"
     implementation "androidx.exifinterface:exifinterface:1.0.0"
-    kapt "androidx.lifecycle:lifecycle-compiler:$aac_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-extensions:$aac_lifecycle_version"
-    implementation "androidx.lifecycle:lifecycle-reactivestreams:$aac_lifecycle_version"
-    kapt "androidx.room:room-compiler:$aac_room_version"
-    implementation "androidx.room:room-runtime:$aac_room_version"
-    implementation "androidx.room:room-rxjava2:$aac_room_version"
-    implementation "android.arch.navigation:navigation-fragment:$aac_nav_version" // use -ktx for Kotlin
-    implementation "android.arch.navigation:navigation-ui:$aac_nav_version" // use -ktx for Kotlin
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
     // NetWork
     implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
     implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version") {
-        exclude module: "okhttp"
-    }
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
     // Converter
     kapt "se.ansman.kotshi:compiler:$kotshi_version"
     implementation "se.ansman.kotshi:api:$kotshi_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
     // DI
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     // UI
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
@@ -139,15 +156,11 @@ dependencies {
     implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
     implementation "com.firebaseui:firebase-ui-firestore:4.1.0"
     implementation "com.ncapdevi:frag-nav:2.4.0"
+    implementation "com.otaliastudios:cameraview:1.6.0"
     // Reactive
     implementation "io.reactivex.rxjava2:rxjava:2.2.3"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
     implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
-    // Util
-    kapt "com.github.hotchemi:permissionsdispatcher-processor:$permissions_dispatcher_version"
-    implementation("com.github.hotchemi:permissionsdispatcher:$permissions_dispatcher_version") {
-        exclude module: "support-v13"
-    }
     // Debug & Log
     implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
@@ -159,6 +172,15 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.0"
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+
+    // spek
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+
+    // spek requires kotlin-reflect, omit when already in classpath
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    // MockK
+    testImplementation("io.mockk:mockk:$mockk_version")
 }
 // GoogleServicesプラグインを適用(dependenciesよりも下に設定する)
 //apply plugin: "com.google.gms.google-services"

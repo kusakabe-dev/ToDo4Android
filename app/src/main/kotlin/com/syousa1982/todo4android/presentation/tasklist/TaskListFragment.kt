@@ -11,7 +11,7 @@ import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.tasklist.item.TaskListItem
 import com.syousa1982.todo4android.util.extention.*
-import org.koin.android.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 /**
  * タスクリスト一覧 [Fragment] subclass.
