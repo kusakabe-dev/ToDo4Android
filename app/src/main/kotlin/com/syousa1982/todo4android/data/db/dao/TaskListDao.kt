@@ -1,8 +1,8 @@
 package com.syousa1982.todo4android.data.db.dao
 
 import androidx.room.*
-import com.syousa1982.todo4android.data.db.entity.Task
-import com.syousa1982.todo4android.data.db.entity.TaskList
+import com.syousa1982.todo4android.data.db.entity.TaskEntity
+import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import com.syousa1982.todo4android.data.db.entity.TaskListAndTasks
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -19,7 +19,7 @@ interface TaskListDao {
      * @param taskLists
      */
     @Insert
-    fun insertTaskLists(vararg taskLists: TaskList): Completable
+    fun insertTaskLists(vararg taskLists: TaskListEntity): Completable
 
     /**
      * タスクを追加
@@ -27,7 +27,7 @@ interface TaskListDao {
      * @param tasks
      */
     @Insert
-    fun insertTasks(vararg tasks: Task): Completable
+    fun insertTasks(vararg tasks: TaskEntity): Completable
 
     /**
      * タスクを更新
@@ -35,19 +35,19 @@ interface TaskListDao {
      * @param tasks
      */
     @Update
-    fun updateTasks(vararg tasks: Task): Completable
+    fun updateTasks(vararg tasks: TaskEntity): Completable
 
     /**
      * タスクリスト削除
      */
     @Delete
-    fun deleteTaskLists(vararg taskLists: TaskList): Completable
+    fun deleteTaskLists(vararg taskLists: TaskListEntity): Completable
 
     /**
      * タスク削除
      */
     @Delete
-    fun deleteTasks(vararg tasks: Task): Completable
+    fun deleteTasks(vararg tasks: TaskEntity): Completable
 
     /**
      * タスクリストとタスクを取得

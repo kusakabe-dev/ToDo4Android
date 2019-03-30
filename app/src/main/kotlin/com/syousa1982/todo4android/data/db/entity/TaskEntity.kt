@@ -5,17 +5,17 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 /**
- * Task Entity
+ * TaskEntity Entity
  */
 @Entity(tableName = "task",
         foreignKeys = arrayOf(ForeignKey(
-                entity = TaskList::class,
+                entity = TaskListEntity::class,
                 parentColumns = arrayOf("id"),
                 childColumns = arrayOf("taskListId"),
                 onDelete = ForeignKey.CASCADE
         ))
 )
-data class Task(
+data class TaskEntity(
         @PrimaryKey(autoGenerate = true)
         val id: Int,
         val taskListId: Int,

@@ -8,8 +8,8 @@ import androidx.room.Relation
  */
 class TaskListAndTasks {
     @Embedded
-    lateinit var taskList: TaskList
+    lateinit var taskList: TaskListEntity
 
     @Relation(parentColumn = "id", entityColumn = "taskListId")
-    lateinit var tasks: List<Task>
+    lateinit var tasks: List<TaskEntity>
 }

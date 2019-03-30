@@ -4,10 +4,10 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 /**
- * TaskList Entity
+ * TaskListEntity
  */
 @Entity(tableName = "task_list")
-data class TaskList(
+data class TaskListEntity(
         @PrimaryKey(autoGenerate = true)
         val id: Int,
         val name: String
