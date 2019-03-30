@@ -2,8 +2,8 @@ package com.syousa1982.todo4android.data.db.dao
 
 import androidx.room.*
 import com.syousa1982.todo4android.data.db.entity.TaskEntity
-import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import com.syousa1982.todo4android.data.db.entity.TaskListAndTasks
+import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import io.reactivex.Completable
 import io.reactivex.Single
 
@@ -39,12 +39,16 @@ interface TaskListDao {
 
     /**
      * タスクリスト削除
+     *
+     * @param taskLists
      */
     @Delete
     fun deleteTaskLists(vararg taskLists: TaskListEntity): Completable
 
     /**
      * タスク削除
+     *
+     * @param tasks
      */
     @Delete
     fun deleteTasks(vararg tasks: TaskEntity): Completable
@@ -63,5 +67,5 @@ interface TaskListDao {
      */
     @Transaction
     @Query("SELECT * FROM task_list WHERE id = :taskListId")
-    fun loadTaskListAndTasksById(taskListId: String): Single<List<TaskListAndTasks>>
+    fun loadTaskListAndTasks(taskListId: String): Single<List<TaskListAndTasks>>
 }
