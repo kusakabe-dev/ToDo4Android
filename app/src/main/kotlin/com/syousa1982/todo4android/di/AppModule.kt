@@ -15,6 +15,7 @@ object AppModule {
 
         // region Data Layer Database
         single { DatabaseModule.getDatabase(androidContext()) }
+        single { DatabaseModule.getTaskListDao(get()) }
         // endregion
 
         // region Data Layer Repository
