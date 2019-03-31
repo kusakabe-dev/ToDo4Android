@@ -5,7 +5,6 @@ import androidx.room.Room
 import com.syousa1982.todo4android.data.db.entity.TaskEntity
 import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import io.mockk.mockk
-import io.reactivex.Single
 import org.dbtools.android.room.jdbc.JdbcSQLiteOpenHelperFactory
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.gherkin.Feature
@@ -26,7 +25,6 @@ class TaskListDaoSpec : Spek({
 
     Feature("TaskListDao") {
         Scenario("TaskDatabase") {
-            lateinit var result: Single<Int>
 
             Given("Todoリストにタスク2件") {
                 val taskList = TaskListEntity(1, "Todoリスト")
@@ -34,20 +32,24 @@ class TaskListDaoSpec : Spek({
                         TaskEntity(1, 1, "hoge", "done"),
                         TaskEntity(2, 1, "piyo", "todo")
                 )
-                database.taskListDao().insertTaskLists(taskList)
+                database.taskListDao().insertTaskLists(taskList).test().await().assertComplete()
                 tasks.forEach {
-                    database.taskListDao().insertTasks(it)
+                    database.taskListDao().insertTasks(it).test().await().assertComplete()
                 }
             }
 
-            When("タスクをCount") {
-                result = database.taskListDao().loadTaskListAndTasks().map {
+            Then("タスクリスト1件") {
+                val result = database.taskListDao().loadTaskListAndTasks()
+                result.map {
+                    it.count()
+                }.test().await().assertValue(1)
+            }
+
+            Then("タスク2件") {
+                val result = database.taskListDao().loadTaskListAndTasks()
+                result.map {
                     it.first().tasks.count()
-                }
-            }
-
-            Then("Todoリストにタスク2件あるか？") {
-                result.test().await().assertValue(2)
+                }.test().await().assertValue(2)
             }
         }
     }
