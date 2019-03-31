@@ -28,6 +28,8 @@ buildscript {
     ext.spek_version = "2.0.1"
     // MockK
     ext.mockk_version = "1.9.3.kotlin12"
+    // DatabaseTest
+    ext.dbtoolsRoomVersion = "4.7.0"
 
     repositories {
         google()
