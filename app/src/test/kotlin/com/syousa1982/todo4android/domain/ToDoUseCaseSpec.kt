@@ -52,11 +52,11 @@ class ToDoUseCaseSpec : Spek({
                 ))
         )
         todoUseCase.getTaskLists().test().await().assertOf {
-            it.assertError(Throwable()).assertResult(
-                    Result.failure(Throwable())
-            )
             it.assertComplete().assertResult(
                     Result.success(result)
+            )
+            it.assertError(Throwable()).assertResult(
+                    Result.failure(Throwable())
             )
         }
     }
@@ -67,11 +67,11 @@ class ToDoUseCaseSpec : Spek({
                 Task(3, "aaaaa", Task.Status.TODO)
         )
         todoUseCase.getTasks().test().await().assertOf {
-            it.assertError(Throwable()).assertResult(
-                    Result.failure(Throwable())
-            )
             it.assertComplete().assertResult(
                     Result.success(result)
+            )
+            it.assertError(Throwable()).assertResult(
+                    Result.failure(Throwable())
             )
         }
     }
