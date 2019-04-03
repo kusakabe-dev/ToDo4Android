@@ -5,6 +5,7 @@ import com.syousa1982.todo4android.data.db.entity.TaskListAndTasks
 import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import com.syousa1982.todo4android.data.repository.ITaskListRepository
 import com.syousa1982.todo4android.domain.model.Task
+import com.syousa1982.todo4android.domain.model.TaskList
 import com.syousa1982.todo4android.domain.usecase.IToDoUseCase
 import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
 import io.mockk.every
@@ -13,6 +14,9 @@ import io.reactivex.Single
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
+/**
+ * ToDoUseCaseのテスト
+ */
 class ToDoUseCaseSpec : Spek({
 
     val taskListRepository: ITaskListRepository by lazy {
@@ -40,10 +44,36 @@ class ToDoUseCaseSpec : Spek({
 
 
     describe("IToDoUseCase#getTaskLists") {
-        todoUseCase.getTaskLists().test().await().assertNoErrors()
+        val result = listOf(
+                TaskList(1, "todo", listOf(
+                        Task(1, "aaaaa", Task.Status.DONE),
+                        Task(2, "aaaaa", Task.Status.TODO),
+                        Task(3, "aaaaa", Task.Status.TODO)
+                ))
+        )
+        todoUseCase.getTaskLists().test().await().assertOf {
+            it.assertError(Throwable()).assertResult(
+                    Result.failure(Throwable())
+            )
+            it.assertComplete().assertResult(
+                    Result.success(result)
+            )
+        }
     }
     describe("IToDoUseCase#getTasks") {
-        todoUseCase.getTasks().test().await().assertNoErrors()
+        val result = listOf(
+                Task(1, "aaaaa", Task.Status.DONE),
+                Task(2, "aaaaa", Task.Status.TODO),
+                Task(3, "aaaaa", Task.Status.TODO)
+        )
+        todoUseCase.getTasks().test().await().assertOf {
+            it.assertError(Throwable()).assertResult(
+                    Result.failure(Throwable())
+            )
+            it.assertComplete().assertResult(
+                    Result.success(result)
+            )
+        }
     }
 
 })
