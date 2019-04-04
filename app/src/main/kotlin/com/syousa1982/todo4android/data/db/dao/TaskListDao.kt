@@ -67,5 +67,5 @@ interface TaskListDao {
      */
     @Transaction
     @Query("SELECT * FROM task_list WHERE id = :taskListId")
-    fun loadTaskListAndTasks(taskListId: String): Single<List<TaskListAndTasks>>
+    fun loadTaskListAndTasks(taskListId: String): Single<TaskListAndTasks>
 }
