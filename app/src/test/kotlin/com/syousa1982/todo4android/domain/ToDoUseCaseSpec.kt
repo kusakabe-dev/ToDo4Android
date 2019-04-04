@@ -66,7 +66,7 @@ class ToDoUseCaseSpec : Spek({
                 Task(2, "aaaaa", Task.Status.TODO),
                 Task(3, "aaaaa", Task.Status.TODO)
         )
-        todoUseCase.getTasks().test().await().assertOf {
+        todoUseCase.getTasks(1).test().await().assertOf {
             it.assertComplete().assertResult(
                     Result.success(result)
             )
