@@ -12,7 +12,7 @@ interface IToDoUseCase {
 
     fun getTaskLists(): Flowable<Result<List<TaskList>>>
 
-    fun getTasks(): Flowable<Result<List<Task>>>
+    fun getTasks(taskListId: Int): Flowable<Result<List<Task>>>
 }
 
 class ToDoUseCase(private val repository: ITaskListRepository) : IToDoUseCase {
@@ -23,7 +23,7 @@ class ToDoUseCase(private val repository: ITaskListRepository) : IToDoUseCase {
                 }.toResult()
     }
 
-    override fun getTasks(): Flowable<Result<List<Task>>> {
+    override fun getTasks(taskListId: Int): Flowable<Result<List<Task>>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
