@@ -27,18 +27,16 @@ class ToDoUseCaseSpec : Spek({
         ToDoUseCase(taskListRepository)
     }
 
-    beforeEachTest {
-        every { taskListRepository.loadTaskListAndTasksByDB() } answers {
-            val taskListAndTasks = TaskListAndTasks()
-            taskListAndTasks.taskList = TaskListEntity(1, "todo")
-            taskListAndTasks.tasks = listOf(
-                    TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
-                    TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
-                    TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
-            )
-            Single.create {
-                listOf(taskListAndTasks)
-            }
+    every { taskListRepository.loadTaskListAndTasksByDB() } answers {
+        val taskListAndTasks = TaskListAndTasks()
+        taskListAndTasks.taskList = TaskListEntity(1, "todo")
+        taskListAndTasks.tasks = listOf(
+                TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
+                TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
+                TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
+        )
+        Single.create {
+            listOf(taskListAndTasks)
         }
     }
 
@@ -60,6 +58,7 @@ class ToDoUseCaseSpec : Spek({
             )
         }
     }
+
     describe("IToDoUseCase#getTasks") {
         val result = listOf(
                 Task(1, "aaaaa", Task.Status.DONE),
