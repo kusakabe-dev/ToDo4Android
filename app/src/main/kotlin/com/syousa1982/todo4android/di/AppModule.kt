@@ -2,6 +2,8 @@ package com.syousa1982.todo4android.di
 
 import com.syousa1982.todo4android.data.repository.ITaskListRepository
 import com.syousa1982.todo4android.data.repository.TaskListRepository
+import com.syousa1982.todo4android.domain.usecase.IToDoUseCase
+import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
 import com.syousa1982.todo4android.presentation.tasklist.TaskListViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
@@ -11,6 +13,10 @@ object AppModule {
     val instance = module {
         // region Presentation Layer
         viewModel { TaskListViewModel() }
+        // endregion
+
+        // region Domain Layer
+        factory<IToDoUseCase> { ToDoUseCase(get()) }
         // endregion
 
         // region Data Layer Database
