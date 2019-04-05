@@ -5,6 +5,8 @@ import com.syousa1982.todo4android.data.repository.TaskListRepository
 import com.syousa1982.todo4android.domain.usecase.IToDoUseCase
 import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
 import com.syousa1982.todo4android.presentation.tasklist.TaskListViewModel
+import com.syousa1982.todo4android.util.rx.AppSchedulerProvider
+import com.syousa1982.todo4android.util.rx.SchedulerProvider
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -16,7 +18,7 @@ object AppModule {
         // endregion
 
         // region Domain Layer
-        factory<IToDoUseCase> { ToDoUseCase(get()) }
+        factory<IToDoUseCase> { ToDoUseCase(get(), get()) }
         // endregion
 
         // region Data Layer Database
@@ -26,6 +28,10 @@ object AppModule {
 
         // region Data Layer Repository
         single<ITaskListRepository> { TaskListRepository(get()) }
+        // endregion
+
+        // region Rx
+        single<SchedulerProvider> { AppSchedulerProvider() }
         // endregion
     }
 }

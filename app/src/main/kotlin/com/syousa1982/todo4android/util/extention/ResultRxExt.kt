@@ -2,12 +2,11 @@ package com.syousa1982.todo4android.util.extention
 
 import androidx.annotation.CheckResult
 import com.syousa1982.todo4android.domain.Result
+import com.syousa1982.todo4android.util.rx.SchedulerProvider
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Result型に変換
@@ -15,14 +14,14 @@ import io.reactivex.schedulers.Schedulers
  * @return Flowable
  */
 @CheckResult
-fun <T> Flowable<T>.toResult(): Flowable<Result<T>> {
+fun <T> Flowable<T>.toResult(schedulerProvider: SchedulerProvider): Flowable<Result<T>> {
     return compose { item ->
         item
                 .map { Result.success(it) }
                 .onErrorReturn { Result.failure(it) }
                 .startWith(Result.progress())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
     }
 }
 
@@ -32,7 +31,7 @@ fun <T> Flowable<T>.toResult(): Flowable<Result<T>> {
  * @return Observable
  */
 @CheckResult
-fun <T> Single<T>.toResult(): Flowable<Result<T>> = toFlowable().toResult()
+fun <T> Single<T>.toResult(schedulerProvider: SchedulerProvider): Flowable<Result<T>> = toFlowable().toResult(schedulerProvider)
 
 /**
  * Result型に変換
@@ -40,7 +39,7 @@ fun <T> Single<T>.toResult(): Flowable<Result<T>> = toFlowable().toResult()
  * @return Observable
  */
 @CheckResult
-fun <T> Maybe<T>.toResult(): Flowable<Result<T>> = toFlowable().toResult()
+fun <T> Maybe<T>.toResult(schedulerProvider: SchedulerProvider): Flowable<Result<T>> = toFlowable().toResult(schedulerProvider)
 
 /**
  * Result型に変換
@@ -48,4 +47,4 @@ fun <T> Maybe<T>.toResult(): Flowable<Result<T>> = toFlowable().toResult()
  * @return Observable
  */
 @CheckResult
-fun <T> Completable.toResult(): Flowable<Result<T>> = toFlowable<T>().toResult()
+fun <T> Completable.toResult(schedulerProvider: SchedulerProvider): Flowable<Result<T>> = toFlowable<T>().toResult(schedulerProvider)

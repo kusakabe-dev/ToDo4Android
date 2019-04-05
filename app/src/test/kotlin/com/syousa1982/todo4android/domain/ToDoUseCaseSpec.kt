@@ -6,8 +6,8 @@ import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import com.syousa1982.todo4android.data.repository.ITaskListRepository
 import com.syousa1982.todo4android.domain.model.Task
 import com.syousa1982.todo4android.domain.model.TaskList
-import com.syousa1982.todo4android.domain.usecase.IToDoUseCase
 import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
+import com.syousa1982.todo4android.util.rx.TestSchedulerProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Single
@@ -23,8 +23,8 @@ class ToDoUseCaseSpec : Spek({
         mockk<ITaskListRepository>()
     }
 
-    val todoUseCase: IToDoUseCase by lazy {
-        ToDoUseCase(taskListRepository)
+    val todoUseCase: ToDoUseCase by lazy {
+        ToDoUseCase(taskListRepository, TestSchedulerProvider())
     }
 
     every { taskListRepository.loadTaskListAndTasksByDB() } answers {
@@ -49,14 +49,18 @@ class ToDoUseCaseSpec : Spek({
                         Task(3, "aaaaa", Task.Status.TODO)
                 ))
         )
-        todoUseCase.getTaskLists().test().await().assertOf {
-            it.assertComplete().assertResult(
-                    Result.success(result)
-            )
-            it.assertError(Throwable()).assertResult(
-                    Result.failure(Throwable())
-            )
-        }
+        todoUseCase
+                .getTaskLists()
+                .test()
+                .await()
+                .assertOf {
+                    it.assertComplete().assertResult(
+                            Result.success(result)
+                    )
+                    it.assertError(Throwable()).assertResult(
+                            Result.failure(Throwable())
+                    )
+                }
     }
 
     describe("IToDoUseCase#getTasks") {
