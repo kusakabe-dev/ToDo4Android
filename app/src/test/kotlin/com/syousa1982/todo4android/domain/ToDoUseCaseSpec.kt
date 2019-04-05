@@ -52,7 +52,6 @@ class ToDoUseCaseSpec : Spek({
         todoUseCase
                 .getTaskLists()
                 .test()
-                .await()
                 .assertOf {
                     it.assertComplete().assertResult(
                             Result.success(result)
@@ -69,7 +68,7 @@ class ToDoUseCaseSpec : Spek({
                 Task(2, "aaaaa", Task.Status.TODO),
                 Task(3, "aaaaa", Task.Status.TODO)
         )
-        todoUseCase.getTasks(1).test().await().assertOf {
+        todoUseCase.getTasks(1).test().assertOf {
             it.assertComplete().assertResult(
                     Result.success(result)
             )
