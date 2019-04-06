@@ -11,12 +11,15 @@ import com.syousa1982.todo4android.util.rx.TestSchedulerProvider
 import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Single
-import org.spekframework.spek2.Spek
-import org.spekframework.spek2.style.specification.describe
+import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.describe
+import org.junit.platform.runner.JUnitPlatform
+import org.junit.runner.RunWith
 
 /**
  * ToDoUseCaseのテスト
  */
+@RunWith(JUnitPlatform::class)
 class ToDoUseCaseSpec : Spek({
 
     val taskListRepository: ITaskListRepository by lazy {
