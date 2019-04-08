@@ -61,7 +61,7 @@ interface ITaskListRepository {
      *
      * @param taskListId
      */
-    fun loadTaskListAndTasksByDB(taskListId: String): Single<List<TaskListAndTasks>>
+    fun loadTaskListAndTasksByDB(taskListId: String): Single<TaskListAndTasks>
     // endregion
 }
 
@@ -90,7 +90,7 @@ class TaskListRepository(private val dao: TaskListDao) : ITaskListRepository {
         return dao.loadTaskListAndTasks()
     }
 
-    override fun loadTaskListAndTasksByDB(taskListId: String): Single<List<TaskListAndTasks>> {
+    override fun loadTaskListAndTasksByDB(taskListId: String): Single<TaskListAndTasks> {
         return dao.loadTaskListAndTasks(taskListId)
     }
 }

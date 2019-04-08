@@ -172,16 +172,24 @@ dependencies {
     testImplementation "org.robolectric:robolectric:4.0"
     androidTestImplementation "androidx.test:runner:1.1.1"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
-
-    // spek
-    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
-    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
     testImplementation "org.dbtools:dbtools-room-jdbc:$dbtoolsRoomVersion"
     testImplementation "org.xerial:sqlite-jdbc:3.27.2"
 
+    // spek
+//    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+//    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+
+    testImplementation('org.jetbrains.spek:spek-api:1.1.5') {
+        exclude group: 'org.jetbrains.kotlin'
+    }
+    testImplementation 'org.jetbrains.spek:spek-junit-platform-engine:1.1.5'
+    testImplementation 'org.junit.platform:junit-platform-runner:1.1.0'
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 
     // spek requires kotlin-reflect, omit when already in classpath
-    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+//    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // MockK
     testImplementation("io.mockk:mockk:$mockk_version")
 }
