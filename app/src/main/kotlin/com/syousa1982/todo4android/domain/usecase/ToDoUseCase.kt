@@ -20,13 +20,17 @@ class ToDoUseCase(private val repository: ITaskListRepository,
                   private val schedulerProvider: SchedulerProvider) : IToDoUseCase {
     override fun getTaskLists(): Flowable<Result<List<TaskList>>> {
         return repository.loadTaskListAndTasksByDB()
-                .map {
-                    TaskListTranslator.toTodoLists(it)
-                }
-                .toResult(schedulerProvider)
+            .map {
+                TaskListTranslator.toTodoLists(it)
+            }
+            .toResult(schedulerProvider)
     }
 
     override fun getTasks(taskListId: Int): Flowable<Result<List<Task>>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return repository.loadTaskListAndTasksByDB(taskListId.toString())
+            .map {
+                TaskListTranslator.toTodoList(it).tasks
+            }
+            .toResult(schedulerProvider)
     }
 }
