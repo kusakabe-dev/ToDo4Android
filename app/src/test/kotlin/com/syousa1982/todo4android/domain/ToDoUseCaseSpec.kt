@@ -46,6 +46,19 @@ class ToDoUseCaseSpec : Spek({
         }
     }
 
+    every { taskListRepository.loadTaskListAndTasksByDB("1") } answers {
+        val taskListAndTasks = TaskListAndTasks()
+        taskListAndTasks.taskList = TaskListEntity(1, "todo")
+        taskListAndTasks.tasks = listOf(
+            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
+            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
+            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
+        )
+        Single.fromCallable {
+            taskListAndTasks
+        }
+    }
+
     describe("ToDoUseCase") {
         val expectedValue =
             Result.success(listOf(
