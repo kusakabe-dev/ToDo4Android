@@ -37,44 +37,40 @@ class ToDoUseCaseSpec : Spek({
         val taskListAndTasks = TaskListAndTasks()
         taskListAndTasks.taskList = TaskListEntity(1, "todo")
         taskListAndTasks.tasks = listOf(
-                TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
-                TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
-                TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
+            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
+            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
+            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
         )
-        Single.create {
+        Single.fromCallable {
             listOf(taskListAndTasks)
         }
     }
 
-
     describe("ToDoUseCase") {
-        val expectedValue = Result.success(listOf(
+        val expectedValue =
+            Result.success(listOf(
                 TaskList(1, "todo", listOf(
-                        Task(1, "aaaaa", Task.Status.DONE),
-                        Task(2, "aaaaa", Task.Status.TODO),
-                        Task(3, "aaaaa", Task.Status.TODO)
+                    Task(1, "aaaaa", Task.Status.DONE),
+                    Task(2, "aaaaa", Task.Status.TODO),
+                    Task(3, "aaaaa", Task.Status.TODO)
                 ))
-        ))
+            ))
+
         todoUseCase
-                .getTaskLists()
-                .test()
-                .assertValue(expectedValue)
+            .getTaskLists()
+            .test()
+            .assertValues(Result.Progress(), expectedValue)
     }
 
-//    describe("IToDoUseCase#getTasks") {
-//        val result = listOf(
-//                Task(1, "aaaaa", Task.Status.DONE),
-//                Task(2, "aaaaa", Task.Status.TODO),
-//                Task(3, "aaaaa", Task.Status.TODO)
-//        )
-//        todoUseCase.getTasks(1).test().assertOf {
-//            it.assertComplete().assertResult(
-//                    Result.success(result)
-//            )
-//            it.assertError(Throwable()).assertResult(
-//                    Result.failure(Throwable())
-//            )
-//        }
-//    }
+    describe("IToDoUseCase#getTasks") {
+        val expectedValue = Result.success(listOf(
+            Task(1, "aaaaa", Task.Status.DONE),
+            Task(2, "aaaaa", Task.Status.TODO),
+            Task(3, "aaaaa", Task.Status.TODO)
+        ))
+        todoUseCase.getTasks(1)
+            .test()
+            .assertValues(Result.Progress(), expectedValue)
+    }
 
 })
