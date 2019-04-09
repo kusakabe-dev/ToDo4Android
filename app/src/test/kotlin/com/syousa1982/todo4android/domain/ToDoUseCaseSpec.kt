@@ -12,6 +12,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.reactivex.Single
 import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.describe
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
@@ -33,57 +34,72 @@ class ToDoUseCaseSpec : Spek({
         ToDoUseCase(taskListRepository, schedulerProvider)
     }
 
-    every { taskListRepository.loadTaskListAndTasksByDB() } answers {
-        val taskListAndTasks = TaskListAndTasks()
-        taskListAndTasks.taskList = TaskListEntity(1, "todo")
-        taskListAndTasks.tasks = listOf(
-            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
-            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
-            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
-        )
-        Single.fromCallable {
-            listOf(taskListAndTasks)
-        }
-    }
 
-    every { taskListRepository.loadTaskListAndTasksByDB("1") } answers {
-        val taskListAndTasks = TaskListAndTasks()
-        taskListAndTasks.taskList = TaskListEntity(1, "todo")
-        taskListAndTasks.tasks = listOf(
-            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
-            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
-            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
-        )
-        Single.fromCallable {
-            taskListAndTasks
-        }
-    }
+    describe("Success Case") {
+        context("ToDoUseCase#getTaskLists()") {
+            every { taskListRepository.loadTaskListAndTasksByDB() } answers {
+                val taskListAndTasks = TaskListAndTasks()
+                taskListAndTasks.taskList = TaskListEntity(1, "todo")
+                taskListAndTasks.tasks = listOf(
+                    TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
+                    TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
+                    TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
+                )
+                Single.fromCallable {
+                    listOf(taskListAndTasks)
+                }
+            }
 
-    describe("ToDoUseCase") {
-        val expectedValue =
-            Result.success(listOf(
-                TaskList(1, "todo", listOf(
-                    Task(1, "aaaaa", Task.Status.DONE),
-                    Task(2, "aaaaa", Task.Status.TODO),
-                    Task(3, "aaaaa", Task.Status.TODO)
+            val expectedValue =
+                Result.success(listOf(
+                    TaskList(1, "todo", listOf(
+                        Task(1, "aaaaa", Task.Status.DONE),
+                        Task(2, "aaaaa", Task.Status.TODO),
+                        Task(3, "aaaaa", Task.Status.TODO)
+                    ))
                 ))
+
+            todoUseCase
+                .getTaskLists()
+                .test()
+                .assertValues(Result.Progress(), expectedValue)
+        }
+
+        context("ToDoUseCase#getTasks()") {
+            every { taskListRepository.loadTaskListAndTasksByDB("1") } answers {
+                val taskListAndTasks = TaskListAndTasks()
+                taskListAndTasks.taskList = TaskListEntity(1, "todo")
+                taskListAndTasks.tasks = listOf(
+                    TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
+                    TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
+                    TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
+                )
+                Single.fromCallable {
+                    taskListAndTasks
+                }
+            }
+            val expectedValue = Result.success(listOf(
+                Task(1, "aaaaa", Task.Status.DONE),
+                Task(2, "aaaaa", Task.Status.TODO),
+                Task(3, "aaaaa", Task.Status.TODO)
             ))
+            todoUseCase.getTasks(1)
+                .test()
+                .assertValues(Result.Progress(), expectedValue)
 
-        todoUseCase
-            .getTaskLists()
-            .test()
-            .assertValues(Result.Progress(), expectedValue)
+        }
     }
 
-    describe("IToDoUseCase#getTasks") {
-        val expectedValue = Result.success(listOf(
-            Task(1, "aaaaa", Task.Status.DONE),
-            Task(2, "aaaaa", Task.Status.TODO),
-            Task(3, "aaaaa", Task.Status.TODO)
-        ))
-        todoUseCase.getTasks(1)
-            .test()
-            .assertValues(Result.Progress(), expectedValue)
-    }
+//    describe("Failure Case") {
+//        context("ToDoUseCase#getTaskLists()") {
+//            every { taskListRepository.loadTaskListAndTasksByDB() } answers {
+//                throw Exception()
+//            }
+//            todoUseCase
+//                .getTaskLists()
+//                .test()
+//                .assertValues(Result.Progress(), Result.failure(Throwable()))
+//        }
+//    }
 
 })
