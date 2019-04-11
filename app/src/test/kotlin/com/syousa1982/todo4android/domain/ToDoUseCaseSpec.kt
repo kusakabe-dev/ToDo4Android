@@ -97,7 +97,33 @@ class ToDoUseCaseSpec : Spek({
          * 異常系テスト
          */
         context("Failure Test") {
-            // todo 異常系のテストを記述
+            beforeEachTest {
+                taskListRepository = mockk<ITaskListRepository>().also {
+                    every { it.loadTaskListAndTasksByDB() } answers {
+                        Single.fromCallable {
+                            listOf(TaskListAndTasks())
+                        }
+                    }
+                    every { it.loadTaskListAndTasksByDB("1") } answers {
+                        Single.fromCallable {
+                            TaskListAndTasks()
+                        }
+                    }
+                }
+                todoUseCase = ToDoUseCase(taskListRepository, TestSchedulerProvider())
+            }
+
+            it("getTaskLists()") {
+                todoUseCase
+                    .getTaskLists()
+                    .skip(1)
+                    .test()
+                    .assertValue(Result.failure(UninitializedPropertyAccessException("lateinit property taskList has not been initialized")))
+            }
+
+            afterEachTest {
+                unmockkAll()
+            }
         }
     }
 })
