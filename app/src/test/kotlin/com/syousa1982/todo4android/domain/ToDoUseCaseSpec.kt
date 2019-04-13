@@ -114,11 +114,23 @@ class ToDoUseCaseSpec : Spek({
             }
 
             it("getTaskLists()") {
-                todoUseCase
-                    .getTaskLists()
-                    .skip(1)
-                    .test()
-                    .assertValue(Result.failure(UninitializedPropertyAccessException("lateinit property taskList has not been initialized")))
+                todoUseCase.getTaskLists().skip(1).test()
+                    .assertNoErrors()
+                    .assertComplete()
+                    .assertValueCount(1)
+                    .assertValue {
+                        it is Result.Failure
+                    }
+            }
+
+            it("getTasks()") {
+                todoUseCase.getTasks(1).skip(1).test()
+                    .assertNoErrors()
+                    .assertComplete()
+                    .assertValueCount(1)
+                    .assertValue {
+                        it is Result.Failure
+                    }
             }
 
             afterEachTest {
