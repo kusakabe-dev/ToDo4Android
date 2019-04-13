@@ -10,9 +10,12 @@ import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
 import com.syousa1982.todo4android.util.rx.TestSchedulerProvider
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.unmockkAll
 import io.reactivex.Single
 import org.jetbrains.spek.api.Spek
+import org.jetbrains.spek.api.dsl.context
 import org.jetbrains.spek.api.dsl.describe
+import org.jetbrains.spek.api.dsl.it
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
 
@@ -22,68 +25,117 @@ import org.junit.runner.RunWith
  */
 @RunWith(JUnitPlatform::class)
 class ToDoUseCaseSpec : Spek({
-
-    val taskListRepository: ITaskListRepository by lazy {
-        mockk<ITaskListRepository>()
-    }
-
-    val schedulerProvider = TestSchedulerProvider()
-
-    val todoUseCase: ToDoUseCase by lazy {
-        ToDoUseCase(taskListRepository, schedulerProvider)
-    }
-
-    every { taskListRepository.loadTaskListAndTasksByDB() } answers {
-        val taskListAndTasks = TaskListAndTasks()
-        taskListAndTasks.taskList = TaskListEntity(1, "todo")
-        taskListAndTasks.tasks = listOf(
-            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
-            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
-            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
-        )
-        Single.fromCallable {
-            listOf(taskListAndTasks)
-        }
-    }
-
-    every { taskListRepository.loadTaskListAndTasksByDB("1") } answers {
-        val taskListAndTasks = TaskListAndTasks()
-        taskListAndTasks.taskList = TaskListEntity(1, "todo")
-        taskListAndTasks.tasks = listOf(
-            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
-            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
-            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
-        )
-        Single.fromCallable {
-            taskListAndTasks
-        }
-    }
-
     describe("ToDoUseCase") {
-        val expectedValue =
-            Result.success(listOf(
-                TaskList(1, "todo", listOf(
+        lateinit var taskListRepository: ITaskListRepository
+        lateinit var todoUseCase: ToDoUseCase
+        /**
+         * 正常系テスト
+         */
+        context("Success") {
+            beforeEachTest {
+                taskListRepository = mockk<ITaskListRepository>().also {
+                    every { it.loadTaskListAndTasksByDB() } answers {
+                        val taskListAndTasks = TaskListAndTasks()
+                        taskListAndTasks.taskList = TaskListEntity(1, "todo")
+                        taskListAndTasks.tasks = listOf(
+                            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
+                            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
+                            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
+                        )
+                        Single.fromCallable {
+                            listOf(taskListAndTasks)
+                        }
+                    }
+                    every { it.loadTaskListAndTasksByDB("1") } answers {
+                        val taskListAndTasks = TaskListAndTasks()
+                        taskListAndTasks.taskList = TaskListEntity(1, "todo")
+                        taskListAndTasks.tasks = listOf(
+                            TaskEntity(1, 1, "aaaaa", Task.Status.DONE.value.toLowerCase()),
+                            TaskEntity(2, 1, "aaaaa", Task.Status.TODO.value.toLowerCase()),
+                            TaskEntity(3, 1, "aaaaa", Task.Status.TODO.value.toLowerCase())
+                        )
+                        Single.fromCallable {
+                            taskListAndTasks
+                        }
+                    }
+                }
+                todoUseCase = ToDoUseCase(taskListRepository, TestSchedulerProvider())
+            }
+
+            it("getTaskLists()") {
+                val expectedValue =
+                    Result.success(listOf(
+                        TaskList(1, "todo", listOf(
+                            Task(1, "aaaaa", Task.Status.DONE),
+                            Task(2, "aaaaa", Task.Status.TODO),
+                            Task(3, "aaaaa", Task.Status.TODO)
+                        ))
+                    ))
+                todoUseCase
+                    .getTaskLists()
+                    .test()
+                    .assertValues(Result.Progress(), expectedValue)
+            }
+
+            it("getTasks()") {
+                val expectedValue = Result.success(listOf(
                     Task(1, "aaaaa", Task.Status.DONE),
                     Task(2, "aaaaa", Task.Status.TODO),
                     Task(3, "aaaaa", Task.Status.TODO)
                 ))
-            ))
+                todoUseCase.getTasks(1)
+                    .test()
+                    .assertValues(Result.Progress(), expectedValue)
+            }
 
-        todoUseCase
-            .getTaskLists()
-            .test()
-            .assertValues(Result.Progress(), expectedValue)
+            afterEachTest {
+                unmockkAll()
+            }
+        }
+
+        /**
+         * 異常系テスト
+         */
+        context("Failure Test") {
+            beforeEachTest {
+                taskListRepository = mockk<ITaskListRepository>().also {
+                    every { it.loadTaskListAndTasksByDB() } answers {
+                        Single.fromCallable {
+                            listOf(TaskListAndTasks())
+                        }
+                    }
+                    every { it.loadTaskListAndTasksByDB("1") } answers {
+                        Single.fromCallable {
+                            TaskListAndTasks()
+                        }
+                    }
+                }
+                todoUseCase = ToDoUseCase(taskListRepository, TestSchedulerProvider())
+            }
+
+            it("getTaskLists()") {
+                todoUseCase.getTaskLists().skip(1).test()
+                    .assertNoErrors()
+                    .assertComplete()
+                    .assertValueCount(1)
+                    .assertValue {
+                        it is Result.Failure
+                    }
+            }
+
+            it("getTasks()") {
+                todoUseCase.getTasks(1).skip(1).test()
+                    .assertNoErrors()
+                    .assertComplete()
+                    .assertValueCount(1)
+                    .assertValue {
+                        it is Result.Failure
+                    }
+            }
+
+            afterEachTest {
+                unmockkAll()
+            }
+        }
     }
-
-    describe("IToDoUseCase#getTasks") {
-        val expectedValue = Result.success(listOf(
-            Task(1, "aaaaa", Task.Status.DONE),
-            Task(2, "aaaaa", Task.Status.TODO),
-            Task(3, "aaaaa", Task.Status.TODO)
-        ))
-        todoUseCase.getTasks(1)
-            .test()
-            .assertValues(Result.Progress(), expectedValue)
-    }
-
 })
