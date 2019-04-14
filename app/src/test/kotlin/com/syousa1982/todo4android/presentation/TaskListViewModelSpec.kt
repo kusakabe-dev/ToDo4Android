@@ -28,7 +28,7 @@ class TaskListViewModelSpec : Spek({
                 viewModel = TaskListViewModel()
             }
             it("fetchTasks") {
-                val observer = mockk<Observer<Result<List<TaskList>>>>() {
+                val observer = mockk<Observer<Result<List<TaskList>>>> {
                     every { onChanged(any()) } just Runs
                 }
                 viewModel.taskLists.observeForever(observer)
