@@ -8,14 +8,10 @@ import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import io.mockk.mockk
 import io.reactivex.Single
 import org.dbtools.android.room.jdbc.JdbcSQLiteOpenHelperFactory
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.context
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
-@RunWith(JUnitPlatform::class)
+
 class TaskListDaoSpec : Spek({
     describe("TaskListDao") {
         val context: Context by lazy {
