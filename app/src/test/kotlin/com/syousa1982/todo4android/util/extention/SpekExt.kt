@@ -2,9 +2,9 @@ package com.syousa1982.todo4android.util.extention
 
 import androidx.arch.core.executor.ArchTaskExecutor
 import androidx.arch.core.executor.TaskExecutor
-import org.jetbrains.spek.api.dsl.SpecBody
+import org.spekframework.spek2.dsl.GroupBody
 
-fun SpecBody.useLiveData() {
+fun GroupBody.useLiveData() {
     beforeEachTest {
         ArchTaskExecutor.getInstance().setDelegate(InstantTaskExecutor)
     }

@@ -10,18 +10,13 @@ import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.context
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.junit.platform.runner.JUnitPlatform
-import org.junit.runner.RunWith
-import kotlin.test.assertEquals
+import org.junit.Assert.assertEquals
+import org.spekframework.spek2.Spek
+import org.spekframework.spek2.style.specification.describe
 
-@RunWith(JUnitPlatform::class)
 class TaskListViewModelSpec : Spek({
+    useLiveData()
     describe("TaskListViewModel") {
-        useLiveData()
         lateinit var viewModel: TaskListViewModel
         context("Success") {
             beforeEachTest {
