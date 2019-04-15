@@ -17,35 +17,34 @@ import org.spekframework.spek2.style.specification.describe
 class TaskListViewModelSpec : Spek({
     useLiveData()
     describe("TaskListViewModel") {
+        lateinit var observer: Observer<Result<List<TaskList>>>
         lateinit var viewModel: TaskListViewModel
-        context("Success") {
-            beforeEachTest {
-                viewModel = TaskListViewModel()
+        beforeEachTest {
+            observer = mockk<Observer<Result<List<TaskList>>>>().also {
+                every { it.onChanged(any()) } just Runs
             }
-            it("fetchTasks") {
-                val observer = mockk<Observer<Result<List<TaskList>>>> {
-                    every { onChanged(any()) } just Runs
-                }
-                viewModel.taskLists.observeForever(observer)
-                run {
-                    viewModel.fetchTasks()
-                }
-                val expectValue = Result.success(
-                    listOf(
-                        TaskList(1, "ToDo", listOf(
-                            Task(1, "ほげ", Task.Status.DONE),
-                            Task(2, "会社を爆破", Task.Status.TODO),
-                            Task(3, "殺意駆動開発", Task.Status.TODO)
-                        )),
-                        TaskList(2, "家事", listOf(
-                            Task(1, "飯作る", Task.Status.DONE),
-                            Task(2, "皿洗う", Task.Status.DONE),
-                            Task(3, "掃除", Task.Status.TODO)
-                        ))
-                    )
+            viewModel = TaskListViewModel()
+        }
+        it("fetchTasks") {
+            viewModel.taskLists.observeForever(observer)
+            run {
+                viewModel.fetchTasks()
+            }
+            val expectValue = Result.success(
+                listOf(
+                    TaskList(1, "ToDo", listOf(
+                        Task(1, "ほげ", Task.Status.DONE),
+                        Task(2, "会社を爆破", Task.Status.TODO),
+                        Task(3, "殺意駆動開発", Task.Status.TODO)
+                    )),
+                    TaskList(2, "家事", listOf(
+                        Task(1, "飯作る", Task.Status.DONE),
+                        Task(2, "皿洗う", Task.Status.DONE),
+                        Task(3, "掃除", Task.Status.TODO)
+                    ))
                 )
-                assertEquals(expectValue, viewModel.taskLists.value)
-            }
+            )
+            assertEquals(expectValue, viewModel.taskLists.value)
         }
     }
 })
