@@ -4,13 +4,15 @@ import androidx.lifecycle.MutableLiveData
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.domain.model.Task
 import com.syousa1982.todo4android.domain.model.TaskList
+import com.syousa1982.todo4android.domain.usecase.IToDoUseCase
 import com.syousa1982.todo4android.presentation.BaseViewModel
 
 /**
  * タスクリスト一覧 ViewModel
- * todo:usecaseをインジェクション
+ *
+ * @param todoUseCase
  */
-class TaskListViewModel : BaseViewModel() {
+class TaskListViewModel(todoUseCase: IToDoUseCase) : BaseViewModel() {
 
     val taskLists = MutableLiveData<Result<List<TaskList>>>()
 
