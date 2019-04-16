@@ -1,18 +1,21 @@
 package com.syousa1982.todo4android.presentation.tasklist
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.syousa1982.todo4android.domain.Result
-import com.syousa1982.todo4android.domain.model.Task
 import com.syousa1982.todo4android.domain.model.TaskList
 import com.syousa1982.todo4android.domain.usecase.IToDoUseCase
 import com.syousa1982.todo4android.presentation.BaseViewModel
+import com.syousa1982.todo4android.util.extention.className
+import io.reactivex.rxkotlin.addTo
+import io.reactivex.rxkotlin.subscribeBy
 
 /**
  * タスクリスト一覧 ViewModel
  *
  * @param todoUseCase
  */
-class TaskListViewModel(todoUseCase: IToDoUseCase) : BaseViewModel() {
+class TaskListViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel() {
 
     val taskLists = MutableLiveData<Result<List<TaskList>>>()
 
@@ -22,19 +25,9 @@ class TaskListViewModel(todoUseCase: IToDoUseCase) : BaseViewModel() {
     }
 
     fun fetchTasks() {
-        taskLists.value = Result.success(
-            listOf(
-                TaskList(1, "ToDo", listOf(
-                    Task(1, "ほげ", Task.Status.DONE),
-                    Task(2, "会社を爆破", Task.Status.TODO),
-                    Task(3, "殺意駆動開発", Task.Status.TODO)
-                )),
-                TaskList(2, "家事", listOf(
-                    Task(1, "飯作る", Task.Status.DONE),
-                    Task(2, "皿洗う", Task.Status.DONE),
-                    Task(3, "掃除", Task.Status.TODO)
-                ))
-            )
-        )
+        todoUseCase.getTaskLists().subscribeBy(
+            onNext = { taskLists.value = it },
+            onError = { e -> Log.e(className(), "エラー発生", e) }
+        ).addTo(disposable)
     }
 }
