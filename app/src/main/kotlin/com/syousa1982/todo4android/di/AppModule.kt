@@ -14,7 +14,7 @@ import org.koin.dsl.module.module
 object AppModule {
     val instance = module {
         // region Presentation Layer
-        viewModel { TaskListViewModel() }
+        viewModel { TaskListViewModel(get()) }
         // endregion
 
         // region Domain Layer

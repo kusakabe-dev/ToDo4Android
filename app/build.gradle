@@ -87,9 +87,10 @@ android {
     // Lintオプションを設定
     // "./gradlew test"で実行
     testOptions {
-//        unitTests {
-//            includeAndroidResources = true
-//        }
+        unitTests {
+            includeAndroidResources = true
+            unitTests.returnDefaultValues = true
+        }
         junitPlatform {
             filters {
                 engines {
