@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "task_list")
 data class TaskListEntity(
-        @PrimaryKey(autoGenerate = true)
-        val id: Int,
-        val name: String
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val name: String
 )
