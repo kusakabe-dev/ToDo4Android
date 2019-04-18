@@ -72,6 +72,17 @@ class ToDoUseCaseSpec : Spek({
                     .assertValues(Result.Progress(), expectedValue)
             }
 
+            it("addTaskList()") {
+                val expect = "hoge"
+                todoUseCase.addTaskList(expect)
+                    .skip(1).test().assertValue {
+                        it is Result.Success
+                    }
+
+                todoUseCase.getTaskLists()
+                    .skip(1).test()
+            }
+
             it("getTasks()") {
                 val expectedValue = Result.success(listOf(
                     Task(1, "aaaaa", Task.Status.DONE),
