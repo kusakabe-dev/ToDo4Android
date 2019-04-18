@@ -9,6 +9,9 @@ import com.syousa1982.todo4android.util.extention.toResult
 import com.syousa1982.todo4android.util.rx.SchedulerProvider
 import io.reactivex.Flowable
 
+/**
+ * ToDo機能 インタフェース
+ */
 interface IToDoUseCase {
 
     /**
@@ -52,6 +55,12 @@ interface IToDoUseCase {
 
 }
 
+/**
+ * ToDo機能
+ *
+ * @param repository
+ * @param schedulerProvider
+ */
 class ToDoUseCase(private val repository: ITaskListRepository,
                   private val schedulerProvider: SchedulerProvider) : IToDoUseCase {
     override fun getTaskLists(): Flowable<Result<List<TaskList>>> {
