@@ -11,9 +11,45 @@ import io.reactivex.Flowable
 
 interface IToDoUseCase {
 
+    /**
+     * タスクリストのListを取得
+     */
     fun getTaskLists(): Flowable<Result<List<TaskList>>>
 
+    /**
+     * タスクのListを取得
+     */
     fun getTasks(taskListId: Int): Flowable<Result<List<Task>>>
+
+    /**
+     * タスクリストを追加
+     *
+     * @param name
+     */
+    fun addTaskList(name: String): Flowable<Result<Boolean>>
+
+    /**
+     * タスクを追加
+     *
+     * @param name
+     */
+    fun addTask(name: String): Flowable<Result<Boolean>>
+
+    /**
+     * タスクリストを削除
+     * memo:タスクリスト削除時はリレーションしているタスクも削除する
+     *
+     * @param id
+     */
+    fun removeTaskList(id: Int): Flowable<Result<Boolean>>
+
+    /**
+     * タスクを削除
+     *
+     * @param id
+     */
+    fun removeTask(id: Int): Flowable<Result<Boolean>>
+
 }
 
 class ToDoUseCase(private val repository: ITaskListRepository,
@@ -32,5 +68,21 @@ class ToDoUseCase(private val repository: ITaskListRepository,
                 TaskListTranslator.toTodoList(it).tasks
             }
             .toResult(schedulerProvider)
+    }
+
+    override fun addTaskList(name: String): Flowable<Result<Boolean>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun addTask(name: String): Flowable<Result<Boolean>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun removeTaskList(id: Int): Flowable<Result<Boolean>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun removeTask(id: Int): Flowable<Result<Boolean>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }
