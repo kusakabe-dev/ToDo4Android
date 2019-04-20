@@ -1,5 +1,6 @@
 package com.syousa1982.todo4android.domain.usecase
 
+import com.syousa1982.todo4android.data.db.entity.TaskListEntity
 import com.syousa1982.todo4android.data.repository.ITaskListRepository
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.domain.model.Task
@@ -80,7 +81,12 @@ class ToDoUseCase(private val repository: ITaskListRepository,
     }
 
     override fun addTaskList(name: String): Flowable<Result<Boolean>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val entity = TaskListEntity(name = name)
+        return repository.insertTaskListsByDB(entity)
+            .doOnComplete {
+                true
+            }
+            .toResult(schedulerProvider)
     }
 
     override fun addTask(name: String): Flowable<Result<Boolean>> {
