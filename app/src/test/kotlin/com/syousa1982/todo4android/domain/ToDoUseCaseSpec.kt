@@ -8,9 +8,7 @@ import com.syousa1982.todo4android.domain.model.Task
 import com.syousa1982.todo4android.domain.model.TaskList
 import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
 import com.syousa1982.todo4android.util.rx.TestSchedulerProvider
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.unmockkAll
+import io.mockk.*
 import io.reactivex.Single
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -53,6 +51,7 @@ class ToDoUseCaseSpec : Spek({
                             taskListAndTasks
                         }
                     }
+
                 }
                 todoUseCase = ToDoUseCase(taskListRepository, TestSchedulerProvider())
             }
@@ -74,13 +73,16 @@ class ToDoUseCaseSpec : Spek({
 
             it("addTaskList()") {
                 val expect = "hoge"
+                val taskListEntity = TaskListEntity(name = expect)
+
+                taskListRepository.insertTaskListsByDB(taskListEntity)
+                verify { taskListRepository.insertTaskListsByDB(taskListEntity) }
                 todoUseCase.addTaskList(expect)
                     .skip(1).test().assertValue {
                         it is Result.Success
                     }
+                confirmVerified(taskListRepository)
 
-                todoUseCase.getTaskLists()
-                    .skip(1).test()
             }
 
             it("getTasks()") {
