@@ -30,6 +30,14 @@ interface TaskListDao {
     fun insertTask(task: TaskEntity): Single<Long>
 
     /**
+     * タスクリストを更新
+     *
+     * @param taskList
+     */
+    @Update
+    fun updateTaskList(taskList: TaskListEntity): Single<Int>
+
+    /**
      * タスクを更新
      *
      * @param task
