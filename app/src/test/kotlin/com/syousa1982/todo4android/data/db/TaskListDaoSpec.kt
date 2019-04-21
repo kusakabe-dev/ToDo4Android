@@ -47,6 +47,21 @@ class TaskListDaoSpec : Spek({
                             && it.first().tasks.count() == taskListAndTasks.tasks.count()
                     }
             }
+            it("タスクリスト更新") {
+                val updatedTaskList = TaskListEntity(id = 1, name = "更新済みTodoリスト")
+                database.taskListDao().updateTaskList(updatedTaskList).test().await().assertComplete()
+                val result = database.taskListDao().loadTaskListAndTasks()
+                val taskListAndTasks = TaskListAndTasks()
+                taskListAndTasks.taskList = updatedTaskList
+                taskListAndTasks.tasks = listOf()
+                result
+                    .test()
+                    .await()
+                    .assertValue {
+                        it.first().taskList.name == taskListAndTasks.taskList.name
+                            && it.first().tasks.count() == taskListAndTasks.tasks.count()
+                    }
+            }
             it("タスク追加") {
                 tasks.forEach {
                     database.taskListDao().insertTask(it).test().await().assertComplete()
@@ -61,8 +76,7 @@ class TaskListDaoSpec : Spek({
                     .test()
                     .await()
                     .assertValue {
-                        it.first().taskList.name == taskListAndTasks.taskList.name
-                            && it.first().tasks.count() == taskListAndTasks.tasks.count()
+                        it.first().tasks.count() == taskListAndTasks.tasks.count()
                     }
             }
         }
