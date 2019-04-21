@@ -41,6 +41,20 @@ interface IToDoUseCase {
     fun addTask(taskListId: Int, name: String): Flowable<Result<Boolean>>
 
     /**
+     * タスクリストを更新
+     *
+     * @param taskList
+     */
+    fun updateTaskList(taskList: TaskList): Flowable<Result<Boolean>>
+
+    /**
+     * タスクを更新
+     *
+     * @param
+     */
+    fun updateTask(task: Task): Flowable<Result<Boolean>>
+
+    /**
      * タスクリストを削除
      * memo:タスクリスト削除時はリレーションしているタスクも削除する
      *
@@ -97,6 +111,14 @@ class ToDoUseCase(private val repository: ITaskListRepository,
                 true
             }
             .toResult(schedulerProvider)
+    }
+
+    override fun updateTaskList(taskList: TaskList): Flowable<Result<Boolean>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun updateTask(task: Task): Flowable<Result<Boolean>> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun removeTaskList(id: Int): Flowable<Result<Boolean>> {
