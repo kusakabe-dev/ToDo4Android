@@ -109,7 +109,7 @@ class ToDoUseCaseSpec : Spek({
                         1L
                     }
                 }
-                todoUseCase.addTask(expect)
+                todoUseCase.addTask(1, expect)
                     .skip(1)
                     .test()
                     .assertValue {
