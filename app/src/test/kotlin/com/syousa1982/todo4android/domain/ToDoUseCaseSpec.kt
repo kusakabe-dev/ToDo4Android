@@ -90,6 +90,32 @@ class ToDoUseCaseSpec : Spek({
                 confirmVerified(taskListRepository)
             }
 
+            it("updateTaskList()") {
+                val updatedValue =
+                    TaskList(1, "UpdatedTodoList", listOf(
+                        Task(1, "aaaaa", Task.Status.DONE),
+                        Task(2, "aaaaa", Task.Status.TODO),
+                        Task(3, "aaaaa", Task.Status.TODO)
+                    ))
+
+                val taskListEntity = TaskListEntity(updatedValue.id, updatedValue.name)
+
+                every { taskListRepository.updateTaskListByDB(taskListEntity) } answers {
+                    Single.fromCallable {
+                        1
+                    }
+                }
+
+                todoUseCase.updateTaskList(updatedValue)
+                    .skip(1)
+                    .test()
+                    .assertValue {
+                        it is Result.Success
+                    }
+                verify { taskListRepository.updateTaskListByDB(taskListEntity) }
+                confirmVerified(taskListRepository)
+            }
+
             it("getTasks()") {
                 val expectedValue = Result.success(listOf(
                     Task(1, "aaaaa", Task.Status.DONE),
