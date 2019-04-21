@@ -12,9 +12,9 @@ interface ITaskListRepository {
     /**
      * タスクリストを追加
      *
-     * @param taskLists
+     * @param taskList
      */
-    fun insertTaskListByDB(taskLists: TaskListEntity): Single<Long>
+    fun insertTaskListByDB(taskList: TaskListEntity): Single<Long>
 
     /**
      * タスクを追加
@@ -44,9 +44,9 @@ interface ITaskListRepository {
     /**
      * タスクリスト削除
      *
-     * @param taskLists
+     * @param taskList
      */
-    fun deleteTaskListByDB(taskLists: TaskListEntity): Single<Int>
+    fun deleteTaskListByDB(taskList: TaskListEntity): Single<Int>
 
     /**
      * タスク削除
