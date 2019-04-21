@@ -88,7 +88,6 @@ class ToDoUseCaseSpec : Spek({
                     }
                 verify { taskListRepository.insertTaskListByDB(taskListEntity) }
                 confirmVerified(taskListRepository)
-
             }
 
             it("getTasks()") {
@@ -100,6 +99,24 @@ class ToDoUseCaseSpec : Spek({
                 todoUseCase.getTasks(1)
                     .test()
                     .assertValues(Result.Progress(), expectedValue)
+            }
+
+            it("addTasks()") {
+                val expect = "fuga"
+                val taskEntity = TaskEntity(name = expect, taskListId = 1, status = Task.Status.TODO.value)
+                every { taskListRepository.insertTaskByDB(taskEntity) } answers {
+                    Single.fromCallable {
+                        1L
+                    }
+                }
+                todoUseCase.addTask(expect)
+                    .skip(1)
+                    .test()
+                    .assertValue {
+                        it is Result.Success
+                    }
+                verify { taskListRepository.insertTaskByDB(taskEntity) }
+                confirmVerified(taskListRepository)
             }
 
             afterEachTest {
