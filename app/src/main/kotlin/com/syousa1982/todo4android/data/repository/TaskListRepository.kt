@@ -26,6 +26,13 @@ interface ITaskListRepository {
 
     // region update
     /**
+     * タスクリストを追加
+     *
+     * @param taskList
+     */
+    fun updateTaskListByDB(taskList: TaskListEntity): Single<Int>
+
+    /**
      * タスクを更新
      *
      * @param task
@@ -71,6 +78,10 @@ class TaskListRepository(private val dao: TaskListDao) : ITaskListRepository {
 
     override fun insertTaskByDB(task: TaskEntity): Single<Long> {
         return dao.insertTask(task)
+    }
+
+    override fun updateTaskListByDB(taskList: TaskListEntity): Single<Int> {
+        return dao.updateTaskList(taskList)
     }
 
     override fun updateTaskByDB(task: TaskEntity): Single<Int> {
