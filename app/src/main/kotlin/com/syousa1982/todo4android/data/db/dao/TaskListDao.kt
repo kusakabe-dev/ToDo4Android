@@ -47,6 +47,7 @@ interface TaskListDao {
 
     /**
      * タスク削除
+     * Todo: 複数削除することを前提に修正する
      *
      * @param tasks
      */
