@@ -9,7 +9,6 @@ import com.syousa1982.todo4android.domain.model.TaskList
 import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
 import com.syousa1982.todo4android.util.rx.TestSchedulerProvider
 import io.mockk.*
-import io.reactivex.Completable
 import io.reactivex.Single
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -76,17 +75,18 @@ class ToDoUseCaseSpec : Spek({
                 val expect = "hoge"
                 val taskListEntity = TaskListEntity(name = expect)
 
-                every { taskListRepository.insertTaskListsByDB(taskListEntity) } answers {
-                    Completable.complete()
+                every { taskListRepository.insertTaskListByDB(taskListEntity) } answers {
+                    Single.fromCallable {
+                        1L
+                    }
                 }
                 todoUseCase.addTaskList(expect)
                     .skip(1)
                     .test()
-                    .assertComplete()
-//                    .assertValue {
-//                        it is Result.Success
-//                    }
-                verify { taskListRepository.insertTaskListsByDB(taskListEntity) }
+                    .assertValue {
+                        it is Result.Success
+                    }
+                verify { taskListRepository.insertTaskListByDB(taskListEntity) }
                 confirmVerified(taskListRepository)
 
             }
