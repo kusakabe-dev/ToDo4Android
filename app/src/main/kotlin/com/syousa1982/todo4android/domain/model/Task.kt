@@ -8,12 +8,16 @@ package com.syousa1982.todo4android.domain.model
  * @param status
  */
 data class Task(
-        val id: Int,
-        val name: String,
-        val status: Status
+    val id: Int,
+    val name: String,
+    val status: Status
 ) {
     enum class Status(val value: String) {
         TODO("todo"),
-        DONE("done")
+        DONE("done");
+
+        companion object {
+            fun from(value: String): Status = Status.values().first { it.value == value }
+        }
     }
 }
