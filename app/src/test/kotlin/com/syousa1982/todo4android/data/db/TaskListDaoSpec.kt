@@ -32,7 +32,7 @@ class TaskListDaoSpec : Spek({
                 TaskEntity(2, 1, "piyo", "todo")
             )
             it("タスクリスト追加") {
-                database.taskListDao().insertTaskLists(taskList).test().await().assertComplete()
+                database.taskListDao().insertTaskList(taskList).test().await().assertComplete()
             }
             it("タスクリストの値とタスクの件数チェック") {
                 val result = database.taskListDao().loadTaskListAndTasks()
@@ -49,7 +49,7 @@ class TaskListDaoSpec : Spek({
             }
             it("タスク追加") {
                 tasks.forEach {
-                    database.taskListDao().insertTasks(it).test().await().assertComplete()
+                    database.taskListDao().insertTask(it).test().await().assertComplete()
                 }
             }
             it("タスク2件") {

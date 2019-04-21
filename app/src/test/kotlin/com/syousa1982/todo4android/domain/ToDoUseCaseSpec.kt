@@ -8,9 +8,7 @@ import com.syousa1982.todo4android.domain.model.Task
 import com.syousa1982.todo4android.domain.model.TaskList
 import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
 import com.syousa1982.todo4android.util.rx.TestSchedulerProvider
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.unmockkAll
+import io.mockk.*
 import io.reactivex.Single
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -53,6 +51,7 @@ class ToDoUseCaseSpec : Spek({
                             taskListAndTasks
                         }
                     }
+
                 }
                 todoUseCase = ToDoUseCase(taskListRepository, TestSchedulerProvider())
             }
@@ -72,6 +71,25 @@ class ToDoUseCaseSpec : Spek({
                     .assertValues(Result.Progress(), expectedValue)
             }
 
+            it("addTaskList()") {
+                val expect = "hoge"
+                val taskListEntity = TaskListEntity(name = expect)
+
+                every { taskListRepository.insertTaskListByDB(taskListEntity) } answers {
+                    Single.fromCallable {
+                        1L
+                    }
+                }
+                todoUseCase.addTaskList(expect)
+                    .skip(1)
+                    .test()
+                    .assertValue {
+                        it is Result.Success
+                    }
+                verify { taskListRepository.insertTaskListByDB(taskListEntity) }
+                confirmVerified(taskListRepository)
+            }
+
             it("getTasks()") {
                 val expectedValue = Result.success(listOf(
                     Task(1, "aaaaa", Task.Status.DONE),
@@ -81,6 +99,24 @@ class ToDoUseCaseSpec : Spek({
                 todoUseCase.getTasks(1)
                     .test()
                     .assertValues(Result.Progress(), expectedValue)
+            }
+
+            it("addTasks()") {
+                val expect = "fuga"
+                val taskEntity = TaskEntity(name = expect, taskListId = 1, status = Task.Status.TODO.value)
+                every { taskListRepository.insertTaskByDB(taskEntity) } answers {
+                    Single.fromCallable {
+                        1L
+                    }
+                }
+                todoUseCase.addTask(1, expect)
+                    .skip(1)
+                    .test()
+                    .assertValue {
+                        it is Result.Success
+                    }
+                verify { taskListRepository.insertTaskByDB(taskEntity) }
+                confirmVerified(taskListRepository)
             }
 
             afterEachTest {

@@ -4,7 +4,6 @@ import com.syousa1982.todo4android.data.db.dao.TaskListDao
 import com.syousa1982.todo4android.data.db.entity.TaskEntity
 import com.syousa1982.todo4android.data.db.entity.TaskListAndTasks
 import com.syousa1982.todo4android.data.db.entity.TaskListEntity
-import io.reactivex.Completable
 import io.reactivex.Single
 
 
@@ -15,23 +14,23 @@ interface ITaskListRepository {
      *
      * @param taskLists
      */
-    fun insertTaskListsByDB(taskLists: TaskListEntity): Completable
+    fun insertTaskListByDB(taskLists: TaskListEntity): Single<Long>
 
     /**
      * タスクを追加
      *
-     * @param tasks
+     * @param task
      */
-    fun insertTasksByDB(tasks: TaskEntity): Completable
+    fun insertTaskByDB(task: TaskEntity): Single<Long>
     // endregion
 
     // region update
     /**
      * タスクを更新
      *
-     * @param tasks
+     * @param task
      */
-    fun updateTasksByDB(tasks: TaskEntity): Completable
+    fun updateTaskByDB(task: TaskEntity): Single<Int>
     // endregion
 
     // region delete
@@ -40,14 +39,14 @@ interface ITaskListRepository {
      *
      * @param taskLists
      */
-    fun deleteTaskListsByDB(taskLists: TaskListEntity): Completable
+    fun deleteTaskListByDB(taskLists: TaskListEntity): Single<Int>
 
     /**
      * タスク削除
      *
-     * @param tasks
+     * @param task
      */
-    fun deleteTasksByDB(tasks: TaskEntity): Completable
+    fun deleteTaskByDB(task: TaskEntity): Single<Int>
     // endregion
 
     // region query
@@ -66,24 +65,24 @@ interface ITaskListRepository {
 }
 
 class TaskListRepository(private val dao: TaskListDao) : ITaskListRepository {
-    override fun insertTaskListsByDB(taskLists: TaskListEntity): Completable {
-        return dao.insertTaskLists(taskLists)
+    override fun insertTaskListByDB(taskList: TaskListEntity): Single<Long> {
+        return dao.insertTaskList(taskList)
     }
 
-    override fun insertTasksByDB(tasks: TaskEntity): Completable {
-        return dao.insertTasks(tasks)
+    override fun insertTaskByDB(task: TaskEntity): Single<Long> {
+        return dao.insertTask(task)
     }
 
-    override fun updateTasksByDB(tasks: TaskEntity): Completable {
-        return dao.updateTasks(tasks)
+    override fun updateTaskByDB(task: TaskEntity): Single<Int> {
+        return dao.updateTask(task)
     }
 
-    override fun deleteTasksByDB(tasks: TaskEntity): Completable {
-        return dao.deleteTasks(tasks)
+    override fun deleteTaskByDB(task: TaskEntity): Single<Int> {
+        return dao.deleteTask(task)
     }
 
-    override fun deleteTaskListsByDB(taskLists: TaskListEntity): Completable {
-        return dao.deleteTaskLists()
+    override fun deleteTaskListByDB(taskList: TaskListEntity): Single<Int> {
+        return dao.deleteTaskList(taskList)
     }
 
     override fun loadTaskListAndTasksByDB(): Single<List<TaskListAndTasks>> {
