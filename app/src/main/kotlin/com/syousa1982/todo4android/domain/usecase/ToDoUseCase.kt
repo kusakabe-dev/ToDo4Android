@@ -82,8 +82,8 @@ class ToDoUseCase(private val repository: ITaskListRepository,
 
     override fun addTaskList(name: String): Flowable<Result<Boolean>> {
         val entity = TaskListEntity(name = name)
-        return repository.insertTaskListsByDB(entity)
-            .doOnComplete {
+        return repository.insertTaskListByDB(entity)
+            .map {
                 true
             }
             .toResult(schedulerProvider)

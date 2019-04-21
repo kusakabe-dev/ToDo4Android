@@ -4,7 +4,6 @@ import androidx.room.*
 import com.syousa1982.todo4android.data.db.entity.TaskEntity
 import com.syousa1982.todo4android.data.db.entity.TaskListAndTasks
 import com.syousa1982.todo4android.data.db.entity.TaskListEntity
-import io.reactivex.Completable
 import io.reactivex.Single
 
 /**
@@ -17,26 +16,26 @@ interface TaskListDao {
      * タスクリストを追加
      * todo: Singleで取得したい
      *
-     * @param taskLists
+     * @param taskList
      */
     @Insert
-    fun insertTaskLists(vararg taskLists: TaskListEntity): Completable
+    fun insertTaskList(taskList: TaskListEntity): Single<Long>
 
     /**
      * タスクを追加
      *
-     * @param tasks
+     * @param task
      */
     @Insert
-    fun insertTasks(vararg tasks: TaskEntity): Completable
+    fun insertTask(task: TaskEntity): Single<Long>
 
     /**
      * タスクを更新
      *
-     * @param tasks
+     * @param task
      */
     @Update
-    fun updateTasks(vararg tasks: TaskEntity): Completable
+    fun updateTask(task: TaskEntity): Single<Int>
 
     /**
      * タスクリスト削除
@@ -44,7 +43,7 @@ interface TaskListDao {
      * @param taskLists
      */
     @Delete
-    fun deleteTaskLists(vararg taskLists: TaskListEntity): Completable
+    fun deleteTaskList(taskLists: TaskListEntity): Single<Int>
 
     /**
      * タスク削除
@@ -52,7 +51,7 @@ interface TaskListDao {
      * @param tasks
      */
     @Delete
-    fun deleteTasks(vararg tasks: TaskEntity): Completable
+    fun deleteTask(tasks: TaskEntity): Single<Int>
 
     /**
      * タスクリストとタスクを取得
