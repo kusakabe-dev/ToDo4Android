@@ -114,7 +114,10 @@ class ToDoUseCase(private val repository: ITaskListRepository,
     }
 
     override fun updateTaskList(taskList: TaskList): Flowable<Result<Boolean>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val entity = TaskListEntity(taskList.id, taskList.name)
+        return repository.updateTaskListByDB(entity)
+            .map { true }
+            .toResult(schedulerProvider)
     }
 
     override fun updateTask(task: Task): Flowable<Result<Boolean>> {
