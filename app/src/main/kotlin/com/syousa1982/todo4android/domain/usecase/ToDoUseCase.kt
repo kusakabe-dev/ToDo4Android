@@ -52,7 +52,7 @@ interface IToDoUseCase {
      *
      * @param
      */
-    fun updateTask(task: Task): Flowable<Result<Boolean>>
+    fun updateTask(taskListId: Int, task: Task): Flowable<Result<Boolean>>
 
     /**
      * タスクリストを削除
@@ -120,7 +120,7 @@ class ToDoUseCase(private val repository: ITaskListRepository,
             .toResult(schedulerProvider)
     }
 
-    override fun updateTask(task: Task): Flowable<Result<Boolean>> {
+    override fun updateTask(taskListId: Int, task: Task): Flowable<Result<Boolean>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
