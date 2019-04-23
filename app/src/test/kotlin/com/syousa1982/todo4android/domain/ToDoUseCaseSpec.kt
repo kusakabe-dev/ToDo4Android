@@ -145,6 +145,27 @@ class ToDoUseCaseSpec : Spek({
                 confirmVerified(taskListRepository)
             }
 
+            it("updateTask()") {
+                val updatedValue = Task(2, "UpdatedTask", Task.Status.DONE)
+                val entity = TaskEntity(updatedValue.id, 1, updatedValue.name, updatedValue.status.value)
+
+                every { taskListRepository.updateTaskByDB(entity) } answers {
+                    Single.fromCallable {
+                        1
+                    }
+                }
+
+                todoUseCase.updateTask(1, updatedValue)
+                    .skip(1)
+                    .test()
+                    .assertValue {
+                        it is Result.Success
+                    }
+
+                verify { taskListRepository.updateTaskByDB(entity) }
+                confirmVerified(taskListRepository)
+            }
+
             afterEachTest {
                 unmockkAll()
             }
