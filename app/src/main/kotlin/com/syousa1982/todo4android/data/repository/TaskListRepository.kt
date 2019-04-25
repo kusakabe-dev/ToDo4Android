@@ -12,9 +12,9 @@ interface ITaskListRepository {
     /**
      * タスクリストを追加
      *
-     * @param taskLists
+     * @param taskList
      */
-    fun insertTaskListByDB(taskLists: TaskListEntity): Single<Long>
+    fun insertTaskListByDB(taskList: TaskListEntity): Single<Long>
 
     /**
      * タスクを追加
@@ -25,6 +25,13 @@ interface ITaskListRepository {
     // endregion
 
     // region update
+    /**
+     * タスクリストを追加
+     *
+     * @param taskList
+     */
+    fun updateTaskListByDB(taskList: TaskListEntity): Single<Int>
+
     /**
      * タスクを更新
      *
@@ -37,9 +44,9 @@ interface ITaskListRepository {
     /**
      * タスクリスト削除
      *
-     * @param taskLists
+     * @param taskList
      */
-    fun deleteTaskListByDB(taskLists: TaskListEntity): Single<Int>
+    fun deleteTaskListByDB(taskList: TaskListEntity): Single<Int>
 
     /**
      * タスク削除
@@ -71,6 +78,10 @@ class TaskListRepository(private val dao: TaskListDao) : ITaskListRepository {
 
     override fun insertTaskByDB(task: TaskEntity): Single<Long> {
         return dao.insertTask(task)
+    }
+
+    override fun updateTaskListByDB(taskList: TaskListEntity): Single<Int> {
+        return dao.updateTaskList(taskList)
     }
 
     override fun updateTaskByDB(task: TaskEntity): Single<Int> {
