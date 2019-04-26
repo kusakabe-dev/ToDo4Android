@@ -6,24 +6,13 @@
     <!--背景色-->
     <color name="background">#F2F2F2</color>
     <!--共通ボタン-->
-    <color name="button_orange_ripple">#DBA901</color>
-    <color name="button_orange_solid">#FFBF00</color>
-    <color name="button_orange_stroke">#FFBF00</color>
-    <color name="button_orange_text">#FFFFFF</color>
-    <color name="button_orange_text_pressed">#FFFFFF</color>
-    <color name="button_red_ripple">#B40404</color>
-    <color name="button_red_solid">#FF0000</color>
-    <color name="button_red_stroke">#FF0000</color>
-    <color name="button_red_text">#FFFFFF</color>
-    <color name="button_red_text_pressed">#FFFFFF</color>
-    <color name="button_blue_ripple">#E6E6E6</color>
-    <color name="button_blue_solid">#FFFFFF</color>
-    <color name="button_blue_stroke">#0080FF</color>
-    <color name="button_blue_text">#0080FF</color>
-    <color name="button_blue_text_pressed">#0080FF</color>
-    <color name="button_white_ripple">#E6E6E6</color>
-    <color name="button_white_solid">#FFFFFF</color>
-    <color name="button_white_stroke">#FFFFFF</color>
-    <color name="button_white_text">#585858</color>
-    <color name="button_white_text_pressed">#585858</color>
+    <color name="button_ripple">#B40404</color>
+    <color name="button_solid">#FF0000</color>
+    <color name="button_stroke">#FF0000</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="button_text_pressed">#FFFFFF</color>
+    <!--共通ボタン（非活性）-->
+    <color name="button_disable_solid">#D8D8D8</color>
+    <color name="button_disable_stroke">#848484</color>
+    <color name="button_disable_text">#848484</color>
 </resources>
