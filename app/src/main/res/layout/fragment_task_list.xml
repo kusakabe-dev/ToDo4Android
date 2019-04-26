@@ -21,15 +21,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <!--<com.google.android.material.button.MaterialButton-->
+            <!--android:id="@+id/material_button"-->
+            <!--style="@style/Widget.AppTheme.Button.Rounded"-->
+            <!--android:layout_width="56dp"-->
+            <!--android:layout_height="56dp"-->
+            <!--android:layout_marginEnd="16dp"-->
+            <!--android:layout_marginBottom="16dp"-->
+            <!--android:textSize="30sp"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"/>-->
         <Button
             android:id="@+id/add_button"
-            style="@style/AppButton.BottomRight"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            style="@style/AppButton.Rounded"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:foreground="@drawable/ic_add_black_24dp"
-            android:foregroundTint="@android:color/background_light"
             android:textSize="30sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
