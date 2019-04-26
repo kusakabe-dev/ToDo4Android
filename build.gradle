@@ -37,7 +37,7 @@ buildscript {
     }
     dependencies {
         // Gradleプラグイン（AndroidStudioのバージョンと合わせる）
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.4.0'
         // Kotlinプラグイン
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // ドキュメント出力プラグイン
