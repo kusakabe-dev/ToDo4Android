@@ -1,7 +1,7 @@
 <resources>
 
     <!--アプリ共通テーマ-->
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
@@ -28,28 +28,4 @@
         <item name="android:textColorSecondary">@android:color/darker_gray</item>
         <item name="windowActionModeOverlay">true</item>
     </style>
-    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-
-    <style name="AppButton">
-        <item name="android:textAllCaps">false</item>
-    </style>
-
-    <!-- todo:要らなくなったら捨てる -->
-    <style name="AppButton.Rounded">
-        <item name="android:background">@drawable/background_button</item>
-        <item name="android:textColor">@drawable/button_text_color</item>
-        <item name="android:foreground">@drawable/ic_add_black_24dp</item>
-        <item name="android:foregroundTint">@android:color/background_light</item>
-        <item name="android:elevation">5dp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="Widget.AppTheme.Button" parent="@style/Widget.MaterialComponents.Button"/>
-    
-    <style name="Widget.AppTheme.Button.Rounded">
-
-    </style>
-
-
 </resources>

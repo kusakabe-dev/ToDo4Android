@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#FFFFFF</color>
+    <color name="color_primary">#2196F3</color>
     <color name="color_primary_dark">#303F9F</color>
-    <color name="color_accent">#0080FF</color>
+    <color name="color_accent">#B40404</color>
     <!--背景色-->
     <color name="background">#F2F2F2</color>
     <!--共通ボタン-->
