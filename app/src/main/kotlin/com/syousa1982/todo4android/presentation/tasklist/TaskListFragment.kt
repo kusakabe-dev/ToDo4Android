@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import com.syousa1982.todo4android.domain.Result
+import com.syousa1982.todo4android.presentation.MainActivity
 import com.syousa1982.todo4android.presentation.tasklist.item.TaskListItem
 import com.syousa1982.todo4android.util.extention.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -29,6 +30,16 @@ class TaskListFragment : Fragment() {
     }
 
 
+    private fun bindOutputViewModel(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
+        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
+    }
+
+    /**
+     * タスクリストを出力
+     *
+     * @param binding
+     * @param viewModel
+     */
     private fun bindRecyclerView(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
         // Input
         binding.taskList.setGroupieAdapter()
