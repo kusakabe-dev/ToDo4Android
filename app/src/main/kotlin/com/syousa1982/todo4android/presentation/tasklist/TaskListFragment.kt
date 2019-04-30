@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.MainActivity
@@ -25,10 +27,17 @@ class TaskListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentTaskListBinding.inflate(inflater, container, false)
         lifecycle.addObserver(viewModel)
+        bindInputViewModel(binding, viewModel)
+        bindOutputViewModel(binding, viewModel)
         bindRecyclerView(binding, viewModel)
         return binding.root
     }
 
+    private fun bindInputViewModel(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
+        binding.addButton.setOnClickPauseListener {
+            Navigation.findNavController(it).navigate(R.id.action_tasksFragment_to_taskListAddFragment)
+        }
+    }
 
     private fun bindOutputViewModel(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
         (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
