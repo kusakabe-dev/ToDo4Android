@@ -9,6 +9,15 @@
         android:id="@+id/tasksFragment"
         android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListFragment"
         android:label="fragment_tasks"
-        tools:layout="@layout/fragment_task_list" />
+        tools:layout="@layout/fragment_task_list" >
+        <action
+            android:id="@+id/action_tasksFragment_to_taskListAddFragment"
+            app:destination="@id/taskListAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskListAddFragment"
+        android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListAddFragment"
+        android:label="fragment_task_list_add"
+        tools:layout="@layout/fragment_task_list_add" />
 
 </navigation>

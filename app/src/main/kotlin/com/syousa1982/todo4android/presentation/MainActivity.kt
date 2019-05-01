@@ -14,4 +14,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
+
+    fun setAppBarTitle(title: String) {
+        binding.toolbar.title = title
+    }
 }

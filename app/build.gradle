@@ -126,6 +126,7 @@ dependencies {
     implementation "androidx.browser:browser:1.0.0"
     implementation "androidx.annotation:annotation:1.0.2"
     implementation "androidx.exifinterface:exifinterface:1.0.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
