@@ -17,6 +17,7 @@ data class TaskListItem(var taskList: TaskList? = null) : BindableItem<ItemTaskL
     override fun bind(viewBinding: ItemTaskListBinding, position: Int) {
         taskList?.let {
             viewBinding.taskListName.text = it.name
+            viewBinding.taskCount.text = it.taskCount.toString()
         }
     }
 }
