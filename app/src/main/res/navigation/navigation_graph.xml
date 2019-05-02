@@ -13,11 +13,23 @@
         <action
             android:id="@+id/action_tasksFragment_to_taskListAddFragment"
             app:destination="@id/taskListAddFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
     </fragment>
     <fragment
         android:id="@+id/taskListAddFragment"
         android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListAddFragment"
         android:label="fragment_task_list_add"
         tools:layout="@layout/fragment_task_list_add" />
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.syousa1982.todo4android.presentation.task.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" >
+        <argument
+            android:name="taskList"
+            app:argType="com.syousa1982.todo4android.domain.model.TaskList" />
+    </fragment>
 
 </navigation>

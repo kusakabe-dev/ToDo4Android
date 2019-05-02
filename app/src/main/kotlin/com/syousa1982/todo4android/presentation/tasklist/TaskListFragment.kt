@@ -27,20 +27,16 @@ class TaskListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentTaskListBinding.inflate(inflater, container, false)
         lifecycle.addObserver(viewModel)
-        bindInputViewModel(binding, viewModel)
-        bindOutputViewModel(binding, viewModel)
+        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
+        bindInput(binding)
         bindRecyclerView(binding, viewModel)
         return binding.root
     }
 
-    private fun bindInputViewModel(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
+    private fun bindInput(binding: FragmentTaskListBinding) {
         binding.addButton.setOnClickPauseListener {
             Navigation.findNavController(it).navigate(R.id.action_tasksFragment_to_taskListAddFragment)
         }
-    }
-
-    private fun bindOutputViewModel(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
-        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
     }
 
     /**
@@ -53,9 +49,11 @@ class TaskListFragment : Fragment() {
         // Input
         binding.taskList.setGroupieAdapter()
         binding.taskList.setLinearLayoutManagerWithDivider()
-        binding.taskList.setGroupieOnItemClickListener<TaskListItem> { item, _ ->
+        binding.taskList.setGroupieOnItemClickListener<TaskListItem> { item, view ->
             item.taskList?.let {
-                // todo: TaskFragmentに遷移
+                Navigation.findNavController(view).navigate(
+                    TaskListFragmentDirections.actionTasksFragmentToTaskFragment(it)
+                )
             }
         }
         // Output
