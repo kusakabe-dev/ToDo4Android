@@ -30,6 +30,12 @@ class TaskViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel() {
      */
     val updateResult = MutableLiveData<Result<Boolean>>()
 
+    override fun onResume() {
+        super.onResume()
+        Log.d(className(), "onResume#taskListid: ${taskListId.value}")
+        getTasks()
+    }
+
     /**
      * タスクを取得
      */
