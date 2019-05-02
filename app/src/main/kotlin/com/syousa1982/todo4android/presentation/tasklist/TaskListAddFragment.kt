@@ -16,7 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 /**
- * A simple [Fragment] subclass.
+ * タスクリスト作成 [Fragment] subclass.
  *
  */
 class TaskListAddFragment : Fragment() {

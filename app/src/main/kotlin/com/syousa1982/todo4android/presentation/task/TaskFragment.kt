@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTaskBinding
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.MainActivity
@@ -37,8 +39,8 @@ class TaskFragment : Fragment() {
 
     private fun bindInputView(binding: FragmentTaskBinding, viewModel: TaskViewModel) {
         binding.addButton.setOnClickPauseListener {
-            // todo:タスク追加画面へ遷移
             Log.d(className(), "bindInputView#taskListid: ${viewModel.taskListId.value}")
+            Navigation.findNavController(it).navigate(R.id.action_taskFragment_to_taskAddFragment)
         }
     }
 
@@ -57,7 +59,7 @@ class TaskFragment : Fragment() {
         }
         // Output
         viewModel.tasks.observe(this) {
-            when(it) {
+            when (it) {
                 is Result.Progress -> {
                     Log.d(className(), "タスク取得開始")
                 }

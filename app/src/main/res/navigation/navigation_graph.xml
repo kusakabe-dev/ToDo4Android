@@ -30,6 +30,19 @@
         <argument
             android:name="taskList"
             app:argType="com.syousa1982.todo4android.domain.model.TaskList" />
+        <action
+            android:id="@+id/action_taskFragment_to_taskAddFragment"
+            app:destination="@id/taskAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskAddFragment"
+        android:name="com.syousa1982.todo4android.presentation.task.TaskAddFragment"
+        android:label="fragment_task_add"
+        tools:layout="@layout/fragment_task_add" >
+        <argument
+            android:name="taskListId"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 
 </navigation>
