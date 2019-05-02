@@ -23,6 +23,8 @@ interface IToDoUseCase {
 
     /**
      * タスクのListを取得
+     *
+     * @param taskListId
      */
     fun getTasks(taskListId: Int): Flowable<Result<List<Task>>>
 
@@ -36,6 +38,7 @@ interface IToDoUseCase {
     /**
      * タスクを追加
      *
+     * @param taskListId
      * @param name
      */
     fun addTask(taskListId: Int, name: String): Flowable<Result<Boolean>>
