@@ -10,6 +10,7 @@ import com.syousa1982.todo4android.domain.translator.TaskListTranslator
 import com.syousa1982.todo4android.util.extention.toResult
 import com.syousa1982.todo4android.util.rx.SchedulerProvider
 import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
 
 /**
  * ToDo機能 インタフェース
@@ -58,6 +59,11 @@ interface IToDoUseCase {
     fun updateTask(taskListId: Int, task: Task): Flowable<Result<Boolean>>
 
     /**
+     * タスクリストとタスクを削除
+     */
+    fun removeTaskListAndTasks(taskList: TaskList): Flowable<Result<Boolean>>
+
+    /**
      * タスクリストを削除
      * memo:タスクリスト削除時はリレーションしているタスクも削除する
      *
@@ -71,6 +77,14 @@ interface IToDoUseCase {
      * @param taskListId
      */
     fun removeTask(taskListId: Int, task: Task): Flowable<Result<Boolean>>
+
+    /**
+     * タスクを全件削除
+     *
+     * @param taskListId
+     * @param tasks
+     */
+    fun removeTasks(taskListId: Int, tasks: List<Task>): Flowable<Result<Boolean>>
 
 }
 
@@ -130,6 +144,24 @@ class ToDoUseCase(private val repository: ITaskListRepository,
             .toResult(schedulerProvider)
     }
 
+    override fun removeTaskListAndTasks(taskList: TaskList): Flowable<Result<Boolean>> {
+        val taskListResult = removeTaskList(taskList)
+        val tasksResult = removeTasks(taskList.id, taskList.tasks)
+        return Flowable.zip(taskListResult, tasksResult, BiFunction {taskListResult, tasksResult ->
+            when {
+                (taskListResult is Result.Failure) || (tasksResult is Result.Failure) -> {
+                    Result.failure(Throwable())
+                }
+                (taskListResult is Result.Success) && (tasksResult is Result.Success) -> {
+                    Result.success(true)
+                }
+                else -> {
+                    Result.progress()
+                }
+            }
+        })
+    }
+
     override fun removeTaskList(taskList: TaskList): Flowable<Result<Boolean>> {
         val entity = TaskListEntity(taskList.id, taskList.name)
         return repository.deleteTaskListByDB(entity)
@@ -140,6 +172,15 @@ class ToDoUseCase(private val repository: ITaskListRepository,
     override fun removeTask(taskListId: Int, task: Task): Flowable<Result<Boolean>> {
         val entity = TaskEntity(task.id, taskListId, task.name, task.status.value)
         return repository.deleteTaskByDB(entity)
+            .map { true }
+            .toResult(schedulerProvider)
+    }
+
+    override fun removeTasks(taskListId: Int, tasks: List<Task>): Flowable<Result<Boolean>> {
+        val entities = tasks.map { task ->
+            TaskEntity(task.id, taskListId, task.name, task.status.value)
+        }
+        return repository.deleteTasksByDB(entities)
             .map { true }
             .toResult(schedulerProvider)
     }
