@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
@@ -83,6 +84,10 @@ class TaskFragment : Fragment() {
             val task = item.task ?: return@setGroupieOnItemClickListener
             viewModel.updateTask(task)
         }
+        binding.tasks.setGroupieOnItemLongClickListener<TaskItem> { item, view ->
+            showDeleteDialog(item)
+            return@setGroupieOnItemLongClickListener true
+        }
         // Output
         viewModel.tasks.observe(this) {
             when (it) {
@@ -103,6 +108,20 @@ class TaskFragment : Fragment() {
                 }
             }
         }
+    }
+
+
+    private fun showDeleteDialog(item: TaskItem) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("確認")
+            .setMessage("タスクを削除しますか？")
+            .setPositiveButton("削除する") { _, _ ->
+                item.task?.let { task ->
+                    viewModel.delete(task)
+                }
+            }
+            .setNegativeButton("キャンセル", null)
+            .show()
     }
 
     /**

@@ -63,4 +63,15 @@ class TaskViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel() {
         ).addTo(disposable)
     }
 
+    /**
+     * タスクを削除
+     */
+    fun delete(task: Task) {
+        val taskListId = taskListId.value ?: throw IllegalAccessException("タスクリストのIDが指定されていません")
+        todoUseCase.removeTask(taskListId, task).subscribeBy(
+            onNext = { updateResult.value = it },
+            onError = { e -> Log.e(className(), "エラー発生", e) }
+        ).addTo(disposable)
+    }
+
 }

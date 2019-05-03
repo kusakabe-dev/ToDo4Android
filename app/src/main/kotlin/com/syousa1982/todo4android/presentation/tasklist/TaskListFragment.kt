@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
@@ -57,6 +58,10 @@ class TaskListFragment : Fragment() {
                 )
             }
         }
+        binding.taskList.setGroupieOnItemLongClickListener<TaskListItem> { item, view ->
+            showDeleteDialog(item)
+            return@setGroupieOnItemLongClickListener true
+        }
         // Output
         viewModel.taskLists.observe(this) {
             when (it) {
@@ -77,6 +82,16 @@ class TaskListFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun showDeleteDialog(item: TaskListItem) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("確認")
+            .setMessage("タスクリストを削除しますか？")
+            .setPositiveButton("削除する") { _, _ ->
+            }
+            .setNegativeButton("キャンセル", null)
+            .show()
     }
 
     /**

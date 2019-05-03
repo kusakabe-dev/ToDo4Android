@@ -61,16 +61,16 @@ interface IToDoUseCase {
      * タスクリストを削除
      * memo:タスクリスト削除時はリレーションしているタスクも削除する
      *
-     * @param id
+     * @param taskList
      */
-    fun removeTaskList(id: Int): Flowable<Result<Boolean>>
+    fun removeTaskList(taskList: TaskList): Flowable<Result<Boolean>>
 
     /**
      * タスクを削除
      *
-     * @param id
+     * @param taskListId
      */
-    fun removeTask(id: Int): Flowable<Result<Boolean>>
+    fun removeTask(taskListId: Int, task: Task): Flowable<Result<Boolean>>
 
 }
 
@@ -130,11 +130,17 @@ class ToDoUseCase(private val repository: ITaskListRepository,
             .toResult(schedulerProvider)
     }
 
-    override fun removeTaskList(id: Int): Flowable<Result<Boolean>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun removeTaskList(taskList: TaskList): Flowable<Result<Boolean>> {
+        val entity = TaskListEntity(taskList.id, taskList.name)
+        return repository.deleteTaskListByDB(entity)
+            .map { true }
+            .toResult(schedulerProvider)
     }
 
-    override fun removeTask(id: Int): Flowable<Result<Boolean>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun removeTask(taskListId: Int, task: Task): Flowable<Result<Boolean>> {
+        val entity = TaskEntity(task.id, taskListId, task.name, task.status.value)
+        return repository.deleteTaskByDB(entity)
+            .map { true }
+            .toResult(schedulerProvider)
     }
 }

@@ -30,4 +30,7 @@ class TaskListViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel()
             onError = { e -> Log.e(className(), "エラー発生", e) }
         ).addTo(disposable)
     }
+
+    fun delete() {
+    }
 }
