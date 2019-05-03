@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTaskBinding
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.MainActivity
@@ -33,6 +32,7 @@ class TaskFragment : Fragment() {
         viewModel.taskListId.value = taskList.id
         (requireActivity() as MainActivity).setAppBarTitle(taskList.name)
         bindInputView(binding, viewModel)
+        bindOutputView(binding, viewModel)
         bindRecyclerView(binding, viewModel)
         return binding.root
     }
@@ -48,6 +48,24 @@ class TaskFragment : Fragment() {
         }
     }
 
+    private fun bindOutputView(binding: FragmentTaskBinding, viewModel: TaskViewModel) {
+        viewModel.updateResult.observe(this) {
+            when (it) {
+                is Result.Progress -> {
+                    Log.d(className(), "タスク更新開始")
+                }
+                is Result.Success -> {
+                    Log.d(className(), "タスク更新完了")
+                    viewModel.getTasks()
+                    viewModel.updateResult.value = null
+                }
+                is Result.Failure -> {
+                    Log.d(className(), "タスク更新失敗", it.e)
+                }
+            }
+        }
+    }
+
     /**
      * タスク一覧を出力
      *
@@ -59,7 +77,8 @@ class TaskFragment : Fragment() {
         binding.tasks.setGroupieAdapter()
         binding.tasks.setLinearLayoutManagerWithDivider()
         binding.tasks.setGroupieOnItemClickListener<TaskItem> { item, view ->
-            // todo:タスクの状態更新
+            val task = item.task ?: return@setGroupieOnItemClickListener
+            viewModel.updateTask(task)
         }
         // Output
         viewModel.tasks.observe(this) {

@@ -52,7 +52,12 @@ class TaskViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel() {
      */
     fun updateTask(task: Task) {
         val taskListId = taskListId.value ?: throw IllegalAccessException("タスクリストのIDが指定されていません")
-        todoUseCase.updateTask(taskListId, task).subscribeBy(
+        val updateTask = Task(
+            task.id,
+            task.name,
+            Task.Status.changeStatus(task.status)
+        )
+        todoUseCase.updateTask(taskListId, updateTask).subscribeBy(
             onNext = { updateResult.value = it },
             onError = { e -> Log.e(className(), "エラー発生", e) }
         ).addTo(disposable)
