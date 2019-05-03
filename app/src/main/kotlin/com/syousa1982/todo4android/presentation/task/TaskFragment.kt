@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 import com.syousa1982.todo4android.databinding.FragmentTaskBinding
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.MainActivity
@@ -60,7 +61,9 @@ class TaskFragment : Fragment() {
                     viewModel.updateResult.value = null
                 }
                 is Result.Failure -> {
-                    Log.d(className(), "タスク更新失敗", it.e)
+                    val actionName = "タスク更新"
+                    Log.d(className(), "$actionName 失敗", it.e)
+                    showErrorMessage(actionName)
                 }
             }
         }
@@ -94,9 +97,20 @@ class TaskFragment : Fragment() {
                     binding.tasks.getGroupieAdapter().update(items)
                 }
                 is Result.Failure -> {
-                    Log.d(className(), "タスク取得失敗", it.e)
+                    val actionName = "タスク取得"
+                    Log.d(className(), "$actionName 失敗", it.e)
+                    showErrorMessage(actionName)
                 }
             }
+        }
+    }
+
+    /**
+     * エラーメッセージ表示
+     */
+    private fun showErrorMessage(actionName: String) {
+        view?.let {
+            Snackbar.make(it, "$actionName 失敗しました。", Snackbar.LENGTH_LONG).show()
         }
     }
 

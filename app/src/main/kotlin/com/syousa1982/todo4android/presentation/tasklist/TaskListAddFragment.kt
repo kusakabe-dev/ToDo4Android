@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 import com.syousa1982.todo4android.databinding.FragmentTaskListAddBinding
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.MainActivity
@@ -72,12 +73,21 @@ class TaskListAddFragment : Fragment() {
                     Navigation.findNavController(binding.root).popBackStack()
                 }
                 is Result.Failure -> {
-                    Log.d(className(), "タスクリスト作成失敗", it.e)
+                    val actionName = "タスクリスト作成"
+                    Log.d(className(), "$actionName 失敗", it.e)
                     viewModel.isProgress.value = false
+                    showErrorMessage(actionName)
                 }
             }
         }
     }
 
-
+    /**
+     * エラーメッセージ表示
+     */
+    private fun showErrorMessage(actionName: String) {
+        view?.let {
+            Snackbar.make(it, "$actionName 失敗しました。", Snackbar.LENGTH_LONG).show()
+        }
+    }
 }

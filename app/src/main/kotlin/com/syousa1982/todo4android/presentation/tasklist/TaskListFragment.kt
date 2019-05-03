@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import com.syousa1982.todo4android.domain.Result
@@ -70,10 +71,20 @@ class TaskListFragment : Fragment() {
                     binding.taskList.getGroupieAdapter().update(items)
                 }
                 is Result.Failure -> {
-                    Log.d(className(), "タスクリスト取得失敗", it.e)
+                    val actionName = "タスクリスト取得"
+                    Log.d(className(), "$actionName 失敗", it.e)
+                    showErrorMessage(actionName)
                 }
             }
         }
     }
 
+    /**
+     * エラーメッセージ表示
+     */
+    private fun showErrorMessage(actionName: String) {
+        view?.let {
+            Snackbar.make(it, "$actionName 失敗しました。", Snackbar.LENGTH_LONG).show()
+        }
+    }
 }
