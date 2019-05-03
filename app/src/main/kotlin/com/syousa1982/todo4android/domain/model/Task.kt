@@ -13,7 +13,7 @@ data class Task(
     val id: Int,
     val name: String,
     val status: Status
-) {
+) : Serializable {
     enum class Status(val value: String) {
         TODO("todo"),
         DONE("done");
