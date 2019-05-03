@@ -31,6 +31,7 @@ class TaskListFragment : Fragment() {
         lifecycle.addObserver(viewModel)
         (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
         bindInput(binding)
+        bindOutput(binding,viewModel)
         bindRecyclerView(binding, viewModel)
         return binding.root
     }
@@ -38,6 +39,26 @@ class TaskListFragment : Fragment() {
     private fun bindInput(binding: FragmentTaskListBinding) {
         binding.addButton.setOnClickPauseListener {
             Navigation.findNavController(it).navigate(R.id.action_tasksFragment_to_taskListAddFragment)
+        }
+    }
+
+    private fun bindOutput(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
+        viewModel.updateResult.observe(this) {
+            when (it) {
+                is Result.Progress -> {
+                    Log.d(className(), "タスクリスト更新開始")
+                }
+                is Result.Success -> {
+                    Log.d(className(), "タスクリスト更新完了")
+                    viewModel.fetchTasks()
+                    viewModel.updateResult.value = null
+                }
+                is Result.Failure -> {
+                    val actionName = "タスクリスト更新"
+                    Log.d(className(), "$actionName 失敗", it.e)
+                    showErrorMessage(actionName)
+                }
+            }
         }
     }
 
@@ -89,6 +110,9 @@ class TaskListFragment : Fragment() {
             .setTitle("確認")
             .setMessage("タスクリストを削除しますか？")
             .setPositiveButton("削除する") { _, _ ->
+                item.taskList?.let {
+                    viewModel.delete(it)
+                }
             }
             .setNegativeButton("キャンセル", null)
             .show()
