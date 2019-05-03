@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'com.cookpad.android.licensetools'
 apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 28
@@ -119,7 +120,7 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     // AndroidX
     implementation "com.google.android.material:material:1.0.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha4"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha5"
     implementation "androidx.appcompat:appcompat:1.0.2"
     implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation "androidx.cardview:cardview:1.0.0"

@@ -54,6 +54,13 @@ interface ITaskListRepository {
      * @param task
      */
     fun deleteTaskByDB(task: TaskEntity): Single<Int>
+
+    /**
+     * タスクを複数削除
+     *
+     * @param tasks
+     */
+    fun deleteTasksByDB(tasks: List<TaskEntity>): Single<Int>
     // endregion
 
     // region query
@@ -94,6 +101,10 @@ class TaskListRepository(private val dao: TaskListDao) : ITaskListRepository {
 
     override fun deleteTaskListByDB(taskList: TaskListEntity): Single<Int> {
         return dao.deleteTaskList(taskList)
+    }
+
+    override fun deleteTasksByDB(tasks: List<TaskEntity>): Single<Int> {
+        return dao.deleteTasks(tasks)
     }
 
     override fun loadTaskListAndTasksByDB(): Single<List<TaskListAndTasks>> {

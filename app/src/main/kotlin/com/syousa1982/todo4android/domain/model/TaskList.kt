@@ -1,5 +1,7 @@
 package com.syousa1982.todo4android.domain.model
 
+import java.io.Serializable
+
 /**
  * タスクリスト
  *
@@ -9,10 +11,10 @@ package com.syousa1982.todo4android.domain.model
  * @property taskCount
  */
 data class TaskList(
-        val id: Int,
-        val name: String,
-        val tasks: List<Task>
-) {
+    val id: Int,
+    val name: String,
+    val tasks: List<Task>
+) : Serializable {
     /**
      * タスク件数
      */

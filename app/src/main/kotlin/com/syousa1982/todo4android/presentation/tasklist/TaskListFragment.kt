@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.material.snackbar.Snackbar
 import com.syousa1982.todo4android.R
 import com.syousa1982.todo4android.databinding.FragmentTaskListBinding
 import com.syousa1982.todo4android.domain.Result
@@ -27,20 +29,37 @@ class TaskListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentTaskListBinding.inflate(inflater, container, false)
         lifecycle.addObserver(viewModel)
-        bindInputViewModel(binding, viewModel)
-        bindOutputViewModel(binding, viewModel)
+        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
+        bindInput(binding)
+        bindOutput(binding,viewModel)
         bindRecyclerView(binding, viewModel)
         return binding.root
     }
 
-    private fun bindInputViewModel(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
+    private fun bindInput(binding: FragmentTaskListBinding) {
         binding.addButton.setOnClickPauseListener {
             Navigation.findNavController(it).navigate(R.id.action_tasksFragment_to_taskListAddFragment)
         }
     }
 
-    private fun bindOutputViewModel(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
-        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
+    private fun bindOutput(binding: FragmentTaskListBinding, viewModel: TaskListViewModel) {
+        viewModel.updateResult.observe(this) {
+            when (it) {
+                is Result.Progress -> {
+                    Log.d(className(), "タスクリスト更新開始")
+                }
+                is Result.Success -> {
+                    Log.d(className(), "タスクリスト更新完了")
+                    viewModel.fetchTasks()
+                    viewModel.updateResult.value = null
+                }
+                is Result.Failure -> {
+                    val actionName = "タスクリスト更新"
+                    Log.d(className(), "$actionName 失敗", it.e)
+                    showErrorMessage(actionName)
+                }
+            }
+        }
     }
 
     /**
@@ -53,10 +72,16 @@ class TaskListFragment : Fragment() {
         // Input
         binding.taskList.setGroupieAdapter()
         binding.taskList.setLinearLayoutManagerWithDivider()
-        binding.taskList.setGroupieOnItemClickListener<TaskListItem> { item, _ ->
+        binding.taskList.setGroupieOnItemClickListener<TaskListItem> { item, view ->
             item.taskList?.let {
-                // todo: TaskFragmentに遷移
+                Navigation.findNavController(view).navigate(
+                    TaskListFragmentDirections.actionTasksFragmentToTaskFragment(it)
+                )
             }
+        }
+        binding.taskList.setGroupieOnItemLongClickListener<TaskListItem> { item, view ->
+            showDeleteDialog(item)
+            return@setGroupieOnItemLongClickListener true
         }
         // Output
         viewModel.taskLists.observe(this) {
@@ -72,10 +97,33 @@ class TaskListFragment : Fragment() {
                     binding.taskList.getGroupieAdapter().update(items)
                 }
                 is Result.Failure -> {
-                    Log.d(className(), "タスクリスト取得失敗", it.e)
+                    val actionName = "タスクリスト取得"
+                    Log.d(className(), "$actionName 失敗", it.e)
+                    showErrorMessage(actionName)
                 }
             }
         }
     }
 
+    private fun showDeleteDialog(item: TaskListItem) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("確認")
+            .setMessage("タスクリストを削除しますか？")
+            .setPositiveButton("削除する") { _, _ ->
+                item.taskList?.let {
+                    viewModel.delete(it)
+                }
+            }
+            .setNegativeButton("キャンセル", null)
+            .show()
+    }
+
+    /**
+     * エラーメッセージ表示
+     */
+    private fun showErrorMessage(actionName: String) {
+        view?.let {
+            Snackbar.make(it, "$actionName 失敗しました。", Snackbar.LENGTH_LONG).show()
+        }
+    }
 }

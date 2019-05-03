@@ -17,7 +17,15 @@ import io.reactivex.rxkotlin.subscribeBy
  */
 class TaskListViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel() {
 
+    /**
+     * タスクリスト一覧
+     */
     val taskLists = MutableLiveData<Result<List<TaskList>>>()
+
+    /**
+     * 更新結果
+     */
+    val updateResult = MutableLiveData<Result<Boolean>>()
 
     override fun onResume() {
         super.onResume()
@@ -27,6 +35,13 @@ class TaskListViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel()
     fun fetchTasks() {
         todoUseCase.getTaskLists().subscribeBy(
             onNext = { taskLists.value = it },
+            onError = { e -> Log.e(className(), "エラー発生", e) }
+        ).addTo(disposable)
+    }
+
+    fun delete(taskList: TaskList) {
+        todoUseCase.removeTaskListAndTasks(taskList).subscribeBy(
+            onNext = { updateResult.value = it },
             onError = { e -> Log.e(className(), "エラー発生", e) }
         ).addTo(disposable)
     }

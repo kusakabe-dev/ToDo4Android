@@ -55,12 +55,19 @@ interface TaskListDao {
 
     /**
      * タスク削除
-     * Todo: 複数削除することを前提に修正する
      *
      * @param tasks
      */
     @Delete
     fun deleteTask(tasks: TaskEntity): Single<Int>
+
+    /**
+     * タスクを複数削除
+     *
+     * @param tasks
+     */
+    @Delete
+    fun deleteTasks(tasks: List<TaskEntity>): Single<Int>
 
     /**
      * タスクリストとタスクを取得

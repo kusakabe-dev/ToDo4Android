@@ -10,6 +10,7 @@ import com.syousa1982.todo4android.domain.translator.TaskListTranslator
 import com.syousa1982.todo4android.util.extention.toResult
 import com.syousa1982.todo4android.util.rx.SchedulerProvider
 import io.reactivex.Flowable
+import io.reactivex.functions.BiFunction
 
 /**
  * ToDo機能 インタフェース
@@ -23,6 +24,8 @@ interface IToDoUseCase {
 
     /**
      * タスクのListを取得
+     *
+     * @param taskListId
      */
     fun getTasks(taskListId: Int): Flowable<Result<List<Task>>>
 
@@ -36,6 +39,7 @@ interface IToDoUseCase {
     /**
      * タスクを追加
      *
+     * @param taskListId
      * @param name
      */
     fun addTask(taskListId: Int, name: String): Flowable<Result<Boolean>>
@@ -55,19 +59,32 @@ interface IToDoUseCase {
     fun updateTask(taskListId: Int, task: Task): Flowable<Result<Boolean>>
 
     /**
+     * タスクリストとタスクを削除
+     */
+    fun removeTaskListAndTasks(taskList: TaskList): Flowable<Result<Boolean>>
+
+    /**
      * タスクリストを削除
      * memo:タスクリスト削除時はリレーションしているタスクも削除する
      *
-     * @param id
+     * @param taskList
      */
-    fun removeTaskList(id: Int): Flowable<Result<Boolean>>
+    fun removeTaskList(taskList: TaskList): Flowable<Result<Boolean>>
 
     /**
      * タスクを削除
      *
-     * @param id
+     * @param taskListId
      */
-    fun removeTask(id: Int): Flowable<Result<Boolean>>
+    fun removeTask(taskListId: Int, task: Task): Flowable<Result<Boolean>>
+
+    /**
+     * タスクを全件削除
+     *
+     * @param taskListId
+     * @param tasks
+     */
+    fun removeTasks(taskListId: Int, tasks: List<Task>): Flowable<Result<Boolean>>
 
 }
 
@@ -127,11 +144,44 @@ class ToDoUseCase(private val repository: ITaskListRepository,
             .toResult(schedulerProvider)
     }
 
-    override fun removeTaskList(id: Int): Flowable<Result<Boolean>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun removeTaskListAndTasks(taskList: TaskList): Flowable<Result<Boolean>> {
+        val taskListResult = removeTaskList(taskList)
+        val tasksResult = removeTasks(taskList.id, taskList.tasks)
+        return Flowable.zip(taskListResult, tasksResult, BiFunction {taskListResult, tasksResult ->
+            when {
+                (taskListResult is Result.Failure) || (tasksResult is Result.Failure) -> {
+                    Result.failure(Throwable())
+                }
+                (taskListResult is Result.Success) && (tasksResult is Result.Success) -> {
+                    Result.success(true)
+                }
+                else -> {
+                    Result.progress()
+                }
+            }
+        })
     }
 
-    override fun removeTask(id: Int): Flowable<Result<Boolean>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun removeTaskList(taskList: TaskList): Flowable<Result<Boolean>> {
+        val entity = TaskListEntity(taskList.id, taskList.name)
+        return repository.deleteTaskListByDB(entity)
+            .map { true }
+            .toResult(schedulerProvider)
+    }
+
+    override fun removeTask(taskListId: Int, task: Task): Flowable<Result<Boolean>> {
+        val entity = TaskEntity(task.id, taskListId, task.name, task.status.value)
+        return repository.deleteTaskByDB(entity)
+            .map { true }
+            .toResult(schedulerProvider)
+    }
+
+    override fun removeTasks(taskListId: Int, tasks: List<Task>): Flowable<Result<Boolean>> {
+        val entities = tasks.map { task ->
+            TaskEntity(task.id, taskListId, task.name, task.status.value)
+        }
+        return repository.deleteTasksByDB(entities)
+            .map { true }
+            .toResult(schedulerProvider)
     }
 }

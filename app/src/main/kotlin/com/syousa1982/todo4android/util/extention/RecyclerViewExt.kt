@@ -36,3 +36,13 @@ inline fun <reified T : Group> RecyclerView.setGroupieOnItemClickListener(crossi
         }
     }
 }
+
+inline fun <reified T : Group> RecyclerView.setGroupieOnItemLongClickListener(crossinline onItemLongClickListener: (T, View) -> Boolean) {
+    val adapter = adapter
+    if (adapter is GroupAdapter) {
+        adapter.setOnItemLongClickListener { item, view ->
+            view.pauseClickTimer()
+            return@setOnItemLongClickListener if (item is T) onItemLongClickListener(item, view) else false
+        }
+    }
+}

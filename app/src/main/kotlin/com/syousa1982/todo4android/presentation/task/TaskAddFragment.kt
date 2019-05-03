@@ -1,4 +1,4 @@
-package com.syousa1982.todo4android.presentation.tasklist
+package com.syousa1982.todo4android.presentation.task
 
 
 import android.os.Bundle
@@ -9,24 +9,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
-import com.syousa1982.todo4android.databinding.FragmentTaskListAddBinding
+import com.syousa1982.todo4android.databinding.FragmentTaskAddBinding
 import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.MainActivity
 import com.syousa1982.todo4android.util.extention.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-
 /**
- * タスクリスト作成 [Fragment] subclass.
+ * タスク作成 [Fragment] subclass.
  *
  */
-class TaskListAddFragment : Fragment() {
+class TaskAddFragment : Fragment() {
 
-    private val viewModel: TaskListAddViewModel by sharedViewModel()
+    private val viewModel: TaskAddViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentTaskListAddBinding.inflate(inflater, container, false)
-        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト作成")
+        val binding = FragmentTaskAddBinding.inflate(inflater, container, false)
+        (requireActivity() as MainActivity).setAppBarTitle("タスク作成")
         lifecycle.addObserver(viewModel)
         bindInputViewModel(binding, viewModel)
         bindOutputViewModel(binding, viewModel)
@@ -39,12 +38,13 @@ class TaskListAddFragment : Fragment() {
      * @param binding
      * @param viewModel
      */
-    private fun bindInputViewModel(binding: FragmentTaskListAddBinding, viewModel: TaskListAddViewModel) {
-        binding.inputTaskListName.setOnChangedTextListener {
-            viewModel.taskListName.value = it
+    private fun bindInputViewModel(binding: FragmentTaskAddBinding, viewModel: TaskAddViewModel) {
+        binding.inputTaskName.setOnChangedTextListener {
+            viewModel.taskName.value = it
         }
-        binding.createTaskListButton.setOnClickPauseListener {
-            viewModel.create()
+        binding.createTaskButton.setOnClickPauseListener {
+            val taskListId = TaskAddFragmentArgs.fromBundle(arguments ?: return@setOnClickPauseListener).taskListId
+            viewModel.create(taskListId)
         }
     }
 
@@ -54,9 +54,9 @@ class TaskListAddFragment : Fragment() {
      * @param binding
      * @param viewModel
      */
-    private fun bindOutputViewModel(binding: FragmentTaskListAddBinding, viewModel: TaskListAddViewModel) {
+    private fun bindOutputViewModel(binding: FragmentTaskAddBinding, viewModel: TaskAddViewModel) {
         viewModel.buttonEnable.observe(this) {
-            binding.createTaskListButton.isEnabled = it
+            binding.createTaskButton.isEnabled = it
         }
         viewModel.isProgress.observe(this) {
             binding.progressBar.visibleOrInvisible(it)
@@ -64,16 +64,16 @@ class TaskListAddFragment : Fragment() {
         viewModel.createResult.observe(this) {
             when (it) {
                 is Result.Progress -> {
-                    Log.d(className(), "タスクリスト作成開始")
+                    Log.d(className(), "タスク作成開始")
                     viewModel.isProgress.value = true
                 }
                 is Result.Success -> {
-                    Log.d(className(), "タスクリスト作成成功")
+                    Log.d(className(), "タスク作成成功")
                     viewModel.isProgress.value = false
                     Navigation.findNavController(binding.root).popBackStack()
                 }
                 is Result.Failure -> {
-                    val actionName = "タスクリスト作成"
+                    val actionName = "タスク作成"
                     Log.d(className(), "$actionName 失敗", it.e)
                     viewModel.isProgress.value = false
                     showErrorMessage(actionName)
@@ -90,4 +90,5 @@ class TaskListAddFragment : Fragment() {
             Snackbar.make(it, "$actionName 失敗しました。", Snackbar.LENGTH_LONG).show()
         }
     }
+
 }
