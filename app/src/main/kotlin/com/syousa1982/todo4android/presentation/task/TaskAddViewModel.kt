@@ -1,4 +1,4 @@
-package com.syousa1982.todo4android.presentation.tasklist
+package com.syousa1982.todo4android.presentation.task
 
 import android.util.Log
 import androidx.lifecycle.MediatorLiveData
@@ -13,13 +13,10 @@ import com.syousa1982.todo4android.util.extention.isNotEmpty
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 
-
 /**
- * タスクリスト作成画面 ViewModel
- *
- * @param todoUseCase
+ * タスク追加画面 ViewModel
  */
-class TaskListAddViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel() {
+class TaskAddViewModel(private val todoUseCase: IToDoUseCase) : BaseViewModel() {
 
     /**
      * 作成結果
@@ -32,16 +29,17 @@ class TaskListAddViewModel(private val todoUseCase: IToDoUseCase) : BaseViewMode
     val isProgress = MutableLiveData<Boolean>().default(false)
 
     /**
-     * タスクリスト名
+     * タスク名
      */
-    val taskListName = MutableLiveData<String>()
+    val taskName = MutableLiveData<String>()
+
 
     /**
      * 作成ボタンの有効判定
      */
     val buttonEnable = MediatorLiveData<Boolean>().default(false).apply {
         addSource(isProgress) { value = isButtonEnable() }
-        addSource(taskListName) { value = isButtonEnable() }
+        addSource(taskName) { value = isButtonEnable() }
     }
 
     override fun onStop() {
@@ -50,11 +48,13 @@ class TaskListAddViewModel(private val todoUseCase: IToDoUseCase) : BaseViewMode
     }
 
     /**
-     * タスクリスト作成
+     * タスク作成
+     *
+     * @param taskListId
      */
-    fun create() {
-        val name = taskListName.value ?: return
-        todoUseCase.addTaskList(name).subscribeBy(
+    fun create(taskListId: Int) {
+        val name = taskName.value ?: return
+        todoUseCase.addTask(taskListId, name).subscribeBy(
             onNext = { createResult.value = it },
             onError = { e -> Log.e(className(), "エラー発生", e) }
         ).addTo(disposable)
@@ -63,5 +63,5 @@ class TaskListAddViewModel(private val todoUseCase: IToDoUseCase) : BaseViewMode
     /**
      * ボタンの有効判定
      */
-    private fun isButtonEnable() = isProgress.isFalse() && taskListName.isNotEmpty()
+    private fun isButtonEnable() = isProgress.isFalse() && taskName.isNotEmpty()
 }

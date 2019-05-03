@@ -25,6 +25,7 @@ class TaskListAddFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentTaskListAddBinding.inflate(inflater, container, false)
+        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト作成")
         lifecycle.addObserver(viewModel)
         bindInputViewModel(binding, viewModel)
         bindOutputViewModel(binding, viewModel)
@@ -53,7 +54,6 @@ class TaskListAddFragment : Fragment() {
      * @param viewModel
      */
     private fun bindOutputViewModel(binding: FragmentTaskListAddBinding, viewModel: TaskListAddViewModel) {
-        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト作成")
         viewModel.buttonEnable.observe(this) {
             binding.createTaskListButton.isEnabled = it
         }

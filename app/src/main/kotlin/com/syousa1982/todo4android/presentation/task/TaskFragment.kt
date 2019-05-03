@@ -40,7 +40,11 @@ class TaskFragment : Fragment() {
     private fun bindInputView(binding: FragmentTaskBinding, viewModel: TaskViewModel) {
         binding.addButton.setOnClickPauseListener {
             Log.d(className(), "bindInputView#taskListid: ${viewModel.taskListId.value}")
-            Navigation.findNavController(it).navigate(R.id.action_taskFragment_to_taskAddFragment)
+            Navigation.findNavController(it).navigate(
+                TaskFragmentDirections.actionTaskFragmentToTaskAddFragment().apply {
+                    taskListId = viewModel.taskListId.value ?: throw IllegalAccessException("タスクリストIDが指定されていません")
+                }
+            )
         }
     }
 
