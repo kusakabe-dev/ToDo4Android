@@ -4,6 +4,7 @@ import com.syousa1982.todo4android.data.repository.ITaskListRepository
 import com.syousa1982.todo4android.data.repository.TaskListRepository
 import com.syousa1982.todo4android.domain.usecase.IToDoUseCase
 import com.syousa1982.todo4android.domain.usecase.ToDoUseCase
+import com.syousa1982.todo4android.presentation.task.TaskAddViewModel
 import com.syousa1982.todo4android.presentation.task.TaskViewModel
 import com.syousa1982.todo4android.presentation.tasklist.TaskListAddViewModel
 import com.syousa1982.todo4android.presentation.tasklist.TaskListViewModel
@@ -19,6 +20,7 @@ object AppModule {
         viewModel { TaskListViewModel(get()) }
         viewModel { TaskListAddViewModel(get()) }
         viewModel { TaskViewModel(get()) }
+        viewModel { TaskAddViewModel(get()) }
         // endregion
 
         // region Domain Layer
