@@ -16,7 +16,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.license.LicenseActivity"></activity>
+        <!-- ライセンス -->
+        <activity android:name=".presentation.license.LicenseActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <!-- メイン画面 -->
         <activity
             android:name=".presentation.MainActivity"

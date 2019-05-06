@@ -21,6 +21,7 @@ class LicenseActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.toolbar.title = "ライセンス"
         val webView = binding.webView
         webView.settings.loadWithOverviewMode = true
         webView.settings.useWideViewPort = true
