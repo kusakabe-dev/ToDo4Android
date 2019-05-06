@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_blank_sub_fragment">Hello blank subFragment</string>
     <string name="title_activity_main">MainActivity</string>
+
+    <string name="license">ライセンス</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.syousa1982.todo4android.presentation.license
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -31,5 +33,7 @@ class LicenseActivity : AppCompatActivity() {
          * ライセンスファイル
          */
         private const val LICENSE_FILE = "file:///android_asset/licenses.html"
+
+        fun newIntent(context: Context) = Intent(context, LicenseActivity::class.java)
     }
 }
