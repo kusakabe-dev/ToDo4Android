@@ -15,6 +15,7 @@ import com.syousa1982.todo4android.domain.Result
 import com.syousa1982.todo4android.presentation.MainActivity
 import com.syousa1982.todo4android.presentation.task.item.TaskItem
 import com.syousa1982.todo4android.util.extention.*
+import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
@@ -32,6 +33,7 @@ class TaskFragment : Fragment() {
         lifecycle.addObserver(viewModel)
         Log.d(className(), "onCreateView#taskListid: ${taskList.id}")
         viewModel.taskListId.value = taskList.id
+        (requireActivity() as MainActivity).toolbar.title = taskList.name
         bindInputView(binding, viewModel)
         bindOutputView(binding, viewModel)
         bindRecyclerView(binding, viewModel)

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/tasksFragment"
         android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListFragment"
-        android:label="fragment_tasks"
-        tools:layout="@layout/fragment_task_list" >
+        android:label="タスクリスト一覧"
+        tools:layout="@layout/fragment_task_list">
         <action
             android:id="@+id/action_tasksFragment_to_taskListAddFragment"
             app:destination="@id/taskListAddFragment" />
@@ -20,13 +20,13 @@
     <fragment
         android:id="@+id/taskListAddFragment"
         android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListAddFragment"
-        android:label="fragment_task_list_add"
+        android:label="タスクリスト追加"
         tools:layout="@layout/fragment_task_list_add" />
     <fragment
         android:id="@+id/taskFragment"
         android:name="com.syousa1982.todo4android.presentation.task.TaskFragment"
-        android:label="fragment_task"
-        tools:layout="@layout/fragment_task" >
+        android:label="タスク一覧"
+        tools:layout="@layout/fragment_task">
         <argument
             android:name="taskList"
             app:argType="com.syousa1982.todo4android.domain.model.TaskList" />
@@ -37,12 +37,12 @@
     <fragment
         android:id="@+id/taskAddFragment"
         android:name="com.syousa1982.todo4android.presentation.task.TaskAddFragment"
-        android:label="fragment_task_add"
-        tools:layout="@layout/fragment_task_add" >
+        android:label="タスク追加"
+        tools:layout="@layout/fragment_task_add">
         <argument
             android:name="taskListId"
-            app:argType="integer"
-            android:defaultValue="0" />
+            android:defaultValue="0"
+            app:argType="integer" />
     </fragment>
 
 </navigation>
