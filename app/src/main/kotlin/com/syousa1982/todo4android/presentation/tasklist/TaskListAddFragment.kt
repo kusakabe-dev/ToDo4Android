@@ -1,17 +1,19 @@
 package com.syousa1982.todo4android.presentation.tasklist
 
 
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.InputMethodManager.HIDE_NOT_ALWAYS
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.google.android.material.snackbar.Snackbar
 import com.syousa1982.todo4android.databinding.FragmentTaskListAddBinding
 import com.syousa1982.todo4android.domain.Result
-import com.syousa1982.todo4android.presentation.MainActivity
 import com.syousa1982.todo4android.util.extention.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
@@ -30,6 +32,16 @@ class TaskListAddFragment : Fragment() {
         bindInputViewModel(binding, viewModel)
         bindOutputViewModel(binding, viewModel)
         return binding.root
+    }
+
+    override fun onStop() {
+        super.onStop()
+        //ソフトキーボードを非表示
+        if (view != null) {
+            val imm = activity!!.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view!!.windowToken, HIDE_NOT_ALWAYS)
+            view!!.clearFocus()
+        }
     }
 
     /**
