@@ -29,7 +29,6 @@ class TaskListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentTaskListBinding.inflate(inflater, container, false)
         lifecycle.addObserver(viewModel)
-        (requireActivity() as MainActivity).setAppBarTitle("タスクリスト一覧")
         bindInput(binding)
         bindOutput(binding,viewModel)
         bindRecyclerView(binding, viewModel)

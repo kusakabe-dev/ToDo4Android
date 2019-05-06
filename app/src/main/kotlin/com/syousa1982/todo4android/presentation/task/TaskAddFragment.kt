@@ -25,7 +25,6 @@ class TaskAddFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentTaskAddBinding.inflate(inflater, container, false)
-        (requireActivity() as MainActivity).setAppBarTitle("タスク作成")
         lifecycle.addObserver(viewModel)
         bindInputViewModel(binding, viewModel)
         bindOutputViewModel(binding, viewModel)

@@ -32,7 +32,6 @@ class TaskFragment : Fragment() {
         lifecycle.addObserver(viewModel)
         Log.d(className(), "onCreateView#taskListid: ${taskList.id}")
         viewModel.taskListId.value = taskList.id
-        (requireActivity() as MainActivity).setAppBarTitle(taskList.name)
         bindInputView(binding, viewModel)
         bindOutputView(binding, viewModel)
         bindRecyclerView(binding, viewModel)
