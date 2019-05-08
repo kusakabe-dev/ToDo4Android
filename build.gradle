@@ -2,13 +2,11 @@
 
 buildscript {
     // Language
-    ext.kotlin_version = '1.3.0'
-    // AndroidSupport
-    ext.android_support_version = "27.1.1"
+    ext.kotlin_version = "1.3.30"
     // Architecture
-    ext.aac_lifecycle_version = "1.1.1"
-    ext.aac_room_version = "1.1.1"
-    ext.aac_nav_version = "1.0.0-alpha06"
+    ext.lifecycle_version = "2.0.0"
+    ext.room_version = "2.1.0-alpha07"
+    ext.nav_version = "1.0.0"
     // NetWork
     ext.retrofit_version = "2.4.0"
     ext.ok_http_version = "3.11.0"
@@ -16,15 +14,22 @@ buildscript {
     ext.kotshi_version = "1.0.5"
     ext.moshi_version = "1.7.0"
     // DI
-    ext.dagger_version = "2.17"
     ext.koin_version = "1.0.1"
     // UI
-    ext.glide_version = "4.8.0"
-    ext.groupie_version = "2.1.0"
+    ext.glide_version = "4.9.0"
+    ext.groupie_version = "2.3.0"
     // Util
-    ext.permissions_dispatcher_version = "3.3.1"
+    ext.permissions_dispatcher_version = "4.0.0"
+    // Securestorage
+    ext.latest_secure_storage_version = "1.0.3"
     // Debug & Log
-    ext.leak_canary_version = "1.5.4"
+    ext.leak_canary_version = "1.6.3"
+    // Spek
+    ext.spek_version = "2.0.1"
+    // MockK
+    ext.mockk_version = "1.9.3"
+    // DatabaseTest
+    ext.dbtoolsRoomVersion = "4.7.0"
 
     repositories {
         google()
@@ -32,15 +37,21 @@ buildscript {
     }
     dependencies {
         // Gradleプラグイン（AndroidStudioのバージョンと合わせる）
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.4.0'
         // Kotlinプラグイン
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // ドキュメント出力プラグイン
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.15"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.18"
         // ライブラリのライセンス出力プラグイン
-        classpath "com.cookpad.android.licensetools:license-tools-plugin:1.3.0"
+        classpath "com.cookpad.android.licensetools:license-tools-plugin:1.7.0"
         // GoogleServicesプラグイン
-//        classpath "com.google.gms:google-services:4.0.0"
+        classpath "com.google.gms:google-services:4.2.0"
+        // junit5
+        classpath "de.mannodermaus.gradle.plugins:android-junit5:1.4.0.0"
+        // junit-platform
+        classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.0'
+        //Apply Safe Args Plugin
+        classpath "android.arch.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
 
@@ -48,10 +59,7 @@ allprojects {
     repositories {
         google()
         jcenter()
-        // Permission Dispatcher
-        maven {
-            url "http://oss.jfrog.org/artifactory/oss-snapshot-local/"
-        }
+        maven { url "http://dl.bintray.com/jetbrains/spek" }
     }
 }
 

@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'com.cookpad.android.licensetools'
+apply plugin: "de.mannodermaus.android-junit5"
+apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 28
@@ -15,12 +17,12 @@ android {
         versionName "1.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        def properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        // local.propertiesのapi_keyに定義されている値を読み込む
-        def OPEN_TASK_API_KEY = properties.getProperty("TaskApiToken")
-        // buildConfigFieldに定義
-        buildConfigField("String", "OPEN_TASK_API_KEY", OPEN_TASK_API_KEY)
+//        def properties = new Properties()
+//        properties.load(project.rootProject.file('local.properties').newDataInputStream())
+//        // local.propertiesのapi_keyに定義されている値を読み込む
+//        def OPEN_TASK_API_KEY = properties.getProperty("TaskApiToken")
+//        // buildConfigFieldに定義
+//        buildConfigField("String", "OPEN_TASK_API_KEY", OPEN_TASK_API_KEY)
     }
     // DataBindingを有効化
     dataBinding {
@@ -73,83 +75,102 @@ android {
             java.srcDirs += 'src/androidTest/kotlin'
         }
     }
+    // Lintオプションを設定
+    // "./gradlew lint"で実行
+    lintOptions {
+        // Lint設定ファイル
+        lintConfig file("lint-config.xml")
+        // Lint結果出力
+        htmlReport true
+        htmlOutput file("$buildDir/reports/lint-results.html")
+        abortOnError false
+    }
+    // Lintオプションを設定
+    // "./gradlew test"で実行
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            unitTests.returnDefaultValues = true
+        }
+        junitPlatform {
+            filters {
+                engines {
+                    include 'spek2'
+                }
+            }
+        }
+    }
 }
 
-dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // Language
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    // AndroidSupport
-    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha2"
-    implementation 'androidx.appcompat:appcompat:1.0.1'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'com.google.android.material:material:1.1.0-alpha01'
-    implementation 'androidx.browser:browser:1.0.0'
-    implementation 'androidx.annotation:annotation:1.0.0'
-    // Architecture
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-reactivestreams:2.0.0'
-    kapt 'androidx.room:room-compiler:2.1.0-alpha02'
-    implementation 'androidx.room:room-runtime:2.1.0-alpha02'
-    implementation 'androidx.room:room-rxjava2:2.1.0-alpha02'
-    // SDK
-//    implementation "com.google.firebase:firebase-core:16.0.4"
-//    implementation "com.google.firebase:firebase-messaging:17.3.3"
-//    implementation "com.google.firebase:firebase-auth:16.0.4"
-//    implementation "com.google.firebase:firebase-invites:16.0.4"
-//    implementation "com.google.firebase:firebase-firestore:17.1.1"
-//    implementation "com.google.android.gms:play-services-auth:16.0.1"
-    implementation "com.facebook.android:facebook-login:4.34.0"
-    implementation "com.stripe:stripe-android:8.0.0"
-    // NetWork
-    implementation "com.squareup.okhttp3:okhttp:$ok_http_version"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
-    implementation "com.squareup.retrofit2:converter-moshi:$retrofit_version"
-    implementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
-    implementation("com.squareup.retrofit2:retrofit:$retrofit_version") {
-        exclude module: "okhttp"
+kapt {
+    generateStubs = true
+    javacOptions {
+        option("-Xmaxerrs", 5000)
     }
+}
+
+configurations {
+    all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+}
+
+
+dependencies {
+    // Language
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    // AndroidX
+    implementation "com.google.android.material:material:1.0.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.0.0-alpha5"
+    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.recyclerview:recyclerview:1.0.0"
+    implementation "androidx.cardview:cardview:1.0.0"
+    implementation "androidx.browser:browser:1.0.0"
+    implementation "androidx.annotation:annotation:1.0.2"
+    implementation "androidx.exifinterface:exifinterface:1.0.0"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams:$lifecycle_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
+    implementation "android.arch.navigation:navigation-fragment:$nav_version" // use -ktx for Kotlin
+    implementation "android.arch.navigation:navigation-ui:$nav_version" // use -ktx for Kotlin
     // Converter
     kapt "se.ansman.kotshi:compiler:$kotshi_version"
     implementation "se.ansman.kotshi:api:$kotshi_version"
     implementation "com.squareup.moshi:moshi:$moshi_version"
     implementation "com.squareup.moshi:moshi-adapters:$moshi_version"
     // DI
-    implementation "org.koin:koin-android:$koin_version"
-    implementation "org.koin:koin-android-scope:$koin_version"
-    implementation "org.koin:koin-android-viewmodel:$koin_version"
+    implementation "org.koin:koin-androidx-scope:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     // UI
     kapt "com.github.bumptech.glide:compiler:$glide_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
     implementation "com.xwray:groupie:$groupie_version"
     implementation "com.xwray:groupie-databinding:$groupie_version"
     implementation "com.xwray:groupie-kotlin-android-extensions:$groupie_version"
-    implementation "co.lujun:androidtagview:1.1.4"
-    implementation "com.firebaseui:firebase-ui-firestore:4.1.0"
-    implementation "com.ncapdevi:frag-nav:2.4.0"
     // Reactive
-    implementation "io.reactivex.rxjava2:rxjava:2.1.13"
-    implementation "io.reactivex.rxjava2:rxandroid:2.0.2"
-    implementation "io.reactivex.rxjava2:rxkotlin:2.2.0"
-    // Util
-    kapt "com.github.hotchemi:permissionsdispatcher-processor:$permissions_dispatcher_version"
-    implementation("com.github.hotchemi:permissionsdispatcher:$permissions_dispatcher_version") {
-        exclude module: "support-v13"
-    }
-    // Debug & Log
-    implementation "com.squareup.okhttp3:logging-interceptor:$ok_http_version"
-    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
-    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
-    testImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leak_canary_version"
+    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
+    implementation "io.reactivex.rxjava2:rxkotlin:2.3.0"
     // Test
-    testImplementation "junit:junit:4.12"
     testImplementation "com.squareup.okhttp3:mockwebserver:$ok_http_version"
-    testImplementation "org.robolectric:robolectric:3.8"
-    androidTestImplementation "androidx.test:runner:1.1.0"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.0"
+    testImplementation "org.robolectric:robolectric:4.2.1"
+    androidTestImplementation "androidx.test:runner:1.1.1"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.1.1"
+    testImplementation "org.dbtools:dbtools-room-jdbc:$dbtoolsRoomVersion"
+    testImplementation "org.xerial:sqlite-jdbc:3.27.2"
+
+    // spek
+    testImplementation 'org.junit.platform:junit-platform-runner:1.1.0'
+    testImplementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    testImplementation "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
+    testImplementation "org.spekframework.spek2:spek-runner-junit5:$spek_version"
+
+    // MockK
+    testImplementation("io.mockk:mockk:$mockk_version")
 }
 // GoogleServicesプラグインを適用(dependenciesよりも下に設定する)
 //apply plugin: "com.google.gms.google-services"
+

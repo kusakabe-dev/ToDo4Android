@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/tasksFragment">
+
+    <fragment
+        android:id="@+id/tasksFragment"
+        android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListFragment"
+        android:label="タスクリスト一覧"
+        tools:layout="@layout/fragment_task_list">
+        <action
+            android:id="@+id/action_tasksFragment_to_taskListAddFragment"
+            app:destination="@id/taskListAddFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_taskFragment"
+            app:destination="@id/taskFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskListAddFragment"
+        android:name="com.syousa1982.todo4android.presentation.tasklist.TaskListAddFragment"
+        android:label="タスクリスト追加"
+        tools:layout="@layout/fragment_task_list_add" />
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.syousa1982.todo4android.presentation.task.TaskFragment"
+        android:label="タスク一覧"
+        tools:layout="@layout/fragment_task">
+        <argument
+            android:name="taskList"
+            app:argType="com.syousa1982.todo4android.domain.model.TaskList" />
+        <action
+            android:id="@+id/action_taskFragment_to_taskAddFragment"
+            app:destination="@id/taskAddFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/taskAddFragment"
+        android:name="com.syousa1982.todo4android.presentation.task.TaskAddFragment"
+        android:label="タスク追加"
+        tools:layout="@layout/fragment_task_add">
+        <argument
+            android:name="taskListId"
+            android:defaultValue="0"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>
