@@ -31,3 +31,4 @@
     public static int e(...);
     public static int wtf(...);
 }
+-keepnames class com.syousa1982.todo4android.domain.model.** { *; }
