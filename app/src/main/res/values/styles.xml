@@ -21,11 +21,15 @@
     </style>
 
     <!--Toolbar-->
-    <style name="AppToolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
+    <style name="BaseToolbar" parent="ThemeOverlay.MaterialComponents.ActionBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:textColorPrimary">@android:color/white</item>
-        <!--<item name="android:textColorSecondary">@android:color/darker_gray</item>-->
+        <item name="android:theme">@style/ToolbarTheme</item>
         <item name="windowActionModeOverlay">true</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/darker_gray</item>
     </style>
 </resources>
