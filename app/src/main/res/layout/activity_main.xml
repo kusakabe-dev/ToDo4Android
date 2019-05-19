@@ -14,7 +14,7 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                style="@style/AppToolbar" />
+                style="@style/BaseToolbar" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
