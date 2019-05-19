@@ -19,3 +19,16 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+-keepclassmembers class fqcn.of.javascript.interface.for.webview {
+   public *;
+}
+# Log出力を行わない
+-assumenosideeffects class android.util.Log {
+    public static int v(...);
+    public static int d(...);
+    public static int i(...);
+    public static int w(...);
+    public static int e(...);
+    public static int wtf(...);
+}
+-keepnames class com.syousa1982.todo4android.domain.model.** { *; }
