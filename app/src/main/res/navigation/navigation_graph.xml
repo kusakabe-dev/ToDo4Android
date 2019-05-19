@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_tasksFragment_to_taskFragment"
             app:destination="@id/taskFragment" />
+        <action
+            android:id="@+id/action_tasksFragment_to_licenseActivity"
+            app:destination="@id/licenseActivity" />
     </fragment>
     <fragment
         android:id="@+id/taskListAddFragment"
@@ -44,5 +47,10 @@
             android:defaultValue="0"
             app:argType="integer" />
     </fragment>
+    <activity
+        android:id="@+id/licenseActivity"
+        android:name="com.syousa1982.todo4android.presentation.license.LicenseActivity"
+        android:label="activity_license"
+        tools:layout="@layout/activity_license" />
 
 </navigation>
