@@ -25,7 +25,7 @@ buildscript {
     // Debug & Log
     ext.leak_canary_version = "1.6.3"
     // Spek
-    ext.spek_version = "2.0.1"
+    ext.spek_version = "2.0.8"
     // MockK
     ext.mockk_version = "1.9.3"
     // DatabaseTest
@@ -37,7 +37,7 @@ buildscript {
     }
     dependencies {
         // Gradleプラグイン（AndroidStudioのバージョンと合わせる）
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.5.0'
         // Kotlinプラグイン
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         // ドキュメント出力プラグイン
