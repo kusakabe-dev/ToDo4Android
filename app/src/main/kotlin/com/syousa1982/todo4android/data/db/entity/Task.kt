@@ -1,14 +1,16 @@
 package com.syousa1982.todo4android.data.db.entity
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 /**
- * TaskListEntity
+ * TaskEntity Entity
  */
-@Entity(tableName = "task_list")
-data class TaskListEntity(
+@Entity(tableName = "tasks")
+data class Task(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
-    val name: String
+    val name: String,
+    val status: String
 )
