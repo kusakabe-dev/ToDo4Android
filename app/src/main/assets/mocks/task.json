@@ -1,7 +1,19 @@
 {
   "tasks" : [
     {
-      "id" : 1
+      "id" : 1,
+      "name" : "タスク1",
+      "status" : "TODO"
+    },
+    {
+      "id" : 2,
+      "name" : "タスク2",
+      "status" : "DOING"
+    },
+    {
+      "id" : 3,
+      "name" : "タスク3",
+      "status" : "DONE"
     }
   ]
 }
