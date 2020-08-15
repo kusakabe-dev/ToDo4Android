@@ -4,8 +4,10 @@
     <!-- カメラ機能が必須かどうかを設定 -->
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" /> <!-- インターネットの使用を許可する -->
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- ネットワーク状況の検知を許可する -->
+        android:required="false" />
+    <!-- インターネットの使用を許可する -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- ネットワーク状況の検知を許可する -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -18,15 +20,11 @@
         <!-- メイン画面 -->
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

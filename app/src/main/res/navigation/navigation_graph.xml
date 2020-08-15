@@ -2,6 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_graph">
-
+    android:id="@+id/navigation_graph"
+    app:startDestination="@id/taskFragment">
+    <fragment
+        android:id="@+id/taskFragment"
+        android:name="com.syousa1982.todo4android.presentation.TaskFragment"
+        android:label="fragment_task"
+        tools:layout="@layout/fragment_task" />
 </navigation>

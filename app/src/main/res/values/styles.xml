@@ -2,9 +2,9 @@
 
     <!--アプリ共通テーマ-->
     <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <!--<item name="colorPrimary">@color/color_primary</item>-->
-        <!--<item name="colorPrimaryDark">@color/color_primary_dark</item>-->
-        <!--<item name="colorAccent">@color/color_accent</item>-->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
         <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
     </style>
 
