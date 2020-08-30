@@ -22,6 +22,8 @@ buildscript {
     // DatabaseTest
     ext.dbtoolsRoomVersion = "4.7.0"
 
+    ext.koin_version = "2.1.6"
+
     repositories {
         google()
         jcenter()
