@@ -4,7 +4,6 @@
     tools:context="com.syousa1982.todo4android.presentation.tasklist.TaskListFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/FragmentTheme"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
