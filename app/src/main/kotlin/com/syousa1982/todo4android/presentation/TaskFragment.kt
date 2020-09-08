@@ -6,9 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.syousa1982.todo4android.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.syousa1982.todo4android.data.db.entity.Task
 import com.syousa1982.todo4android.databinding.FragmentTaskBinding
-import kotlinx.android.synthetic.main.fragment_task.*
+import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.GroupieViewHolder
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -20,13 +23,10 @@ class TaskFragment : Fragment() {
 
     lateinit var binding: FragmentTaskBinding
 
-    val viewModel : TaskViewModel by viewModel()
+    private val viewModel : TaskViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.tasks.observe(this, Observer {
-            test_text.text = it.toString()
-        })
         arguments?.let {
 
         }
@@ -40,9 +40,22 @@ class TaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.testButton.setOnClickListener {
-            viewModel.add("テスト用")
+//        binding.testButton.setOnClickListener {
+//            viewModel.add("テスト用")
+//        }
+        binding.navAddButton.setOnClickListener {
+
         }
+        viewModel.tasks.observe(viewLifecycleOwner, Observer {
+            bindRecycler(it)
+        })
+    }
+
+    private fun bindRecycler(tasks: List<Task>) {
+        binding.taskList.adapter = GroupAdapter<GroupieViewHolder>()
+        val linearLayoutManager = LinearLayoutManager(context)
+        binding.taskList.layoutManager = linearLayoutManager
+
     }
 
     companion object {

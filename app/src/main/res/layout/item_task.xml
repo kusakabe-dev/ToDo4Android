@@ -19,7 +19,7 @@
             app:srcCompat="@drawable/ic_check_off_24dp" />
 
         <TextView
-            android:id="@+id/task_name"
+            android:id="@+id/taskName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
