@@ -2,11 +2,13 @@ package com.syousa1982.todo4android.data.db
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.syousa1982.todo4android.data.db.dao.TaskListDao
-import com.syousa1982.todo4android.data.db.entity.TaskEntity
-import com.syousa1982.todo4android.data.db.entity.TaskListEntity
+import androidx.room.TypeConverters
+import com.syousa1982.todo4android.data.db.dao.TaskDao
+import com.syousa1982.todo4android.data.db.entity.Task
+import com.syousa1982.todo4android.data.db.entity.TaskStatusConverter
 
-@Database(entities = arrayOf(TaskListEntity::class, TaskEntity::class), version = 1)
+@Database(entities = arrayOf(Task::class), version = 1, exportSchema = false)
+@TypeConverters(TaskStatusConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun taskListDao(): TaskListDao
+    abstract fun taskDao(): TaskDao
 }
